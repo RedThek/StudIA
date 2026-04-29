@@ -1,4 +1,4 @@
-# 🏫 Gestion École Secondaire — Java
+# 🏫 StudIA - Gestion École Secondaire
 
 Projet Java complet de gestion d'une école secondaire réalisé dans le cadre d'un TP de programmation orientée objet.
 
