@@ -70,13 +70,13 @@ public class HelloController {
         sexeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getSexe()));
         sexeColumn.setPrefWidth(80);
 
-        TableColumn<Eleve, String> nationaliteColumn = new TableColumn<>("Nationalité");
+        TableColumn<Eleve, String> nationaliteColumn = new TableColumn<>("NationalitÃ©");
         nationaliteColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getNationalite()));
         nationaliteColumn.setPrefWidth(140);
 
         studentsTable.getColumns().setAll(matriculeColumn, nameColumn, naissanceColumn, lieuColumn, sexeColumn, nationaliteColumn);
 
-        TableColumn<Evaluation, String> matiereColumn = new TableColumn<>("Matière");
+        TableColumn<Evaluation, String> matiereColumn = new TableColumn<>("MatiÃ¨re");
         matiereColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getMatiere().getLibelle()));
         matiereColumn.setPrefWidth(200);
 
@@ -84,7 +84,7 @@ public class HelloController {
         noteColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(String.format("%.1f", data.getValue().getNote())));
         noteColumn.setPrefWidth(80);
 
-        TableColumn<Evaluation, String> sequenceColumn = new TableColumn<>("Séquence");
+        TableColumn<Evaluation, String> sequenceColumn = new TableColumn<>("SÃ©quence");
         sequenceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getSequence().getLibelle()));
         sequenceColumn.setPrefWidth(140);
 
@@ -102,18 +102,18 @@ public class HelloController {
             }
         });
 
-        showStatus("Bienvenue ! / Welcome! Sélectionnez un élève ou créez-en un nouveau.");
+        showStatus("Bienvenue ! / Welcome! SÃ©lectionnez un Ã©lÃ¨ve ou crÃ©ez-en un nouveau.");
     }
 
     @FXML
     protected void onCreateStudent() {
         if (isStudentFormInvalid()) {
-            showStatus("Veuillez remplir tous les champs de l'élève.");
+            showStatus("Veuillez remplir tous les champs de l'ï¿½lï¿½ve.");
             return;
         }
         String matricule = matriculeField.getText().trim();
         if (repository.findEleveByMatricule(matricule) != null) {
-            showStatus("Un élève avec ce matricule existe déjà.");
+            showStatus("Un ï¿½lï¿½ve avec ce matricule existe dï¿½jï¿½.");
             return;
         }
 
@@ -131,18 +131,18 @@ public class HelloController {
         repository.addEleve(eleve);
         studentsData.add(eleve);
         studentsTable.getSelectionModel().select(eleve);
-        showStatus("Élève ajouté avec succès.");
+        showStatus("ï¿½lï¿½ve ajoutï¿½ avec succï¿½s.");
     }
 
     @FXML
     protected void onUpdateStudent() {
         Eleve selected = studentsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showStatus("Sélectionnez un élève pour mettre à jour.");
+            showStatus("Sï¿½lectionnez un ï¿½lï¿½ve pour mettre ï¿½ jour.");
             return;
         }
         if (isStudentFormInvalid()) {
-            showStatus("Veuillez remplir tous les champs de l'élève.");
+            showStatus("Veuillez remplir tous les champs de l'ï¿½lï¿½ve.");
             return;
         }
 
@@ -154,28 +154,28 @@ public class HelloController {
         selected.setSexe(sexeField.getText().trim());
         selected.setNationalite(nationaliteField.getText().trim());
         studentsTable.refresh();
-        showStatus("Élève mis à jour avec succès.");
+        showStatus("ï¿½lï¿½ve mis ï¿½ jour avec succï¿½s.");
     }
 
     @FXML
     protected void onDeleteStudent() {
         Eleve selected = studentsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showStatus("Sélectionnez un élève pour le supprimer.");
+            showStatus("Sï¿½lectionnez un ï¿½lï¿½ve pour le supprimer.");
             return;
         }
         repository.deleteEleve(selected);
         studentsData.remove(selected);
         clearStudentForm();
         reportData.clear();
-        showStatus("Élève supprimé et ses évaluations supprimées.");
+        showStatus("ï¿½lï¿½ve supprimï¿½ et ses ï¿½valuations supprimï¿½es.");
     }
 
     @FXML
     protected void onClearForm() {
         clearStudentForm();
         studentsTable.getSelectionModel().clearSelection();
-        showStatus("Formulaire réinitialisé.");
+        showStatus("Formulaire rï¿½initialisï¿½.");
     }
 
     @FXML
@@ -187,26 +187,26 @@ public class HelloController {
         }
         Eleve eleve = repository.findEleveByMatricule(matricule);
         if (eleve == null) {
-            showStatus("Aucun élève trouvé pour ce matricule.");
+            showStatus("Aucun ï¿½lï¿½ve trouvï¿½ pour ce matricule.");
             reportData.clear();
             return;
         }
         studentsTable.getSelectionModel().select(eleve);
         populateStudentForm(eleve);
         updateReportTable(eleve);
-        showStatus("Bulletin chargé pour " + eleve.getNomComplet() + ".");
+        showStatus("Bulletin chargï¿½ pour " + eleve.getNomComplet() + ".");
     }
 
     @FXML
     protected void onGeneratePdf() {
         String matricule = reportMatriculeField.getText().trim();
         if (matricule.isEmpty()) {
-            showStatus("Indiquez un matricule avant de générer le PDF.");
+            showStatus("Indiquez un matricule avant de gï¿½nï¿½rer le PDF.");
             return;
         }
         Eleve eleve = repository.findEleveByMatricule(matricule);
         if (eleve == null) {
-            showStatus("Aucun élève trouvé pour ce matricule.");
+            showStatus("Aucun ï¿½lï¿½ve trouvï¿½ pour ce matricule.");
             return;
         }
 
@@ -214,9 +214,9 @@ public class HelloController {
         Path outputPath = Paths.get(System.getProperty("user.home"), "StudIAReports", "bulletin_" + eleve.getMatricule() + ".pdf");
         try {
             ReportCardGenerator.generateReportCard(eleve, evaluations, outputPath.toFile());
-            showStatus("PDF généré: " + outputPath.toAbsolutePath());
+            showStatus("PDF gï¿½nï¿½rï¿½: " + outputPath.toAbsolutePath());
         } catch (IOException exception) {
-            showStatus("Erreur pendant la génération du PDF: " + exception.getMessage());
+            showStatus("Erreur pendant la gï¿½nï¿½ration du PDF: " + exception.getMessage());
         }
     }
 

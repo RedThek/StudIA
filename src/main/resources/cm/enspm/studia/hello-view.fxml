@@ -22,7 +22,10 @@
                 <Tab text="Élèves / Students">
                     <BorderPane>
                         <top>
-                            <GridPane hgap="10" vgap="10" padding="10">
+                            <GridPane hgap="10" vgap="10">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
                                 <Label text="Matricule:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
                                 <TextField fx:id="matriculeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
@@ -49,7 +52,10 @@
                             <TableView fx:id="studentsTable" prefHeight="360" />
                         </center>
                         <bottom>
-                            <HBox spacing="12" padding="10">
+                            <HBox spacing="12">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
                                 <Button text="Ajouter / Add" onAction="#onCreateStudent" />
                                 <Button text="Mettre à jour / Update" onAction="#onUpdateStudent" />
                                 <Button text="Supprimer / Delete" onAction="#onDeleteStudent" />
@@ -59,7 +65,10 @@
                     </BorderPane>
                 </Tab>
                 <Tab text="Bulletin / Report Card">
-                    <VBox spacing="12" padding="10">
+                    <VBox spacing="12">
+                        <padding>
+                            <Insets bottom="10" left="10" right="10" top="10" />
+                        </padding>
                         <HBox spacing="10">
                             <Label text="Matricule :" />
                             <TextField fx:id="reportMatriculeField" promptText="ELV2024-001" />
