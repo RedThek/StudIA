@@ -123,6 +123,3 @@ java -cp out interfaces.Application
 | **Séparation MVC**   | Modèles / Services (logique) / Interface console     |
 
 ---
-
-## 👤 Auteur
-Projet réalisé dans le cadre d'un TP de programmation Java orientée objet.
