@@ -1,15 +1,48 @@
 package cm.enspm.studia.model;
+/**
+ * Classe représentant un élève de l'école secondaire.
+ * Un élève a un matricule unique et peut être associé à une classe.
+ */
 
-import java.util.Date;
+public class Eleve extends Personne {
 
-public class Eleve {
     private String matricule;
-    private String nom;
-    private String prenom;
-    private Date dateNaissance;
-    private String lieuNaissance;
-    private String sexe;
     private String photo;
-    private String nationalite;
 
+    /**
+     * Constructeur de la classe Eleve.
+     */
+    public Eleve(
+        String matricule, String nom, String prenom,
+        String dateNaissance, String lieuNaissance, 
+        String sexe, String photo, String nationalite) {
+        super(nom, prenom, dateNaissance, lieuNaissance, sexe, nationalite);
+        this.matricule  = matricule;
+        this.photo   = photo;
+    }
+
+    // ----------------------------- Getters -----------------------------
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    // ----------------------------- Setters -----------------------------
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    @Override
+    public String getRole() {
+        return "Élève";
+    }
 }
