@@ -1,4 +1,4 @@
 package cm.enspm.studia.model.dto;
 
-public class Utilisateur {
+public record Utilisateur(String nomUtilisateur, String motDePasse, Role role) {
 }

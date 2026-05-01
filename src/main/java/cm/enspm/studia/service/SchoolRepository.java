@@ -1,6 +1,6 @@
 package cm.enspm.studia.service;
 
-import cm.enspm.studia.model.*;
+//import cm.enspm.studia.model.*;
 import cm.enspm.studia.model.examens.Evaluation;
 import cm.enspm.studia.model.examens.Sequence;
 import cm.enspm.studia.model.examens.Trimestre;
