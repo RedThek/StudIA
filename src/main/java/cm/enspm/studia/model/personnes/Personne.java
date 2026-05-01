@@ -1,4 +1,4 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.personnes;
 
 /**
  * Classe abstraite représentant une personne de l'école.

@@ -1,4 +1,5 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.personnes;
+
 /**
  * Classe représentant un élève de l'école secondaire.
  * Un élève a un matricule unique et peut être associé à une classe.

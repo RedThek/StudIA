@@ -1,4 +1,7 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.administration;
+
+import cm.enspm.studia.model.personnes.Employe;
+import cm.enspm.studia.model.syllabus.Matiere;
 
 public class Affectation {
 

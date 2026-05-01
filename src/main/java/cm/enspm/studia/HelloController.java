@@ -1,7 +1,7 @@
 package cm.enspm.studia;
 
-import cm.enspm.studia.model.Evaluation;
-import cm.enspm.studia.model.Eleve;
+import cm.enspm.studia.model.examens.Evaluation;
+import cm.enspm.studia.model.personnes.Eleve;
 import cm.enspm.studia.service.ReportCardGenerator;
 import cm.enspm.studia.service.SchoolRepository;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -108,12 +108,12 @@ public class HelloController {
     @FXML
     protected void onCreateStudent() {
         if (isStudentFormInvalid()) {
-            showStatus("Veuillez remplir tous les champs de l'�l�ve.");
+            showStatus("Veuillez remplir tous les champs de l'élève.");
             return;
         }
         String matricule = matriculeField.getText().trim();
         if (repository.findEleveByMatricule(matricule) != null) {
-            showStatus("Un �l�ve avec ce matricule existe d�j�.");
+            showStatus("Un élève avec ce matricule existe déjà.");
             return;
         }
 
@@ -131,18 +131,18 @@ public class HelloController {
         repository.addEleve(eleve);
         studentsData.add(eleve);
         studentsTable.getSelectionModel().select(eleve);
-        showStatus("�l�ve ajout� avec succ�s.");
+        showStatus("Élève ajouté avec succès.");
     }
 
     @FXML
     protected void onUpdateStudent() {
         Eleve selected = studentsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showStatus("S�lectionnez un �l�ve pour mettre � jour.");
+            showStatus("Sélectionnez un élève pour mettre à jour.");
             return;
         }
         if (isStudentFormInvalid()) {
-            showStatus("Veuillez remplir tous les champs de l'�l�ve.");
+            showStatus("Veuillez remplir tous les champs de l'élève.");
             return;
         }
 
@@ -154,28 +154,28 @@ public class HelloController {
         selected.setSexe(sexeField.getText().trim());
         selected.setNationalite(nationaliteField.getText().trim());
         studentsTable.refresh();
-        showStatus("�l�ve mis � jour avec succ�s.");
+        showStatus("Élève mis à jour avec succès.");
     }
 
     @FXML
     protected void onDeleteStudent() {
         Eleve selected = studentsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showStatus("S�lectionnez un �l�ve pour le supprimer.");
+            showStatus("Sélectionnez un élève pour le supprimer.");
             return;
         }
         repository.deleteEleve(selected);
         studentsData.remove(selected);
         clearStudentForm();
         reportData.clear();
-        showStatus("�l�ve supprim� et ses �valuations supprim�es.");
+        showStatus("Élève supprimé et ses évaluations supprimées.");
     }
 
     @FXML
     protected void onClearForm() {
         clearStudentForm();
         studentsTable.getSelectionModel().clearSelection();
-        showStatus("Formulaire r�initialis�.");
+        showStatus("Formulaire réinitialisé.");
     }
 
     @FXML
@@ -187,26 +187,26 @@ public class HelloController {
         }
         Eleve eleve = repository.findEleveByMatricule(matricule);
         if (eleve == null) {
-            showStatus("Aucun �l�ve trouv� pour ce matricule.");
+            showStatus("Aucun élève trouvé pour ce matricule.");
             reportData.clear();
             return;
         }
         studentsTable.getSelectionModel().select(eleve);
         populateStudentForm(eleve);
         updateReportTable(eleve);
-        showStatus("Bulletin charg� pour " + eleve.getNomComplet() + ".");
+        showStatus("Bulletin chargé pour " + eleve.getNomComplet() + ".");
     }
 
     @FXML
     protected void onGeneratePdf() {
         String matricule = reportMatriculeField.getText().trim();
         if (matricule.isEmpty()) {
-            showStatus("Indiquez un matricule avant de g�n�rer le PDF.");
+            showStatus("Indiquez un matricule avant de générer le PDF.");
             return;
         }
         Eleve eleve = repository.findEleveByMatricule(matricule);
         if (eleve == null) {
-            showStatus("Aucun �l�ve trouv� pour ce matricule.");
+            showStatus("Aucun élève trouvé pour ce matricule.");
             return;
         }
 
@@ -214,9 +214,9 @@ public class HelloController {
         Path outputPath = Paths.get(System.getProperty("user.home"), "StudIAReports", "bulletin_" + eleve.getMatricule() + ".pdf");
         try {
             ReportCardGenerator.generateReportCard(eleve, evaluations, outputPath.toFile());
-            showStatus("PDF g�n�r�: " + outputPath.toAbsolutePath());
+            showStatus("PDF généré: " + outputPath.toAbsolutePath());
         } catch (IOException exception) {
-            showStatus("Erreur pendant la g�n�ration du PDF: " + exception.getMessage());
+            showStatus("Erreur pendant la génération du PDF: " + exception.getMessage());
         }
     }
 

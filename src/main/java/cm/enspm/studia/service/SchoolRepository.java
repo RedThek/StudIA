@@ -1,6 +1,15 @@
 package cm.enspm.studia.service;
 
 import cm.enspm.studia.model.*;
+import cm.enspm.studia.model.examens.Evaluation;
+import cm.enspm.studia.model.examens.Sequence;
+import cm.enspm.studia.model.examens.Trimestre;
+import cm.enspm.studia.model.personnes.Eleve;
+import cm.enspm.studia.model.syllabus.AnneeScolaire;
+import cm.enspm.studia.model.syllabus.Cycle;
+import cm.enspm.studia.model.syllabus.Matiere;
+import cm.enspm.studia.model.syllabus.NiveauEtude;
+import cm.enspm.studia.model.syllabus.SystemeEducatif;
 
 import java.util.ArrayList;
 import java.util.Date;

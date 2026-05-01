@@ -1,12 +1,19 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.administration;
+
+import cm.enspm.studia.model.personnes.Eleve;
 
 public class Inscription {
+    private String numeroInscription;
     private Eleve eleve;
     private Classe classe;
     private String dateInscription;
     private String statut;
 
-    public Inscription(Eleve eleve, Classe classe, String dateInscription, String statut) {
+    public Inscription(
+        String numeroInscription, Eleve eleve, Classe classe,
+        String dateInscription, String statut
+    ) {
+        this.numeroInscription = numeroInscription;
         this.eleve = eleve;
         this.classe = classe;
         this.dateInscription = dateInscription;
@@ -14,6 +21,14 @@ public class Inscription {
     }
 
     // Getters and Setters
+    public String getNumeroInscription() {
+        return numeroInscription;
+    }
+
+    public void setNumeroInscription(String numeroInscription) {
+        this.numeroInscription = numeroInscription;
+    }
+
     public Eleve getEleve() {
         return eleve;
     }

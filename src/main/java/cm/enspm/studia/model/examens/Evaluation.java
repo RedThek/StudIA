@@ -1,4 +1,7 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.examens;
+
+import cm.enspm.studia.model.personnes.Eleve;
+import cm.enspm.studia.model.syllabus.Matiere;
 
 /**
  * Classe représentant une note attribuée à un élève dans une matière.

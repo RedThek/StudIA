@@ -1,4 +1,4 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.administration;
 
 public class CrenauHoraire {
     private int id;             // Identifiant unique du créneau

@@ -1,4 +1,4 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.personnes;
 
 public class Responsabilite {
     private Eleve eleve;

@@ -1,4 +1,4 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.examens;
 
 public class Sequence {
     private int idSequence;

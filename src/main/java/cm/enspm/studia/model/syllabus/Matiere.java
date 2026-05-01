@@ -1,11 +1,28 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.syllabus;
 
 public class Matiere {
 
-    private int identifiantMatiere;      // Code unique (ex: "001")
-    private String codeMatiere;           // Code de la matière (ex: "MAT222", "PHY")
-    private String libelle;                   // Nom de la matière (ex: "Mathématiques")
+    /**
+     * identifiant de la matière : Un entier unique pour identifier la matière (ex: 1, 2, 3)
+     */
+    private int identifiantMatiere;
+
+    /**
+     * code de la matière : Un code alphanumérique pour représenter la matière (ex: "MATHS", "PHY")
+     */
+    private String codeMatiere;
+
+    /**
+     * libellé de la matière : Le nom complet de la matière (ex: "Mathématiques", "Physique")
+     */
+    private String libelle;
     
+    /**
+     * Constructeur de la classe Matiere
+     * @param identifiantMatiere
+     * @param codeMatiere
+     * @param libelle
+     */
     public Matiere(int identifiantMatiere, String codeMatiere, String libelle) {
         this.identifiantMatiere = identifiantMatiere;
         this.codeMatiere = codeMatiere;

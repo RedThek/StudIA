@@ -1,4 +1,4 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.personnes;
 
 /**
  * Classe représentant le personnel de l'école secondaire.
@@ -6,17 +6,56 @@ package cm.enspm.studia.model;
  */
 public class Employe extends Personne {
 
+    /**
+     * identifiant d'un employé de l'école secondaire.
+     */
     private String identifiant;
+
+    /**
+     * Carte Nationale d'Identité (CNI) de l'employé.
+     */
     private String cni;
+
+    /**
+     * Poste occupé par l'employé au sein de l'école secondaire (ex: enseignant, surveillant, etc.).
+     */
     private String poste;
+
+    /**
+     * Numéro de téléphone de l'employé.
+     */
     private String telephone;
+
+    /**
+     * Adresse email de l'employé.
+     */
     private String email;
+
+    /**
+     * Adresse physique de l'employé.
+     */
     private String adresse;
+
+    /**
+     * Diplôme le plus élevé de l'employé.
+     */
     private String grade;
 
 
     /**
      * Constructeur de la classe Employe.
+     * @param nom
+     * @param prenom
+     * @param dateNaissance
+     * @param sexe
+     * @param nationalite
+     * @param identifiant
+     * @param cni
+     * @param poste
+     * @param telephone
+     * @param email
+     * @param adresse
+     * @param grade
      */
     public Employe(
         String nom, String prenom, String dateNaissance, String sexe,

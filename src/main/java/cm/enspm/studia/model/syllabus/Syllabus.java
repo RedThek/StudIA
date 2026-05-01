@@ -1,4 +1,4 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.syllabus;
 
 public class Syllabus {
     

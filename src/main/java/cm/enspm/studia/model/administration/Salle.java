@@ -1,4 +1,4 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.administration;
 
 /**
  * Classe représentant une salle de l'école secondaire.

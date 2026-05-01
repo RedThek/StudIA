@@ -1,4 +1,6 @@
-package cm.enspm.studia.model;
+package cm.enspm.studia.model.examens;
+
+import cm.enspm.studia.model.syllabus.AnneeScolaire;
 
 public class Trimestre {
 
