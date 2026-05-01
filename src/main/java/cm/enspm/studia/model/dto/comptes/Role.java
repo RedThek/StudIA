@@ -1,4 +1,4 @@
-package cm.enspm.studia.model.dto;
+package cm.enspm.studia.model.dto.comptes;
 
 public enum Role {
     ADMINISTRATEUR,

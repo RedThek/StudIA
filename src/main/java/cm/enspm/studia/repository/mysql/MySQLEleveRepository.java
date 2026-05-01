@@ -1,6 +1,6 @@
 package cm.enspm.studia.repository.mysql;
 
-import cm.enspm.studia.model.dto.Eleve;
+import cm.enspm.studia.model.dto.personnes.Eleve;
 import cm.enspm.studia.repository.EleveRepository;
 import java.sql.*;
 //import java.util.ArrayList;

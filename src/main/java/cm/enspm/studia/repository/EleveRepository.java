@@ -1,8 +1,9 @@
 package cm.enspm.studia.repository;
 
-import cm.enspm.studia.model.dto.Eleve;
 import java.util.List;
 import java.util.Optional;
+
+import cm.enspm.studia.model.dto.personnes.Eleve;
 
 public interface EleveRepository {
     

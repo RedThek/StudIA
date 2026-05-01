@@ -1,6 +1,6 @@
 package cm.enspm.studia.service;
 
-import cm.enspm.studia.model.dto.Eleve;
+import cm.enspm.studia.model.dto.personnes.Eleve;
 import cm.enspm.studia.repository.EleveRepository;
 import cm.enspm.studia.session.ContexteSession;
 

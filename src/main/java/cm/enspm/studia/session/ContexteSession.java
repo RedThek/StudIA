@@ -1,7 +1,8 @@
 package cm.enspm.studia.session;
 
-import cm.enspm.studia.model.dto.Utilisateur;
 import java.util.Optional;
+
+import cm.enspm.studia.model.dto.comptes.Utilisateur;
 
 public interface ContexteSession {
 

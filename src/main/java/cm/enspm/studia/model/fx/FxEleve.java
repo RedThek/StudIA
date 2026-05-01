@@ -2,7 +2,7 @@ package cm.enspm.studia.model.fx;
 
 import java.time.LocalDate;
 
-import cm.enspm.studia.model.dto.Eleve;
+import cm.enspm.studia.model.dto.personnes.Eleve;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

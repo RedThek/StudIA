@@ -1,7 +1,7 @@
 package cm.enspm.studia.ui.controller;
 
+import cm.enspm.studia.model.dto.comptes.Utilisateur;
 import cm.enspm.studia.session.ContexteSession;
-import cm.enspm.studia.model.dto.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
