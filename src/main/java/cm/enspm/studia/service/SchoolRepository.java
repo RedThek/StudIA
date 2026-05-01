@@ -113,4 +113,25 @@ public class SchoolRepository {
         evaluations.removeIf(evaluation -> Objects.equals(evaluation.getEleve().getMatricule(), eleve.getMatricule()));
         return eleves.remove(eleve);
     }
+
+    //By MKR_fire
+    public boolean addEvaluation(Evaluation evaluation) {
+        if (evaluation == null) {
+            return false;
+        }
+        return evaluations.add(evaluation);
+    }
+
+    public boolean deleteEvaluation(Evaluation evaluation) {
+        if (evaluation == null) {
+            return false;
+        }
+        return evaluations.remove(evaluation);
+    }
+
+    public List<Evaluation> getEvaluations() {
+        return new ArrayList<>(evaluations);
+    }
+
+
 }
