@@ -48,7 +48,7 @@ public class SchoolRepository {
         sequences.add(new Sequence(3, "Séquence 3", "Évaluation finale", trimestre3));
 
         Eleve eleve1 = new Eleve("ELV2024-001", "NGOUNOU", "Marie", "12/05/2009", "Yaoundé", "F", "", "Camerounaise");
-        Eleve eleve2 = new Eleve("ELV2024-002", "TCHOUNGANG", "Paul", "18/09/2008", "Douala", "M", "", "Camerounaise");
+        Eleve eleve2 = new Eleve("ELV2024-002", "_fire", "MKR", "11/11/1111", "Valhalla", "M", "", "Asgardien");
         eleves.add(eleve1);
         eleves.add(eleve2);
 
