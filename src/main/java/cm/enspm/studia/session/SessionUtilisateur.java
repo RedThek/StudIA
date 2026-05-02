@@ -2,8 +2,8 @@ package cm.enspm.studia.session;
 
 import java.util.Optional;
 
-import cm.enspm.studia.model.dto.Role;
-import cm.enspm.studia.model.dto.Utilisateur;
+import cm.enspm.studia.model.dto.comptes.Role;
+import cm.enspm.studia.model.dto.comptes.Utilisateur;
 
 public class SessionUtilisateur implements ContexteSession {
     
