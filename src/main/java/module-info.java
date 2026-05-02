@@ -7,6 +7,9 @@ module cm.enspm.studia {
     requires org.apache.pdfbox;
     requires org.apache.fontbox;
 
+    requires java.sql;
+
     opens cm.enspm.studia to javafx.fxml;
+    opens cm.enspm.studia.repository to java.sql;
     exports cm.enspm.studia;
 }

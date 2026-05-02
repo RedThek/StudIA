@@ -1,6 +1,15 @@
 package cm.enspm.studia.service;
 
-import cm.enspm.studia.model.*;
+//import cm.enspm.studia.model.*;
+import cm.enspm.studia.model.examens.Evaluation;
+import cm.enspm.studia.model.examens.Sequence;
+import cm.enspm.studia.model.examens.Trimestre;
+import cm.enspm.studia.model.personnes.Eleve;
+import cm.enspm.studia.model.syllabus.AnneeScolaire;
+import cm.enspm.studia.model.syllabus.Cycle;
+import cm.enspm.studia.model.syllabus.Matiere;
+import cm.enspm.studia.model.syllabus.NiveauEtude;
+import cm.enspm.studia.model.syllabus.SystemeEducatif;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +48,7 @@ public class SchoolRepository {
         sequences.add(new Sequence(3, "Séquence 3", "Évaluation finale", trimestre3));
 
         Eleve eleve1 = new Eleve("ELV2024-001", "NGOUNOU", "Marie", "12/05/2009", "Yaoundé", "F", "", "Camerounaise");
-        Eleve eleve2 = new Eleve("ELV2024-002", "TCHOUNGANG", "Paul", "18/09/2008", "Douala", "M", "", "Camerounaise");
+        Eleve eleve2 = new Eleve("ELV2024-002", "_fire", "MKR", "11/11/1111", "Valhalla", "M", "", "Asgardien");
         eleves.add(eleve1);
         eleves.add(eleve2);
 
@@ -104,4 +113,25 @@ public class SchoolRepository {
         evaluations.removeIf(evaluation -> Objects.equals(evaluation.getEleve().getMatricule(), eleve.getMatricule()));
         return eleves.remove(eleve);
     }
+
+    //By MKR_fire
+    public boolean addEvaluation(Evaluation evaluation) {
+        if (evaluation == null) {
+            return false;
+        }
+        return evaluations.add(evaluation);
+    }
+
+    public boolean deleteEvaluation(Evaluation evaluation) {
+        if (evaluation == null) {
+            return false;
+        }
+        return evaluations.remove(evaluation);
+    }
+
+    public List<Evaluation> getEvaluations() {
+        return new ArrayList<>(evaluations);
+    }
+
+
 }

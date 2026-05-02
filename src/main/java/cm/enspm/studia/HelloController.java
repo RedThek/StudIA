@@ -1,7 +1,8 @@
 package cm.enspm.studia;
 
-import cm.enspm.studia.model.Evaluation;
-import cm.enspm.studia.model.Eleve;
+import cm.enspm.studia.model.examens.Evaluation;
+import cm.enspm.studia.model.personnes.Eleve;
+import cm.enspm.studia.model.syllabus.Matiere;
 import cm.enspm.studia.service.ReportCardGenerator;
 import cm.enspm.studia.service.SchoolRepository;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -14,6 +15,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+
+//By MKR_fire
+import cm.enspm.studia.model.examens.Sequence;
+
 
 public class HelloController {
 
@@ -39,6 +44,25 @@ public class HelloController {
     private TableView<Evaluation> reportTable;
     @FXML
     private Label statusLabel;
+
+    //By MKR_fire
+    @FXML
+    private TextField evaluationMatriculeField;
+    @FXML
+    private ComboBox<Matiere> matiereComboBox;
+    @FXML
+    private ComboBox<Sequence> sequenceComboBox;
+    @FXML
+    private TextField noteField;
+    @FXML
+    private TextField evaluationDateField;
+    @FXML
+    private TextField commentaireField;
+    @FXML
+    private TableView<Evaluation> evaluationsTable;
+
+    private final ObservableList<Evaluation> evaluationsData = FXCollections.observableArrayList();
+
 
     private final SchoolRepository repository = new SchoolRepository();
     private final ObservableList<Eleve> studentsData = FXCollections.observableArrayList();
@@ -92,6 +116,34 @@ public class HelloController {
         commentaireColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getCommentaire()));
         commentaireColumn.setPrefWidth(300);
 
+        //By MKR_fire
+        matiereComboBox.setItems(FXCollections.observableArrayList(repository.getMatieres()));
+        sequenceComboBox.setItems(FXCollections.observableArrayList(repository.getSequences()));
+        evaluationsData.setAll(repository.getEvaluations());
+        evaluationsTable.setItems(evaluationsData);
+
+        TableColumn<Evaluation, String> eleveEvalColumn = new TableColumn<>("Élève");
+        eleveEvalColumn.setCellValueFactory(data ->
+                new ReadOnlyStringWrapper(data.getValue().getEleve().getMatricule()));
+
+        TableColumn<Evaluation, String> matiereEvalColumn = new TableColumn<>("Matière");
+        matiereEvalColumn.setCellValueFactory(data ->
+                new ReadOnlyStringWrapper(data.getValue().getMatiere().getLibelle()));
+
+        TableColumn<Evaluation, String> noteEvalColumn = new TableColumn<>("Note");
+        noteEvalColumn.setCellValueFactory(data ->
+                new ReadOnlyStringWrapper(String.format("%.1f", data.getValue().getNote())));
+
+        TableColumn<Evaluation, String> sequenceEvalColumn = new TableColumn<>("Séquence");
+        sequenceEvalColumn.setCellValueFactory(data ->
+                new ReadOnlyStringWrapper(data.getValue().getSequence().getLibelle()));
+
+        evaluationsTable.getColumns().setAll(
+                eleveEvalColumn,
+                matiereEvalColumn,
+                noteEvalColumn,
+                sequenceEvalColumn);
+        
         reportTable.getColumns().setAll(matiereColumn, noteColumn, sequenceColumn, commentaireColumn);
 
         studentsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -106,14 +158,79 @@ public class HelloController {
     }
 
     @FXML
+    protected void onCreateEvaluation() {
+        Eleve eleve = repository.findEleveByMatricule(evaluationMatriculeField.getText().trim());
+
+            if (eleve == null) {
+                showStatus("Aucun élève trouvé pour ce matricule.");
+                return;
+            }
+
+            Matiere matiere = matiereComboBox.getValue();
+            Sequence sequence = sequenceComboBox.getValue();
+
+            if (matiere == null || sequence == null) {
+                showStatus("Choisissez une matière et une séquence.");
+                return;
+            }
+
+            double note;
+            try {
+                note = Double.parseDouble(noteField.getText().trim());
+            } catch (NumberFormatException exception) {
+                showStatus("La note doit être un nombre.");
+                return;
+            }
+
+            Evaluation evaluation = new Evaluation(
+                    eleve,
+                    matiere,
+                    sequence,
+                    note,
+                    evaluationDateField.getText().trim(),
+                    commentaireField.getText().trim()
+            );
+
+            repository.addEvaluation(evaluation);
+            evaluationsData.add(evaluation);
+
+            if (eleve.equals(studentsTable.getSelectionModel().getSelectedItem())) {
+                updateReportTable(eleve);
+            }
+
+            showStatus("Évaluation ajoutée avec succès.");
+        }
+
+    @FXML
+    protected void onDeleteEvaluation() {
+        Evaluation selected = evaluationsTable.getSelectionModel().getSelectedItem();
+
+            if (selected == null) {
+                showStatus("Sélectionnez une évaluation à supprimer.");
+                return;
+            }
+
+            repository.deleteEvaluation(selected);
+            evaluationsData.remove(selected);
+
+            Eleve selectedEleve = studentsTable.getSelectionModel().getSelectedItem();
+            if (selectedEleve != null) {
+                updateReportTable(selectedEleve);
+            }
+
+            showStatus("Évaluation supprimée.");
+        }
+
+
+    @FXML
     protected void onCreateStudent() {
         if (isStudentFormInvalid()) {
-            showStatus("Veuillez remplir tous les champs de l'�l�ve.");
+            showStatus("Veuillez remplir tous les champs de l'élève.");
             return;
         }
         String matricule = matriculeField.getText().trim();
         if (repository.findEleveByMatricule(matricule) != null) {
-            showStatus("Un �l�ve avec ce matricule existe d�j�.");
+            showStatus("Un élève avec ce matricule existe déjà.");
             return;
         }
 
@@ -131,18 +248,18 @@ public class HelloController {
         repository.addEleve(eleve);
         studentsData.add(eleve);
         studentsTable.getSelectionModel().select(eleve);
-        showStatus("�l�ve ajout� avec succ�s.");
+        showStatus("Élève ajouté avec succès.");
     }
 
     @FXML
     protected void onUpdateStudent() {
         Eleve selected = studentsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showStatus("S�lectionnez un �l�ve pour mettre � jour.");
+            showStatus("Sélectionnez un élève pour mettre à jour.");
             return;
         }
         if (isStudentFormInvalid()) {
-            showStatus("Veuillez remplir tous les champs de l'�l�ve.");
+            showStatus("Veuillez remplir tous les champs de l'élève.");
             return;
         }
 
@@ -154,28 +271,28 @@ public class HelloController {
         selected.setSexe(sexeField.getText().trim());
         selected.setNationalite(nationaliteField.getText().trim());
         studentsTable.refresh();
-        showStatus("�l�ve mis � jour avec succ�s.");
+        showStatus("Élève mis à jour avec succès.");
     }
 
     @FXML
     protected void onDeleteStudent() {
         Eleve selected = studentsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showStatus("S�lectionnez un �l�ve pour le supprimer.");
+            showStatus("Sélectionnez un élève pour le supprimer.");
             return;
         }
         repository.deleteEleve(selected);
         studentsData.remove(selected);
         clearStudentForm();
         reportData.clear();
-        showStatus("�l�ve supprim� et ses �valuations supprim�es.");
+        showStatus("Élève supprimé et ses évaluations supprimées.");
     }
 
     @FXML
     protected void onClearForm() {
         clearStudentForm();
         studentsTable.getSelectionModel().clearSelection();
-        showStatus("Formulaire r�initialis�.");
+        showStatus("Formulaire réinitialisé.");
     }
 
     @FXML
@@ -187,26 +304,26 @@ public class HelloController {
         }
         Eleve eleve = repository.findEleveByMatricule(matricule);
         if (eleve == null) {
-            showStatus("Aucun �l�ve trouv� pour ce matricule.");
+            showStatus("Aucun élève trouvé pour ce matricule.");
             reportData.clear();
             return;
         }
         studentsTable.getSelectionModel().select(eleve);
         populateStudentForm(eleve);
         updateReportTable(eleve);
-        showStatus("Bulletin charg� pour " + eleve.getNomComplet() + ".");
+        showStatus("Bulletin chargé pour " + eleve.getNomComplet() + ".");
     }
 
     @FXML
     protected void onGeneratePdf() {
         String matricule = reportMatriculeField.getText().trim();
         if (matricule.isEmpty()) {
-            showStatus("Indiquez un matricule avant de g�n�rer le PDF.");
+            showStatus("Indiquez un matricule avant de générer le PDF.");
             return;
         }
         Eleve eleve = repository.findEleveByMatricule(matricule);
         if (eleve == null) {
-            showStatus("Aucun �l�ve trouv� pour ce matricule.");
+            showStatus("Aucun élève trouvé pour ce matricule.");
             return;
         }
 
@@ -214,9 +331,9 @@ public class HelloController {
         Path outputPath = Paths.get(System.getProperty("user.home"), "StudIAReports", "bulletin_" + eleve.getMatricule() + ".pdf");
         try {
             ReportCardGenerator.generateReportCard(eleve, evaluations, outputPath.toFile());
-            showStatus("PDF g�n�r�: " + outputPath.toAbsolutePath());
+            showStatus("PDF généré: " + outputPath.toAbsolutePath());
         } catch (IOException exception) {
-            showStatus("Erreur pendant la g�n�ration du PDF: " + exception.getMessage());
+            showStatus("Erreur pendant la génération du PDF: " + exception.getMessage());
         }
     }
 

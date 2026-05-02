@@ -1,7 +1,8 @@
 package cm.enspm.studia.service;
 
-import cm.enspm.studia.model.Evaluation;
-import cm.enspm.studia.model.Eleve;
+import cm.enspm.studia.model.examens.Evaluation;
+import cm.enspm.studia.model.personnes.Eleve;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
