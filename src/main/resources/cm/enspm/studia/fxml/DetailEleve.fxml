@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox spacing="20.0" styleClass="view-container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    
+    <VBox spacing="5.0">
+        <Label text="Students" styleClass="page-title" />
+        <Label text="Home &gt; Student Details" styleClass="breadcrumb" />
+    </VBox>
+
+    <VBox styleClass="card" spacing="20.0">
+        <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+        </padding>
+        
+        <Label text="About Me" styleClass="card-title" />
+        
+        <HBox spacing="40.0">
+            <!-- Profile Image Placeholder -->
+            <StackPane prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #00BCD4;" />
+            
+            <!-- Details -->
+            <VBox spacing="15.0" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Jessia Rose" styleClass="profile-name" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <!-- Action Buttons -->
+                    <HBox spacing="10.0">
+                        <Button text="Edit" styleClass="icon-btn" />
+                        <Button text="Print" styleClass="icon-btn" />
+                        <Button text="Download" styleClass="icon-btn" />
+                    </HBox>
+                </HBox>
+                
+                <Label text="Aliquam erat volutpat. Curabiene natis massa sedde..." wrapText="true" styleClass="bio-text" />
+                
+                <GridPane hgap="20.0" vgap="15.0">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="120.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    
+                    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="field-label" />
+                    <Label text="Jessia Rose" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="field-value" />
+                    
+                    <Label text="Gender:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="field-label" />
+                    <Label text="Female" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="field-value" />
+                    
+                    <Label text="Father Name:" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="field-label" />
+                    <Label text="Steve Jones" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="field-value" />
+                    
+                    <!-- Additional fields follow the same pattern -->
+                </GridPane>
+            </VBox>
+        </HBox>
+    </VBox>
+</VBox>
