@@ -5,6 +5,7 @@ import cm.enspm.studia.model.personnes.Eleve;
 import cm.enspm.studia.model.syllabus.Matiere;
 
 import java.util.List;
+import java.util.Set;
 
 public interface Evaluation_Repository {
 
@@ -20,6 +21,6 @@ public interface Evaluation_Repository {
 
     void supprimerEvaluation(Evaluation evaluation);
 
-    double calculerMoyenneEleve(Eleve eleve);
+    double calculerMoyenneEleve(Eleve eleve, Set<Double> notes);
 
 }

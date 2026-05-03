@@ -1,5 +1,6 @@
 package cm.enspm.studia;
 
+import cm.enspm.studia.model.administration.Classe;
 import cm.enspm.studia.model.examens.Evaluation;
 import cm.enspm.studia.model.personnes.Eleve;
 import cm.enspm.studia.model.syllabus.Matiere;
@@ -40,6 +41,8 @@ public class HelloController {
     private TextField reportMatriculeField;
     @FXML
     private TableView<Eleve> studentsTable;
+    //@FXML
+    //private TableView<Classe> classesTable;
     @FXML
     private TableView<Evaluation> reportTable;
     @FXML
@@ -242,7 +245,9 @@ public class HelloController {
                 lieuNaissanceField.getText().trim(),
                 sexeField.getText().trim(),
                 "",
-                nationaliteField.getText().trim()
+                nationaliteField.getText().trim(),
+                null
+                
         );
 
         repository.addEleve(eleve);

@@ -1,6 +1,6 @@
 package cm.enspm.studia.model.syllabus;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Classe représentant une année scolaire, qui contient des informations sur l'année académique en cours,
@@ -10,77 +10,46 @@ import java.util.Date;
  */
 public class AnneeScolaire {
 
-    /*
-     * Identifiant unique de l'année scolaire ex: 20242025
-     */
-    private int idAnneeScolaire;
-    /**
-     * Libellé de l'année scolaire, généralement au format "AAAA-AAAA" (ex: "2023-2024")
-     */
-    private String libelle;
     /**
      * Date de début de l'année scolaire, utilisées pour déterminer les périodes d'enseignement.
      */
-    private Date dateDebut;
+    private LocalDate dateDebut;
     /**
      * Date de fin de l'année scolaire, utilisée pour déterminer le debut des vacances.
      */
-    private Date dateFin;
+    private LocalDate dateFin;
 
     /**
      * Constructeur de la classe AnneeScolaire
-     * @param idAnneeScolaire
-     * @param libelle
      * @param dateDebut
      * @param dateFin
      */
-    public AnneeScolaire(int idAnneeScolaire, String libelle, Date dateDebut, Date dateFin) {
-        this.idAnneeScolaire = idAnneeScolaire;
-        this.libelle = libelle;
+    public AnneeScolaire(LocalDate dateDebut, LocalDate dateFin) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
     }
 
-    /**
-     * Getter pour l'identifiant de l'année scolaire
-     * @return identifiant de l'année scolaire
-     */
-    public int getIdAnneeScolaire() {
-        return idAnneeScolaire;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public Date getDateDebut() {
+    public LocalDate getDateDebut() {
         return dateDebut;
     }
 
-    public Date getDateFin() {
+    public LocalDate getDateFin() {
         return dateFin;
     }
 
-    /**
-     * Setter pour l'identifiant de l'année scolaire
-     * @param idAnneeScolaire
-     */
-    public void setIdAnneeScolaire(int idAnneeScolaire) {
-        this.idAnneeScolaire = idAnneeScolaire;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
     }
 
-    
+    public String getLibelle() {
+        // Générer le libellé de l'année scolaire au format "YYYY-YYYY"
+        int anneeDebut = dateDebut.getYear() + 1900; // getYear() retourne l'année depuis 1900
+        int anneeFin = dateFin.getYear() + 1900;
+        return anneeDebut + "-" + anneeFin;
+    }
     
 }

@@ -7,19 +7,9 @@ package cm.enspm.studia.model.personnes;
 public class Employe extends Personne {
 
     /**
-     * identifiant d'un employé de l'école secondaire.
-     */
-    private String identifiant;
-
-    /**
      * Carte Nationale d'Identité (CNI) de l'employé.
      */
-    private String cni;
-
-    /**
-     * Poste occupé par l'employé au sein de l'école secondaire (ex: enseignant, surveillant, etc.).
-     */
-    private String poste;
+    private String numeroCNI;
 
     /**
      * Numéro de téléphone de l'employé.
@@ -32,14 +22,19 @@ public class Employe extends Personne {
     private String email;
 
     /**
-     * Adresse physique de l'employé.
+     * Poste occupé par l'employé au sein de l'école secondaire (ex: enseignant, surveillant, etc.).
      */
-    private String adresse;
+    private String poste;
 
     /**
      * Diplôme le plus élevé de l'employé.
      */
     private String grade;
+
+    /**
+     * Adresse physique de l'employé.
+     */
+    private String adresse;
 
 
     /**
@@ -49,7 +44,6 @@ public class Employe extends Personne {
      * @param dateNaissance
      * @param sexe
      * @param nationalite
-     * @param identifiant
      * @param cni
      * @param poste
      * @param telephone
@@ -59,12 +53,11 @@ public class Employe extends Personne {
      */
     public Employe(
         String nom, String prenom, String dateNaissance, String sexe,
-        String nationalite, String identifiant, String cni, String poste, 
+        String nationalite, String cni, String poste, 
         String telephone, String email, String adresse, String grade
     ) {
         super(nom, prenom, dateNaissance, "", sexe, nationalite);
-        this.identifiant = identifiant;
-        this.cni = cni;
+        this.numeroCNI = cni;
         this.poste = poste;
         this.telephone = telephone;
         this.email = email;
@@ -74,12 +67,8 @@ public class Employe extends Personne {
 
     //------------------ Getters ------------------
 
-    public String getIdentifiant() {
-        return identifiant;
-    }
-
-    public String getCni() {
-        return cni;
+    public String getNumeroCNI() {
+        return numeroCNI;
     }
 
     public String getPoste() {
@@ -104,12 +93,8 @@ public class Employe extends Personne {
 
     //------------------ Setters ------------------
 
-    public void setIdentifiant(String identifiant) {
-        this.identifiant = identifiant;
-    }
-
     public void setCni(String cni) {
-        this.cni = cni;
+        this.numeroCNI = cni;
     }
 
     public void setPoste(String poste) {
@@ -135,5 +120,13 @@ public class Employe extends Personne {
     @Override
     public String getRole() {
         return "Employé";
+    }
+
+    /**
+     * @return
+     */
+    public Boolean estEnseignant() {
+        // TODO implement here
+        return null;
     }
 }

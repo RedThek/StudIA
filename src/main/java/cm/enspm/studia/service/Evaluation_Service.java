@@ -7,6 +7,7 @@ import cm.enspm.studia.repository.Evaluation_Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Evaluation_Service implements Evaluation_Repository {
 
@@ -26,7 +27,7 @@ public class Evaluation_Service implements Evaluation_Repository {
     public List<Evaluation> getEvaluationsParEleve(Eleve eleve) {
         List<Evaluation> result = new ArrayList<>();
         for (Evaluation e : evaluations) {
-            if (e.getEleve().equals(eleve)) {
+            if (e.getUniqueEleve(eleve).equals(eleve)) {
                 result.add(e);
             }
         }
@@ -37,7 +38,7 @@ public class Evaluation_Service implements Evaluation_Repository {
     public List<Evaluation> getEvaluationsParMatiere(Matiere matiere) {
         List<Evaluation> result = new ArrayList<>();
         for (Evaluation e : evaluations) {
-            if (e.getMatiere().equals(matiere)) {
+            if (e.getUniqueMatiere(matiere).equals(matiere)) {
                 result.add(e);
             }
         }
@@ -60,14 +61,14 @@ public class Evaluation_Service implements Evaluation_Repository {
     }
 
     @Override
-    public double calculerMoyenneEleve(Eleve eleve) {
+    public double calculerMoyenneEleve(Eleve eleve, Set<Double> notes) {
         if (eleve == null) return 0;
         double somme = 0;
         int count = 0;
 
         for (Evaluation e : evaluations) {
-            if (e.getEleve() != null && e.getEleve().equals(eleve)) {
-                somme += e.getNote();
+            if (e.getUniqueEleve(eleve) != null && e.getUniqueEleve(eleve).equals(eleve)) {
+                somme += e.getUniqueNote();
                 count++;
             }
         }
