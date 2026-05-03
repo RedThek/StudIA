@@ -11,8 +11,8 @@ import cm.enspm.studia.model.syllabus.Matiere;
 import cm.enspm.studia.model.syllabus.NiveauEtude;
 import cm.enspm.studia.model.syllabus.SystemeEducatif;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ public class SchoolRepository {
         SystemeEducatif systeme = new SystemeEducatif(1, "Système éducatif bilingue camerounais", "Secondaire bilingue");
         Cycle cycleSecondaire = new Cycle(1, "Secondaire", "Cycle d'enseignement général");
         NiveauEtude seconde = new NiveauEtude(1, "Seconde", systeme, cycleSecondaire);
-        AnneeScolaire annee2025 = new AnneeScolaire(1, "2024-2025", new Date(), new Date());
+        AnneeScolaire annee2025 = new AnneeScolaire(LocalDate.now(), LocalDate.now());
 
         matieres.add(new Matiere(1, "MAT", "Mathématiques"));
         matieres.add(new Matiere(2, "FR", "Français"));
@@ -47,8 +47,8 @@ public class SchoolRepository {
         sequences.add(new Sequence(2, "Séquence 2", "Évaluation sommative", trimestre2));
         sequences.add(new Sequence(3, "Séquence 3", "Évaluation finale", trimestre3));
 
-        Eleve eleve1 = new Eleve("ELV2024-001", "NGOUNOU", "Marie", "12/05/2009", "Yaoundé", "F", "", "Camerounaise");
-        Eleve eleve2 = new Eleve("ELV2024-002", "TCHOUNGANG", "Paul", "18/09/2008", "Douala", "M", "", "Camerounaise");
+        Eleve eleve1 = new Eleve("ELV2024-001", "NGOUNOU", "Marie", "12/05/2009", "Yaoundé", "F", "", "Camerounaise", null);
+        Eleve eleve2 = new Eleve("ELV2024-002", "_fire", "MKR", "11/11/1111", "Valhalla", "M", "", "Asgardien", null);
         eleves.add(eleve1);
         eleves.add(eleve2);
 
@@ -113,4 +113,25 @@ public class SchoolRepository {
         evaluations.removeIf(evaluation -> Objects.equals(evaluation.getEleve().getMatricule(), eleve.getMatricule()));
         return eleves.remove(eleve);
     }
+
+    //By MKR_fire
+    public boolean addEvaluation(Evaluation evaluation) {
+        if (evaluation == null) {
+            return false;
+        }
+        return evaluations.add(evaluation);
+    }
+
+    public boolean deleteEvaluation(Evaluation evaluation) {
+        if (evaluation == null) {
+            return false;
+        }
+        return evaluations.remove(evaluation);
+    }
+
+    public List<Evaluation> getEvaluations() {
+        return new ArrayList<>(evaluations);
+    }
+
+
 }

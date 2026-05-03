@@ -7,7 +7,14 @@ package cm.enspm.studia.model.personnes;
 public abstract class Personne {
 
     // Attributs communs à toutes les personnes
+    /**
+     * 
+     */
     private String nom;
+
+    /**
+     * 
+     */
     private String prenom;
     private String dateNaissance;
     private String lieuNaissance;

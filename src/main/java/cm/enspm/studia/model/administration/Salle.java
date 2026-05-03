@@ -14,10 +14,29 @@ public class Salle {
     public static final String TYPE_BIBLIOTHEQUE = "Bibliothèque";
     public static final String TYPE_ART          = "Salle d'art";
 
-    private String code;         // Code de la salle (ex: "A101")
-    private String nom;                 // Nom descriptif (ex: "Salle Pasteur")
-    private String typeSalle;           // Type de salle (voir constantes ci-dessus)
-    private int capaciteMax;            // Nombre maximum d'élèves
+    /**
+     * Code de la salle (ex: "A101")
+     */
+    private String code;
+
+    /**
+     * Nom descriptif (ex: "Salle Projection")
+     */
+    private String nom;
+    
+    /**
+     * Type de salle (voir constantes ci-dessus)
+     */
+    private String typeSalle;
+
+    /**
+     * Nombre maximum d'élèves
+     */
+    private int capacite;
+
+    /**
+     * 
+     */
     private int numeroBatiment;         // Numéro du bâtiment
     private int numeroEtage;            // Étage (0 = rez-de-chaussée)
     private boolean estDisponible;      // Disponibilité actuelle
@@ -27,14 +46,13 @@ public class Salle {
     /**
      * Constructeur de la classe Salle.
      */
-    public Salle(String code, String nom, String typeSalle,
-                 int capaciteMax, int numeroBatiment, int numeroEtage) {
+    public Salle(String code, String nom, String typeSalle, int capaciteMax) {
         this.code      = code;
         this.nom              = nom;
         this.typeSalle        = typeSalle;
-        this.capaciteMax      = capaciteMax;
-        this.numeroBatiment   = numeroBatiment;
-        this.numeroEtage      = numeroEtage;
+        this.capacite      = capaciteMax;
+        this.numeroBatiment   = 1;
+        this.numeroEtage      = 1;
         this.estDisponible    = true;   // Disponible par défaut
         this.aProjecteur      = false;
         this.aTableauxBlancs  = false;
@@ -45,7 +63,7 @@ public class Salle {
     public String getCode()                    { return code; }
     public String getNom()                     { return nom; }
     public String getTypeSalle()               { return typeSalle; }
-    public int getCapaciteMax()                { return capaciteMax; }
+    public int getCapacite()                { return capacite; }
     public int getNumeroBatiment()             { return numeroBatiment; }
     public int getNumeroEtage()                { return numeroEtage; }
     public boolean isEstDisponible()           { return estDisponible; }
@@ -54,7 +72,7 @@ public class Salle {
 
     public void setNom(String nom)                         { this.nom = nom; }
     public void setTypeSalle(String typeSalle)             { this.typeSalle = typeSalle; }
-    public void setCapaciteMax(int capaciteMax)            { this.capaciteMax = capaciteMax; }
+    public void setCapacite(int capaciteMax)            { this.capacite = capaciteMax; }
     public void setEstDisponible(boolean estDisponible)    { this.estDisponible = estDisponible; }
     public void setAProjecteur(boolean aProjecteur)        { this.aProjecteur = aProjecteur; }
     public void setATableauxBlancs(boolean aTBI)          { this.aTableauxBlancs = aTBI; }
@@ -65,14 +83,5 @@ public class Salle {
     public String getEmplacement() {
         String etageStr = (numeroEtage == 0) ? "Rez-de-chaussée" : "Étage " + numeroEtage;
         return "Bâtiment " + numeroBatiment + " – " + etageStr;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("SALLE | [%s] %s | %s | Capacité: %d élèves | %s | %s | Proj: %s | TBI: %s",
-                code, nom, typeSalle, capaciteMax, getEmplacement(),
-                estDisponible ? "DISPONIBLE" : "OCCUPÉE",
-                aProjecteur ? "Oui" : "Non",
-                aTableauxBlancs ? "Oui" : "Non");
     }
 }

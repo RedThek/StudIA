@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.control.ComboBox?>
+
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="cm.enspm.studia.HelloController">
     <top>
@@ -66,6 +68,50 @@
                         </bottom>
                     </BorderPane>
                 </Tab>
+                <Tab text="Évaluations">
+                    <BorderPane>
+                        <top>
+                            <GridPane hgap="10" vgap="10">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
+
+                                <Label text="Matricule élève:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="evaluationMatriculeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label text="Matière:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="matiereComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                <Label text="Séquence:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="sequenceComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                                <Label text="Note:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextField fx:id="noteField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                                <Label text="Date:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <TextField fx:id="evaluationDateField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                                <Label text="Commentaire:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <TextField fx:id="commentaireField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+                            </GridPane>
+                        </top>
+
+                        <center>
+                            <TableView fx:id="evaluationsTable" prefHeight="360" />
+                        </center>
+
+                        <bottom>
+                            <HBox spacing="12">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
+                                <Button text="Ajouter" onAction="#onCreateEvaluation" />
+                                <Button text="Supprimer" onAction="#onDeleteEvaluation" />
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
                 <Tab text="Bulletin / Report Card">
                     <VBox spacing="12">
                         <padding>
