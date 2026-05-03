@@ -1,6 +1,7 @@
 package cm.enspm.studia.model.examens;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -196,7 +197,7 @@ public class Evaluation {
 
     public Map<String, Double> enregistrerNotesEleve(List<Matiere> matieres, List<Double> notes){
         
-        //Map<String, Double> pv = new HashMap<>();
+        Map<String, Double> pv = new HashMap<>();
 
         int max = 0;
         if (matieres.size() >= notes.size()) {
@@ -212,7 +213,11 @@ public class Evaluation {
 
     public Map<Eleve, Map<String, Double>> enregistrerNotesEleves(List<Eleve> eleves, Map<String, Double> PV) {
         int max = eleves.size();
-
+        Map<Eleve, Map<String, Double>> pv = new HashMap<>();
+        for (int i = 0; i < max; i++) {
+            pv.put(eleves.get(i), PV);
+        }
+        return pv;
     }
 
     public Map<String,String> enregistrerObservationsEleve(List<Matiere> matieres, List<String> observations){
@@ -231,13 +236,27 @@ public class Evaluation {
         return pv;
     }
 
-    public List<Double> getListeNotes(Eleve cle, Classe classe){
-        List<Double> notes = null;
+    public List<Double> getListeNotes(Eleve cle, Sequence sequence){
+        List<Double> notes = new ArrayList<Double>();
 
+        for (Trimestre trimestre : this.trimestre) {
+            for (Sequence seq : trimestre.getSequences()) {
+                if (seq.equals(sequence)) {
+                    for (Evaluation eval : seq.getEvaluations()) {
+                        if (eval.getUniqueEleve(cle).equals(cle)) {
+                            notes = eval.getNotes().stream().toList();
+                        }
+                    }
+                }
+            }
+        }
+
+        return notes;
     }
 
     public double getUniqueNote(Eleve cle, List<Double> notes){
         double note = 0;
+        return note;
     }
     
 }
