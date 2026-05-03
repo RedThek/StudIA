@@ -99,7 +99,6 @@ public class MySQLEleveRepository implements EleveRepository {
         }
     }
 
-    @Override
     public List<Eleve> RechercherEleveParNom(String mot_cle) {
         String sql = "SELECT * FROM eleves WHERE nom LIKE ? OR prenom LIKE ?";
         List<Eleve> eleves = new ArrayList<>();

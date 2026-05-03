@@ -1,6 +1,5 @@
 package cm.enspm.studia;
 
-import cm.enspm.studia.model.administration.Classe;
 import cm.enspm.studia.model.examens.Evaluation;
 import cm.enspm.studia.model.personnes.Eleve;
 import cm.enspm.studia.model.syllabus.Matiere;
@@ -22,6 +21,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 //By MKR_fire
 import cm.enspm.studia.model.examens.Sequence;
@@ -47,8 +47,6 @@ public class HelloController {
     private TextField reportMatriculeField;
     @FXML
     private TableView<Eleve> studentsTable;
-    //@FXML
-    //private TableView<Classe> classesTable;
     @FXML
     private TableView<Evaluation> reportTable;
     @FXML
@@ -93,23 +91,23 @@ public class HelloController {
         reportTable.setItems(reportData);
 
         TableColumn<Eleve, String> matriculeColumn = new TableColumn<>("Matricule");
-        matriculeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().matricule()));
+        matriculeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getMatricule()));
         matriculeColumn.setPrefWidth(140);
 
         TableColumn<Eleve, String> nameColumn = new TableColumn<>("Nom complet");
-        nameColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().nom() + " " + data.getValue().prenom()));
+        nameColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getNom() + " " + data.getValue().getPrenom()));
         nameColumn.setPrefWidth(220);
 
         TableColumn<Eleve, String> naissanceColumn = new TableColumn<>("Naissance");
-        naissanceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().dateNaissance().toString()));
+        naissanceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDateNaissance().toString()));
         naissanceColumn.setPrefWidth(120);
 
         TableColumn<Eleve, String> lieuColumn = new TableColumn<>("Lieu");
-        lieuColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().lieuNaissance()));
+        lieuColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLieuNaissance()));
         lieuColumn.setPrefWidth(120);
 
         TableColumn<Eleve, String> sexeColumn = new TableColumn<>("Sexe");
-        sexeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().sexe()));
+        sexeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getSexe()));
         sexeColumn.setPrefWidth(80);
 
         TableColumn<Eleve, String> nationaliteColumn = new TableColumn<>("Nationalité");
@@ -119,19 +117,37 @@ public class HelloController {
         studentsTable.getColumns().setAll(matriculeColumn, nameColumn, naissanceColumn, lieuColumn, sexeColumn, nationaliteColumn);
 
         TableColumn<Evaluation, String> matiereColumn = new TableColumn<>("Matière");
-        matiereColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getMatiere().getLibelle()));
+        matiereColumn.setCellValueFactory(data -> {
+            Set<String> matieres = data.getValue().getClasses().stream()
+                    .flatMap(c -> c.getNiveauEtude().getMatieres().stream())
+                    .map(Matiere::getDesignation)
+                    .collect(java.util.stream.Collectors.toSet());
+            return new ReadOnlyStringWrapper(matieres.isEmpty() ? "" : matieres.iterator().next());
+        });
         matiereColumn.setPrefWidth(200);
 
         TableColumn<Evaluation, String> noteColumn = new TableColumn<>("Note");
-        noteColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(String.format("%.1f", data.getValue().getNote())));
+        noteColumn.setCellValueFactory(data -> {
+            Double note = data.getValue().getNotes().isEmpty() ? 0.0 : data.getValue().getNotes().iterator().next();
+            return new ReadOnlyStringWrapper(String.format("%.1f", note));
+        });
         noteColumn.setPrefWidth(80);
 
         TableColumn<Evaluation, String> sequenceColumn = new TableColumn<>("Séquence");
-        sequenceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getSequence().getLibelle()));
+        sequenceColumn.setCellValueFactory(data -> {
+            Set<String> sequences = data.getValue().getTrimestre().stream()
+                    .flatMap(t -> t.getSequences().stream())
+                    .map(Sequence::getLibelle)
+                    .collect(java.util.stream.Collectors.toSet());
+            return new ReadOnlyStringWrapper(sequences.isEmpty() ? "" : sequences.iterator().next());
+        });
         sequenceColumn.setPrefWidth(140);
 
         TableColumn<Evaluation, String> commentaireColumn = new TableColumn<>("Commentaire");
-        commentaireColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getCommentaire()));
+        commentaireColumn.setCellValueFactory(data -> {
+            String comment = data.getValue().getCommentaire().isEmpty() ? "" : data.getValue().getCommentaire().iterator().next();
+            return new ReadOnlyStringWrapper(comment);
+        });
         commentaireColumn.setPrefWidth(300);
 
         //By MKR_fire
@@ -141,20 +157,37 @@ public class HelloController {
         evaluationsTable.setItems(evaluationsData);
 
         TableColumn<Evaluation, String> eleveEvalColumn = new TableColumn<>("Élève");
-        eleveEvalColumn.setCellValueFactory(data ->
-                new ReadOnlyStringWrapper(data.getValue().getEleve().getMatricule()));
+        eleveEvalColumn.setCellValueFactory(data -> {
+            Set<String> eleves = data.getValue().getClasses().stream()
+                    .flatMap(c -> c.getEleves().stream())
+                    .map(Eleve::getMatricule)
+                    .collect(java.util.stream.Collectors.toSet());
+            return new ReadOnlyStringWrapper(eleves.isEmpty() ? "" : eleves.iterator().next());
+        });
 
         TableColumn<Evaluation, String> matiereEvalColumn = new TableColumn<>("Matière");
-        matiereEvalColumn.setCellValueFactory(data ->
-                new ReadOnlyStringWrapper(data.getValue().getMatiere().getLibelle()));
+        matiereEvalColumn.setCellValueFactory(data -> {
+            Set<String> matieres = data.getValue().getClasses().stream()
+                    .flatMap(c -> c.getNiveauEtude().getMatieres().stream())
+                    .map(Matiere::getDesignation)
+                    .collect(java.util.stream.Collectors.toSet());
+            return new ReadOnlyStringWrapper(matieres.isEmpty() ? "" : matieres.iterator().next());
+        });
 
         TableColumn<Evaluation, String> noteEvalColumn = new TableColumn<>("Note");
-        noteEvalColumn.setCellValueFactory(data ->
-                new ReadOnlyStringWrapper(String.format("%.1f", data.getValue().getNote())));
+        noteEvalColumn.setCellValueFactory(data -> {
+            Double note = data.getValue().getNotes().isEmpty() ? 0.0 : data.getValue().getNotes().iterator().next();
+            return new ReadOnlyStringWrapper(String.format("%.1f", note));
+        });
 
         TableColumn<Evaluation, String> sequenceEvalColumn = new TableColumn<>("Séquence");
-        sequenceEvalColumn.setCellValueFactory(data ->
-                new ReadOnlyStringWrapper(data.getValue().getSequence().getLibelle()));
+        sequenceEvalColumn.setCellValueFactory(data -> {
+            Set<String> sequences = data.getValue().getTrimestre().stream()
+                    .flatMap(t -> t.getSequences().stream())
+                    .map(Sequence::getLibelle)
+                    .collect(java.util.stream.Collectors.toSet());
+            return new ReadOnlyStringWrapper(sequences.isEmpty() ? "" : sequences.iterator().next());
+        });
 
         evaluationsTable.getColumns().setAll(
                 eleveEvalColumn,
@@ -179,34 +212,35 @@ public class HelloController {
     protected void onCreateEvaluation() {
         Eleve eleve = repository.findEleveByMatricule(evaluationMatriculeField.getText().trim());
 
-            if (eleve == null) {
-                showStatus("Aucun élève trouvé pour ce matricule.");
-                return;
-            }
+        if (eleve == null) {
+            showStatus("Aucun élève trouvé pour ce matricule.");
+            return;
+        }
 
-            Matiere matiere = matiereComboBox.getValue();
-            Sequence sequence = sequenceComboBox.getValue();
+        Matiere matiere = matiereComboBox.getValue();
+        Sequence sequence = sequenceComboBox.getValue();
 
-            if (matiere == null || sequence == null) {
-                showStatus("Choisissez une matière et une séquence.");
-                return;
-            }
+        if (matiere == null || sequence == null) {
+            showStatus("Choisissez une matière et une séquence.");
+            return;
+        }
 
-            double note;
-            try {
-                note = Double.parseDouble(noteField.getText().trim());
-            } catch (NumberFormatException exception) {
-                showStatus("La note doit être un nombre.");
-                return;
-            }
+        double note;
+        try {
+            note = Double.parseDouble(noteField.getText().trim());
+        } catch (NumberFormatException exception) {
+            showStatus("La note doit être un nombre.");
+            return;
+        }
 
+        try {
             Evaluation evaluation = new Evaluation(
-                    eleve,
-                    matiere,
-                    sequence,
-                    note,
-                    evaluationDateField.getText().trim(),
-                    commentaireField.getText().trim()
+                    java.util.Collections.emptySet(),
+                    java.util.Collections.emptySet(),
+                    java.util.Collections.emptySet(),
+                    java.util.Collections.singleton(repository.findClasseForEleve(eleve)),
+                    java.util.Collections.singleton(note),
+                    java.util.Collections.singleton(commentaireField.getText().trim())
             );
 
             repository.addEvaluation(evaluation);
@@ -217,7 +251,10 @@ public class HelloController {
             }
 
             showStatus("Évaluation ajoutée avec succès.");
+        } catch (Exception e) {
+            showStatus("Erreur lors de l'ajout de l'évaluation: " + e.getMessage());
         }
+    }
 
     @FXML
     protected void onDeleteEvaluation() {

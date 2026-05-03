@@ -1,4 +1,5 @@
 module cm.enspm.studia {
+    requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -12,4 +13,5 @@ module cm.enspm.studia {
     opens cm.enspm.studia to javafx.fxml;
     opens cm.enspm.studia.repository to java.sql;
     exports cm.enspm.studia;
+    //exports cm.enspm.studia.model;
 }

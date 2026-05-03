@@ -13,3 +13,4 @@ public interface EleveRepository {
     void supprimerEleve(String matriculeEleve);
     Optional<Eleve> RechercherEleveParMatricule(String matriculeEleve);
     List<Eleve> getAllEleves();
+}

@@ -150,7 +150,7 @@ public class Cours {
 
     /**
      * @return
-     */
+     
     public List<Cours> getEmploiDeTempsClasse() {
         // TODO implement here
         return null;
@@ -158,7 +158,7 @@ public class Cours {
 
     /**
      * @return
-     */
+     
     public List<Cours> getEmploiDeTempsEnseignant() {
         // TODO implement here
         return null;
@@ -166,7 +166,7 @@ public class Cours {
 
     /**
      * @return
-     */
+     
     public List<Cours> getEmploiDeTempsSalle() {
         // TODO implement here
         return null;
@@ -174,11 +174,11 @@ public class Cours {
 
     /**
      * @return
-     */
+     
     public String getProgressionEnseignement() {
         // TODO implement here
         return "";
-    }
+    }*/
 
     public Integer getDuree(){
         return (int) java.time.Duration.between(debut, fin).toMinutes();

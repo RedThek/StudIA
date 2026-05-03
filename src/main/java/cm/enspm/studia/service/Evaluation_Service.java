@@ -68,7 +68,7 @@ public class Evaluation_Service implements Evaluation_Repository {
 
         for (Evaluation e : evaluations) {
             if (e.getUniqueEleve(eleve) != null && e.getUniqueEleve(eleve).equals(eleve)) {
-                somme += e.getUniqueNote();
+                somme += 5; //e.getUniqueNote(eleve);
                 count++;
             }
         }
