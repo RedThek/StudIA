@@ -12,5 +12,4 @@ public interface EleveRepository {
     void desactiverEleve(String matriculeEleve);
     void supprimerEleve(String matriculeEleve);
     Optional<Eleve> RechercherEleveParMatricule(String matriculeEleve);
-    List<Eleve> RechercherEleveParNom(String mot_cle);
-}
+    List<Eleve> getAllEleves();

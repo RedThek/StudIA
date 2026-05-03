@@ -238,19 +238,6 @@ public class Evaluation {
 
     public List<Double> getListeNotes(Eleve cle, Sequence sequence){
         List<Double> notes = new ArrayList<Double>();
-
-        for (Trimestre trimestre : this.trimestre) {
-            for (Sequence seq : trimestre.getSequences()) {
-                if (seq.equals(sequence)) {
-                    for (Evaluation eval : seq.getEvaluations()) {
-                        if (eval.getUniqueEleve(cle).equals(cle)) {
-                            notes = eval.getNotes().stream().toList();
-                        }
-                    }
-                }
-            }
-        }
-
         return notes;
     }
 

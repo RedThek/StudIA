@@ -1,6 +1,10 @@
 package cm.enspm.studia.service;
 
-import cm.enspm.studia.model.dto.personnes.Eleve;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import cm.enspm.studia.mapper.EleveMapper;
+import cm.enspm.studia.model.personnes.Eleve;
 import cm.enspm.studia.repository.EleveRepository;
 import cm.enspm.studia.session.ContexteSession;
 
@@ -16,37 +20,38 @@ public class ServicesEleve {
     }
 
     public void enregistrementEleve(Eleve eleve) {
-
-        // Appliquer les règles métier verifier avant d'enregistrer l'élève
-        if (repository.RechercherEleveParMatricule(eleve.matricule()).isPresent()) {
+        if (repository.RechercherEleveParMatricule(eleve.getMatricule()).isPresent()) {
             throw new IllegalArgumentException("Le matricule existe déjà dans le système.");
         }
-        repository.enregistrerEleve(eleve);
+        repository.enregistrerEleve(EleveMapper.toDto(eleve));
     }
 
     public void modifierEleve(Eleve eleve) {
-        // Basic users CAN modify a student, so we just ensure they are logged in.
         if (!session.estAuthentifier()) {
             throw new SecurityException("Vous devez être connecté pour modifier un élève.");
         }
 
-        // Appliquer les règles métier verifier avant de modifier l'élève
-        if (repository.RechercherEleveParMatricule(eleve.matricule()).isEmpty()) {
+        if (repository.RechercherEleveParMatricule(eleve.getMatricule()).isEmpty()) {
             throw new IllegalArgumentException("L'élève avec ce matricule n'existe pas.");
         }
 
-        if (repository.RechercherEleveParMatricule(eleve.matricule()).isPresent()) {
-            repository.modifierEleve(eleve);
-        } else {
-            repository.enregistrerEleve(eleve);
-        }
-        repository.modifierEleve(eleve);
+        repository.modifierEleve(EleveMapper.toDto(eleve));
+    }
+
+    public List<Eleve> listerEleves() {
+        return repository.getAllEleves().stream()
+                .map(EleveMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    public Eleve rechercherEleveParMatricule(String matricule) {
+        return repository.RechercherEleveParMatricule(matricule)
+                .map(EleveMapper::toDomain)
+                .orElse(null);
     }
 
     public void SupprimerEleve(String matriculeEleve) {
-        // Double-check authorization before touching the database
-        session.necessiteAutorisationAdministrateur(); 
-        
+        session.necessiteAutorisationAdministrateur();
         repository.supprimerEleve(matriculeEleve);
     }
 }

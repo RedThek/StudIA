@@ -5,7 +5,10 @@ import cm.enspm.studia.model.examens.Evaluation;
 import cm.enspm.studia.model.personnes.Eleve;
 import cm.enspm.studia.model.syllabus.Matiere;
 import cm.enspm.studia.service.ReportCardGenerator;
+import cm.enspm.studia.service.DatabaseService;
+import cm.enspm.studia.service.ServicesEleve;
 import cm.enspm.studia.service.SchoolRepository;
+import cm.enspm.studia.session.SessionUtilisateur;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +18,9 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 //By MKR_fire
@@ -65,36 +71,45 @@ public class HelloController {
     private TableView<Evaluation> evaluationsTable;
 
     private final ObservableList<Evaluation> evaluationsData = FXCollections.observableArrayList();
-
-
     private final SchoolRepository repository = new SchoolRepository();
+    private final ServicesEleve eleveService;
     private final ObservableList<Eleve> studentsData = FXCollections.observableArrayList();
     private final ObservableList<Evaluation> reportData = FXCollections.observableArrayList();
 
+    public HelloController() {
+        try {
+            this.eleveService = new ServicesEleve(
+                    DatabaseService.getInstance().getEleveRepository(),
+                    new SessionUtilisateur());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur de connexion à la base de données", e);
+        }
+    }
+
     @FXML
     public void initialize() {
-        studentsData.setAll(repository.getEleves());
+        studentsData.setAll(eleveService.listerEleves());
         studentsTable.setItems(studentsData);
         reportTable.setItems(reportData);
 
         TableColumn<Eleve, String> matriculeColumn = new TableColumn<>("Matricule");
-        matriculeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getMatricule()));
+        matriculeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().matricule()));
         matriculeColumn.setPrefWidth(140);
 
         TableColumn<Eleve, String> nameColumn = new TableColumn<>("Nom complet");
-        nameColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getNomComplet()));
+        nameColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().nom() + " " + data.getValue().prenom()));
         nameColumn.setPrefWidth(220);
 
         TableColumn<Eleve, String> naissanceColumn = new TableColumn<>("Naissance");
-        naissanceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDateNaissance()));
+        naissanceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().dateNaissance().toString()));
         naissanceColumn.setPrefWidth(120);
 
         TableColumn<Eleve, String> lieuColumn = new TableColumn<>("Lieu");
-        lieuColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLieuNaissance()));
+        lieuColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().lieuNaissance()));
         lieuColumn.setPrefWidth(120);
 
         TableColumn<Eleve, String> sexeColumn = new TableColumn<>("Sexe");
-        sexeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getSexe()));
+        sexeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().sexe()));
         sexeColumn.setPrefWidth(80);
 
         TableColumn<Eleve, String> nationaliteColumn = new TableColumn<>("Nationalité");
@@ -232,12 +247,14 @@ public class HelloController {
             return;
         }
         String matricule = matriculeField.getText().trim();
-        if (repository.findEleveByMatricule(matricule) != null) {
+        if (eleveService.rechercherEleveParMatricule(matricule) != null) {
             showStatus("Un élève avec ce matricule existe déjà.");
             return;
         }
 
-        Eleve eleve = new Eleve(
+        try {
+            LocalDate.parse(dateNaissanceField.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            Eleve eleve = new Eleve(
                 matricule,
                 nomField.getText().trim(),
                 prenomField.getText().trim(),
@@ -247,13 +264,14 @@ public class HelloController {
                 "",
                 nationaliteField.getText().trim(),
                 null
-                
-        );
+            );
 
-        repository.addEleve(eleve);
-        studentsData.add(eleve);
-        studentsTable.getSelectionModel().select(eleve);
-        showStatus("Élève ajouté avec succès.");
+            eleveService.enregistrementEleve(eleve);
+            studentsData.setAll(eleveService.listerEleves());
+            showStatus("Élève ajouté avec succès.");
+        } catch (Exception e) {
+            showStatus("Erreur lors de l'ajout de l'élève: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -268,15 +286,26 @@ public class HelloController {
             return;
         }
 
-        selected.setMatricule(matriculeField.getText().trim());
-        selected.setNom(nomField.getText().trim());
-        selected.setPrenom(prenomField.getText().trim());
-        selected.setDateNaissance(dateNaissanceField.getText().trim());
-        selected.setLieuNaissance(lieuNaissanceField.getText().trim());
-        selected.setSexe(sexeField.getText().trim());
-        selected.setNationalite(nationaliteField.getText().trim());
-        studentsTable.refresh();
-        showStatus("Élève mis à jour avec succès.");
+        try {
+            LocalDate.parse(dateNaissanceField.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            Eleve updatedEleve = new Eleve(
+                matriculeField.getText().trim(),
+                nomField.getText().trim(),
+                prenomField.getText().trim(),
+                dateNaissanceField.getText().trim(),
+                lieuNaissanceField.getText().trim(),
+                sexeField.getText().trim(),
+                selected.getPhoto(),
+                nationaliteField.getText().trim(),
+                selected.getClasse()
+            );
+
+            eleveService.modifierEleve(updatedEleve);
+            studentsData.setAll(eleveService.listerEleves());
+            showStatus("Élève mis à jour avec succès.");
+        } catch (Exception e) {
+            showStatus("Erreur lors de la mise à jour de l'élève: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -286,11 +315,15 @@ public class HelloController {
             showStatus("Sélectionnez un élève pour le supprimer.");
             return;
         }
-        repository.deleteEleve(selected);
-        studentsData.remove(selected);
-        clearStudentForm();
-        reportData.clear();
-        showStatus("Élève supprimé et ses évaluations supprimées.");
+        try {
+            eleveService.SupprimerEleve(selected.getMatricule());
+            studentsData.setAll(eleveService.listerEleves());
+            clearStudentForm();
+            reportData.clear();
+            showStatus("Élève supprimé.");
+        } catch (Exception e) {
+            showStatus("Erreur lors de la suppression de l'élève: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -307,7 +340,7 @@ public class HelloController {
             showStatus("Indiquez un matricule pour charger le bulletin.");
             return;
         }
-        Eleve eleve = repository.findEleveByMatricule(matricule);
+        Eleve eleve = eleveService.rechercherEleveParMatricule(matricule);
         if (eleve == null) {
             showStatus("Aucun élève trouvé pour ce matricule.");
             reportData.clear();
@@ -326,7 +359,7 @@ public class HelloController {
             showStatus("Indiquez un matricule avant de générer le PDF.");
             return;
         }
-        Eleve eleve = repository.findEleveByMatricule(matricule);
+        Eleve eleve = eleveService.rechercherEleveParMatricule(matricule);
         if (eleve == null) {
             showStatus("Aucun élève trouvé pour ce matricule.");
             return;

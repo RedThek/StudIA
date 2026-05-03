@@ -1,6 +1,7 @@
 package cm.enspm.studia.model.fx;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import cm.enspm.studia.model.dto.personnes.Eleve;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,7 +10,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 
 public class FxEleve {
-    
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     private final IntegerProperty identifiant = new SimpleIntegerProperty();
     private final StringProperty matricule = new SimpleStringProperty();
     private final StringProperty nom = new SimpleStringProperty();
@@ -20,7 +22,6 @@ public class FxEleve {
     private final StringProperty photo = new SimpleStringProperty();
     private final StringProperty nationalite = new SimpleStringProperty();
 
-    // Constructor to map from DB DTO to UI Model
     public FxEleve(Eleve eleveDto) {
         this.identifiant.set(eleveDto.identifiant());
         this.matricule.set(eleveDto.matricule());
@@ -33,13 +34,37 @@ public class FxEleve {
         this.nationalite.set(eleveDto.nationalite());
     }
 
-    // Converters to send data back to the Service/DB
+    public FxEleve(cm.enspm.studia.model.personnes.Eleve eleveDomain) {
+        this.identifiant.set(0);
+        this.matricule.set(eleveDomain.getMatricule());
+        this.nom.set(eleveDomain.getNom());
+        this.prenom.set(eleveDomain.getPrenom());
+        this.dateNaissance = LocalDate.parse(eleveDomain.getDateNaissance(), DATE_FORMATTER);
+        this.lieuNaissance.set(eleveDomain.getLieuNaissance());
+        this.sexe.set(eleveDomain.getSexe());
+        this.photo.set(eleveDomain.getPhoto());
+        this.nationalite.set(eleveDomain.getNationalite());
+    }
+
     public Eleve toDto() {
-        // In a real app, parse the date properly
         return new Eleve(
             identifiant.get(), matricule.get(), nom.get(), prenom.get(), 
             dateNaissance, lieuNaissance.get(), sexe.get(), 
             photo.get(), nationalite.get()); 
+    }
+
+    public cm.enspm.studia.model.personnes.Eleve toDomain() {
+        return new cm.enspm.studia.model.personnes.Eleve(
+            matricule.get(),
+            nom.get(),
+            prenom.get(),
+            dateNaissance.format(DATE_FORMATTER),
+            lieuNaissance.get(),
+            sexe.get(),
+            photo.get(),
+            nationalite.get(),
+            null
+        );
     }
 
     // Getters for Property Binding in TableViews
