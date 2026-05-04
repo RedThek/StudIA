@@ -4,136 +4,68 @@ package cm.enspm.studia.model.dto.personnes;
  * Classe représentant le personnel de l'école secondaire.
  * Un membre du personnel peut enseigner plusieurs matières dans plusieurs classes ou pas.
  */
-public class Employe extends Personne {
+public record Employe (
 
     /**
-     * identifiant d'un employé de l'école secondaire.
+     * L'identifiant d'un employé de l'école secondaire dans la base de données..
      */
-    private String identifiant;
+    String id-employe,
 
     /**
-     * Carte Nationale d'Identité (CNI) de l'employé.
+     * Carte Nationale d'Identité (CNI) de l'employé dans la base de données..
      */
-    private String cni;
+    String numero-cni,
 
     /**
-     * Poste occupé par l'employé au sein de l'école secondaire (ex: enseignant, surveillant, etc.).
+     * Les noms de l'employé dans la base de données.
      */
-    private String poste;
+    String nom,
+
+    /**
+     * Les prénoms de l'employé dans la base de données.
+     */
+    String prenom,
+
+    /**
+     * La date de naissance de l'employé dans la base de données.
+     */
+    String date-naissance,
+
+    /**
+     * Le sexe de l'employé dans la base de données.
+     */
+    String sexe,
 
     /**
      * Numéro de téléphone de l'employé.
      */
-    private String telephone;
+    String telephone,
 
     /**
      * Adresse email de l'employé.
      */
-    private String email;
+    String email,
 
     /**
-     * Adresse physique de l'employé.
+     * Poste occupé par l'employé au sein de l'école secondaire (ex: enseignant, surveillant, etc.).
      */
-    private String adresse;
+    String poste,
 
     /**
-     * Diplôme le plus élevé de l'employé.
+     * Diplôme le plus élevé de l'employé dans la base de données.
      */
-    private String grade;
-
+    String grade
 
     /**
-     * Constructeur de la classe Employe.
-     * @param nom
-     * @param prenom
-     * @param dateNaissance
-     * @param sexe
-     * @param nationalite
-     * @param identifiant
-     * @param cni
-     * @param poste
-     * @param telephone
-     * @param email
-     * @param adresse
-     * @param grade
+     * Adresse physique de l'employé dans la base de données.
      */
-    public Employe(
-        String nom, String prenom, String dateNaissance, String sexe,
-        String nationalite, String identifiant, String cni, String poste, 
-        String telephone, String email, String adresse, String grade
+    String adresse,
+
+    /**
+     * La nationalité de l'employé dans la base de données
+     */
+    String nationalite
+
     ) {
-        super(nom, prenom, dateNaissance, "", sexe, nationalite);
-        this.identifiant = identifiant;
-        this.cni = cni;
-        this.poste = poste;
-        this.telephone = telephone;
-        this.email = email;
-        this.adresse = adresse;
-        this.grade = grade;
-    }
 
-    //------------------ Getters ------------------
-
-    public String getIdentifiant() {
-        return identifiant;
-    }
-
-    public String getCni() {
-        return cni;
-    }
-
-    public String getPoste() {
-        return poste;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    //------------------ Setters ------------------
-
-    public void setIdentifiant(String identifiant) {
-        this.identifiant = identifiant;
-    }
-
-    public void setCni(String cni) {
-        this.cni = cni;
-    }
-
-    public void setPoste(String poste) {
-        this.poste = poste;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    @Override
-    public String getRole() {
-        return "Employé";
-    }
 }
