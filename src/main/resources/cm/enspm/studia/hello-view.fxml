@@ -1,78 +1,230 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="cm.enspm.studia.HelloController">
     <top>
-        <Label text="Gestion scolaire secondaire bilingue / Bilingual Secondary School Management"
-               style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 12;" />
+        <Label text="StudIA — Gestion scolaire secondaire bilingue / Bilingual Secondary School Management"
+               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 10;" />
     </top>
     <center>
         <TabPane tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="Élèves / Students">
+
+                <!-- ONGLET 1 : ÉLÈVES -->
+                <Tab text="Eleves / Students">
                     <BorderPane>
                         <top>
-                            <GridPane hgap="10" vgap="10" padding="10">
-                                <Label text="Matricule:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                <TextField fx:id="matriculeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
-
-                                <Label text="Nom:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                <TextField fx:id="nomField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-
-                                <Label text="Prénom:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                <TextField fx:id="prenomField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
-
-                                <Label text="Date de naissance:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                                <TextField fx:id="dateNaissanceField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
-
-                                <Label text="Lieu de naissance:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                            <GridPane hgap="10" vgap="8">
+                                <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                                <Label text="Matricule :"          GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="matriculeField"  GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+                                <Label text="Nom :"                GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="nomField"        GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                <Label text="Prenom :"             GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="prenomField"     GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                <Label text="Date de naissance :"  GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextField fx:id="dateNaissanceField" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="JJ/MM/AAAA"/>
+                                <Label text="Lieu de naissance :"  GridPane.rowIndex="4" GridPane.columnIndex="0" />
                                 <TextField fx:id="lieuNaissanceField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
-
-                                <Label text="Sexe:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
-                                <TextField fx:id="sexeField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
-
-                                <Label text="Nationalité:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+                                <Label text="Sexe :"               GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <TextField fx:id="sexeField"       GridPane.rowIndex="5" GridPane.columnIndex="1" promptText="M ou F"/>
+                                <Label text="Nationalite :"        GridPane.rowIndex="6" GridPane.columnIndex="0" />
                                 <TextField fx:id="nationaliteField" GridPane.rowIndex="6" GridPane.columnIndex="1" />
                             </GridPane>
                         </top>
                         <center>
-                            <TableView fx:id="studentsTable" prefHeight="360" />
+                            <TableView fx:id="studentsTable" prefHeight="300" />
                         </center>
                         <bottom>
-                            <HBox spacing="12" padding="10">
-                                <Button text="Ajouter / Add" onAction="#onCreateStudent" />
-                                <Button text="Mettre à jour / Update" onAction="#onUpdateStudent" />
-                                <Button text="Supprimer / Delete" onAction="#onDeleteStudent" />
-                                <Button text="Effacer / Clear" onAction="#onClearForm" />
-                            </HBox>
+                            <VBox>
+                                <HBox spacing="10">
+                                    <padding><Insets bottom="8" left="10" right="10" top="8" /></padding>
+                                    <Button text="Ajouter"    onAction="#onCreateStudent" />
+                                    <Button text="Modifier"   onAction="#onUpdateStudent" />
+                                    <Button text="Supprimer"  onAction="#onDeleteStudent" />
+                                    <Button text="Effacer"    onAction="#onClearForm" />
+                                </HBox>
+                                <Label fx:id="statusLabel" style="-fx-padding: 4 10; -fx-background-color: #f0f0f0;" maxWidth="Infinity"/>
+                            </VBox>
                         </bottom>
                     </BorderPane>
                 </Tab>
+
+                <!-- ONGLET 2 : BULLETIN -->
                 <Tab text="Bulletin / Report Card">
-                    <VBox spacing="12" padding="10">
-                        <HBox spacing="10">
+                    <VBox spacing="10">
+                        <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
                             <Label text="Matricule :" />
-                            <TextField fx:id="reportMatriculeField" promptText="ELV2024-001" />
-                            <Button text="Charger / Load" onAction="#onLoadReport" />
-                            <Button text="Générer PDF / Generate PDF" onAction="#onGeneratePdf" />
+                            <TextField fx:id="reportMatriculeField" promptText="ELV2024-001" prefWidth="180"/>
+                            <Button text="Charger"      onAction="#onLoadReport" />
+                            <Button text="Generer PDF"  onAction="#onGeneratePdf" />
                         </HBox>
-                        <TableView fx:id="reportTable" prefHeight="460" />
+                        <TableView fx:id="reportTable" prefHeight="440" />
                     </VBox>
                 </Tab>
+
+                <!-- ONGLET 3 : MATIERES -->
+                <Tab text="Matieres">
+                    <BorderPane>
+                        <top>
+                            <GridPane hgap="10" vgap="8">
+                                <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                                <Label text="Code :"    GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="matiereCodeField"    GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="160" promptText="ex: MAT"/>
+                                <Label text="Libelle :" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="matiereLibelleField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="280" promptText="ex: Mathematiques"/>
+                            </GridPane>
+                        </top>
+                        <center>
+                            <TableView fx:id="matieresTable" prefHeight="380" />
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <HBox spacing="10">
+                                    <padding><Insets bottom="8" left="10" right="10" top="8" /></padding>
+                                    <Button text="Ajouter"   onAction="#onAddMatiere" />
+                                    <Button text="Modifier"  onAction="#onUpdateMatiere" />
+                                    <Button text="Supprimer" onAction="#onDeleteMatiere" />
+                                </HBox>
+                                <Label fx:id="matiereStatusLabel" style="-fx-padding: 4 10; -fx-background-color: #f0f0f0;" maxWidth="Infinity"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
+                <!-- ONGLET 4 : CLASSES -->
+                <Tab text="Classes">
+                    <BorderPane>
+                        <top>
+                            <GridPane hgap="10" vgap="8">
+                                <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                                <Label text="Libelle :"         GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="classeLibelleField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200" promptText="ex: 3eme A"/>
+                                <Label text="Prof. principal :" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="classeProfCombo" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="280"/>
+                            </GridPane>
+                        </top>
+                        <center>
+                            <TableView fx:id="classesTable" prefHeight="380" />
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <HBox spacing="10">
+                                    <padding><Insets bottom="8" left="10" right="10" top="8" /></padding>
+                                    <Button text="Ajouter"   onAction="#onAddClasse" />
+                                    <Button text="Modifier"  onAction="#onUpdateClasse" />
+                                    <Button text="Supprimer" onAction="#onDeleteClasse" />
+                                </HBox>
+                                <Label fx:id="classeStatusLabel" style="-fx-padding: 4 10; -fx-background-color: #f0f0f0;" maxWidth="Infinity"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
+                <!-- ONGLET 5 : ENSEIGNANTS -->
+                <Tab text="Enseignants">
+                    <BorderPane>
+                        <top>
+                            <GridPane hgap="10" vgap="8">
+                                <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                                <Label text="Nom :"       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="ensNomField"    GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+                                <Label text="Prenom :"    GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="ensPrenomField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                <Label text="Poste :"     GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="ensPosteField"  GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="ex: Enseignant"/>
+                                <Label text="Telephone :" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextField fx:id="ensTelField"    GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="+237 6XX XXX XXX"/>
+                                <Label text="Email :"     GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <TextField fx:id="ensEmailField"  GridPane.rowIndex="4" GridPane.columnIndex="1" />
+                            </GridPane>
+                        </top>
+                        <center>
+                            <TableView fx:id="enseignantsTable" prefHeight="330" />
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <HBox spacing="10">
+                                    <padding><Insets bottom="8" left="10" right="10" top="8" /></padding>
+                                    <Button text="Ajouter"   onAction="#onAddEnseignant" />
+                                    <Button text="Modifier"  onAction="#onUpdateEnseignant" />
+                                    <Button text="Supprimer" onAction="#onDeleteEnseignant" />
+                                </HBox>
+                                <Label fx:id="ensStatusLabel" style="-fx-padding: 4 10; -fx-background-color: #f0f0f0;" maxWidth="Infinity"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
+                <!-- ONGLET 6 : AFFECTATIONS -->
+                <Tab text="Affectations">
+                    <BorderPane>
+                        <top>
+                            <GridPane hgap="10" vgap="8">
+                                <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                                <Label text="Enseignant :" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="affEnseignantCombo" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="280"/>
+                                <Label text="Matiere :"    GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="affMatiereCombo"    GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="280"/>
+                                <Label text="Classe :"     GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="affClasseCombo"     GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="280"/>
+                            </GridPane>
+                        </top>
+                        <center>
+                            <TableView fx:id="affectationsTable" prefHeight="360" />
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <HBox spacing="10">
+                                    <padding><Insets bottom="8" left="10" right="10" top="8" /></padding>
+                                    <Button text="Affecter"  onAction="#onAddAffectation" />
+                                    <Button text="Supprimer" onAction="#onDeleteAffectation" />
+                                </HBox>
+                                <Label fx:id="affStatusLabel" style="-fx-padding: 4 10; -fx-background-color: #f0f0f0;" maxWidth="Infinity"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
+                <!-- ONGLET 7 : EMPLOI DU TEMPS -->
+                <Tab text="Emploi du temps">
+                    <BorderPane>
+                        <top>
+                            <GridPane hgap="10" vgap="8">
+                                <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                                <Label text="Classe :"       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="edtClasseCombo"      GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+                                <Label text="Cours :"        GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="edtAffectationCombo" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="300"/>
+                                <Label text="Jour :"         GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="edtJourCombo"        GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="140"/>
+                                <Label text="Heure debut :"  GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="edtHeureDebutCombo"  GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="100"/>
+                                <Label text="Heure fin :"    GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="edtHeureFinCombo"    GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="100"/>
+                            </GridPane>
+                        </top>
+                        <center>
+                            <TableView fx:id="edtTable" prefHeight="310" />
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <HBox spacing="10">
+                                    <padding><Insets bottom="8" left="10" right="10" top="8" /></padding>
+                                    <Button text="Ajouter creneau"  onAction="#onAddProgramme" />
+                                    <Button text="Supprimer"        onAction="#onDeleteProgramme" />
+                                    <Button text="Tout afficher"    onAction="#onShowAllProgrammes" />
+                                </HBox>
+                                <Label fx:id="edtStatusLabel" style="-fx-padding: 4 10; -fx-background-color: #f0f0f0;" maxWidth="Infinity"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
             </tabs>
         </TabPane>
     </center>
-    <bottom>
-        <Label fx:id="statusLabel" style="-fx-padding: 10; -fx-background-color: #f4f4f4;" />
-    </bottom>
 </BorderPane>
