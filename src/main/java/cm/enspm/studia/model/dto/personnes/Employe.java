@@ -9,12 +9,12 @@ public record Employe (
     /**
      * L'identifiant d'un employé de l'école secondaire dans la base de données..
      */
-    String id-employe,
+    String identifiant,
 
     /**
      * Carte Nationale d'Identité (CNI) de l'employé dans la base de données..
      */
-    String numero-cni,
+    String numeroCNI,
 
     /**
      * Les noms de l'employé dans la base de données.
@@ -29,7 +29,7 @@ public record Employe (
     /**
      * La date de naissance de l'employé dans la base de données.
      */
-    String date-naissance,
+    String dateNaissance,
 
     /**
      * Le sexe de l'employé dans la base de données.
@@ -54,7 +54,7 @@ public record Employe (
     /**
      * Diplôme le plus élevé de l'employé dans la base de données.
      */
-    String grade
+    String grade,
 
     /**
      * Adresse physique de l'employé dans la base de données.

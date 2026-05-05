@@ -18,7 +18,16 @@ public class MySQLEleveRepository implements EleveRepository {
     @Override
     public void enregistrerEleve(Eleve eleve) {
         String sql = """
-            INSERT INTO eleves (identifiant, matricule, nom, prenom, date_de_naissance, lieu_de_naissance, sexe, photo, nationalite)
+            INSERT INTO eleves (
+            id-eleve, 
+            matricule-eleve, 
+            nom-eleve, 
+            prenom-eleve, 
+            date-naissance-eleve, 
+            lieu-naissance-eleve, 
+            sexe-eleve, 
+            photo-eleve, 
+            nationalite-eleve)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -39,7 +48,7 @@ public class MySQLEleveRepository implements EleveRepository {
 
     @Override
     public Optional<Eleve> RechercherEleveParMatricule(String matriculeEleve) {
-        String sql = "SELECT * FROM eleves WHERE matricule = ?";
+        String sql = "SELECT * FROM eleve WHERE matricule-eleve = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matriculeEleve);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -55,23 +64,30 @@ public class MySQLEleveRepository implements EleveRepository {
 
     private Eleve appliquerResultatDansEleve(ResultSet rs) throws SQLException {
         return new Eleve(
-            rs.getInt("identifiant"),
-            rs.getString("matricule"),
-            rs.getString("nom"),
-            rs.getString("prenom"),
-            rs.getDate("date_de_naissance").toLocalDate(),
-            rs.getString("lieu_de_naissance"),
-            rs.getString("sexe"),
-            rs.getString("photo"),
-            rs.getString("nationalite")
+            rs.getInt("id-eleve"),
+            rs.getString("matricule-eleve"),
+            rs.getString("nom-eleve"),
+            rs.getString("prenom-eleve"),
+            rs.getDate("date-naissance-eleve").toLocalDate(),
+            rs.getString("lieu-naissance-eleve"),
+            rs.getString("sexe-eleve"),
+            rs.getString("photo-eleve"),
+            rs.getString("nationalite-eleve")
         );
     }
 
     @Override
     public void modifierEleve(Eleve eleve) {
         String sql = """
-            UPDATE eleves SET nom = ?, prenom = ?, date_de_naissance = ?, lieu_de_naissance = ?, sexe = ?, photo = ?, nationalite = ?
-            WHERE matricule = ?
+            UPDATE eleve 
+            SET nom-eleve = ?, 
+            prenom-eleve = ?, 
+            date-naissance-eleve = ?, 
+            lieu-naissance-eleve = ?, 
+            sexe-eleve = ?, 
+            photo-eleve = ?, 
+            nationalite-eleve = ?
+            WHERE matricule-eleve = ?
             """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, eleve.nom());
@@ -88,19 +104,19 @@ public class MySQLEleveRepository implements EleveRepository {
         }
     }
 
-    @Override
+    /**@Override
     public void desactiverEleve(String matriculeEleve) {
-        String sql = "UPDATE eleves SET status = 'inactive' WHERE matricule = ?";
+        String sql = "UPDATE eleve SET status = 'inactive' WHERE matricule = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matriculeEleve);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erreur Base de données lors de la désactivation de l'élève", e);
         }
-    }
+    }**/
 
     public List<Eleve> RechercherEleveParNom(String mot_cle) {
-        String sql = "SELECT * FROM eleves WHERE nom LIKE ? OR prenom LIKE ?";
+        String sql = "SELECT * FROM eleve WHERE nom-eleve LIKE ? OR prenom-eleve LIKE ?";
         List<Eleve> eleves = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             String pattern = "%" + mot_cle + "%";
@@ -119,7 +135,7 @@ public class MySQLEleveRepository implements EleveRepository {
 
     @Override
     public void supprimerEleve(String matriculeEleve) {
-        String sql = "DELETE FROM eleves WHERE matricule = ?";
+        String sql = "DELETE FROM eleve WHERE matricule-eleve = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matriculeEleve);
             stmt.executeUpdate();
@@ -130,7 +146,7 @@ public class MySQLEleveRepository implements EleveRepository {
 
     @Override
     public List<Eleve> getAllEleves() {
-        String sql = "SELECT * FROM eleves";
+        String sql = "SELECT * FROM eleve";
         List<Eleve> eleves = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {

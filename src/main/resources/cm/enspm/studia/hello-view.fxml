@@ -112,6 +112,10 @@
                     </BorderPane>
                 </Tab>
 
+                <Tab text="Parents">
+                    <fx:include source="fxml/Parent.fxml" />
+                </Tab>
+
                 <Tab text="Bulletin / Report Card">
                     <VBox spacing="12">
                         <padding>

@@ -11,7 +11,7 @@ module cm.enspm.studia {
     requires java.sql;
 
     opens cm.enspm.studia to javafx.fxml;
+    opens cm.enspm.studia.ui.controller to javafx.fxml;
     opens cm.enspm.studia.repository to java.sql;
     exports cm.enspm.studia;
-    //exports cm.enspm.studia.model;
 }

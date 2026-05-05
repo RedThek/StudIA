@@ -9,7 +9,7 @@ public interface EleveRepository {
     
     void enregistrerEleve(Eleve eleve);
     void modifierEleve(Eleve eleve);
-    void desactiverEleve(String matriculeEleve);
+    //void desactiverEleve(String matriculeEleve);
     void supprimerEleve(String matriculeEleve);
     Optional<Eleve> RechercherEleveParMatricule(String matriculeEleve);
     List<Eleve> getAllEleves();

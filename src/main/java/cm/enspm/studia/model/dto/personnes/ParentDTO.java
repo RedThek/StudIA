@@ -1,61 +1,63 @@
 package cm.enspm.studia.model.dto.personnes;
 
 /**
- * Structure enregistrement d'un Parent
- * similaire à la table Parent dans la base de données
+ * Structure Enregistrement représentant un parent dans la base de données.
  */
 public record ParentDTO(
     /**
-     * Identifiant unique du Parent de la BD
+     * L'identifiant unique du parent dans la base de données.
      */
-    int id-parent,
+    int identifiant,
 
     /**
-     * Numéro de la Carte Nationale d'Identité du Parent de la BD
+     * Le numéro de la Carte Nationale d'Identité du parent.
      */
-    String numero-cni,
+    String numeroCNI,
 
     /**
-     * Les noms du Parent de la BD
+     * Le nom du parent.
      */
     String nom,
 
     /**
-     * Les prénoms du Parent de la BD
+     * Le prénom du parent.
      */
     String prenom,
 
     /**
-     * La date de naissance du Parent de la BD
+     * La date de naissance du parent.
      */
-    String date-naissance,
+    String dateNaissance,
 
     /**
-     * Le numéro de téléphone du Parent de la BD
-     * constitué de 06 chiffres sans l'indicatif régional
+     * Le numéro de téléphone du parent.
      */
     String telephone,
 
     /**
-     * L'adresse mail électronique du Parent de la BD
+     * L'adresse e-mail du parent.
      */
     String email,
 
     /**
-     * L'activité génératrice de révénus effectuée par le Parent de la BD
+     * La profession du parent.
      */
     String profession,
 
     /**
-     * La nationalité du Parent de la BD
+     * La nationalité du parent.
      */
     String nationalite,
 
     /**
-     * L'adresse de résidence du Parent de la BD
+     * L'adresse de résidence du parent.
      */
     String adresse
-) {
 
+    /**
+     * Le lien parental avec l'élève (père, mère, tuteur, etc.).
+     
+    String lienParental */
+) {
 }
 
