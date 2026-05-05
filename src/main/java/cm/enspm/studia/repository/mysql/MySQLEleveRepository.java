@@ -1,8 +1,9 @@
 package cm.enspm.studia.repository.mysql;
 
-import cm.enspm.studia.model.dto.personnes.Eleve;
+import cm.enspm.studia.model.dto.personnes.EleveDTO;
 import cm.enspm.studia.repository.EleveRepository;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ public class MySQLEleveRepository implements EleveRepository {
     }
 
     @Override
-    public void enregistrerEleve(Eleve eleve) {
+    public void enregistrerEleve(EleveDTO eleveDTO) {
         String sql = """
             INSERT INTO eleves (
             id-eleve, 
@@ -31,15 +32,15 @@ public class MySQLEleveRepository implements EleveRepository {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, eleve.identifiant());
-            stmt.setString(2, eleve.matricule());
-            stmt.setString(3, eleve.nom());
-            stmt.setString(4, eleve.prenom());
-            stmt.setDate(5, Date.valueOf(eleve.dateNaissance()));
-            stmt.setString(6, eleve.lieuNaissance());
-            stmt.setString(7, eleve.sexe());
-            stmt.setString(8, eleve.photo());
-            stmt.setString(9, eleve.nationalite());
+            stmt.setInt(1, eleveDTO.identifiant());
+            stmt.setString(2, eleveDTO.matricule());
+            stmt.setString(3, eleveDTO.nom());
+            stmt.setString(4, eleveDTO.prenom());
+            stmt.setDate(5, Date.valueOf(eleveDTO.dateNaissance()));
+            stmt.setString(6, eleveDTO.lieuNaissance());
+            stmt.setString(7, eleveDTO.sexe());
+            stmt.setString(8, eleveDTO.photo());
+            stmt.setString(9, eleveDTO.nationalite());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erreur Base de données lors de l'enregistrement de l'élève", e);
@@ -47,7 +48,7 @@ public class MySQLEleveRepository implements EleveRepository {
     }
 
     @Override
-    public Optional<Eleve> RechercherEleveParMatricule(String matriculeEleve) {
+    public Optional<EleveDTO> RechercherEleveParMatricule(String matriculeEleve) {
         String sql = "SELECT * FROM eleve WHERE matricule-eleve = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matriculeEleve);
@@ -62,8 +63,8 @@ public class MySQLEleveRepository implements EleveRepository {
         return Optional.empty();
     }
 
-    private Eleve appliquerResultatDansEleve(ResultSet rs) throws SQLException {
-        return new Eleve(
+    private EleveDTO appliquerResultatDansEleve(ResultSet rs) throws SQLException {
+        return new EleveDTO(
             rs.getInt("id-eleve"),
             rs.getString("matricule-eleve"),
             rs.getString("nom-eleve"),
@@ -77,7 +78,7 @@ public class MySQLEleveRepository implements EleveRepository {
     }
 
     @Override
-    public void modifierEleve(Eleve eleve) {
+    public void modifierEleve(EleveDTO eleve) {
         String sql = """
             UPDATE eleve 
             SET nom-eleve = ?, 
@@ -115,9 +116,9 @@ public class MySQLEleveRepository implements EleveRepository {
         }
     }**/
 
-    public List<Eleve> RechercherEleveParNom(String mot_cle) {
+    public List<EleveDTO> RechercherEleveParNom(String mot_cle) {
         String sql = "SELECT * FROM eleve WHERE nom-eleve LIKE ? OR prenom-eleve LIKE ?";
-        List<Eleve> eleves = new ArrayList<>();
+        List<EleveDTO> eleves = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             String pattern = "%" + mot_cle + "%";
             stmt.setString(1, pattern);
@@ -145,9 +146,9 @@ public class MySQLEleveRepository implements EleveRepository {
     }
 
     @Override
-    public List<Eleve> getAllEleves() {
+    public List<EleveDTO> getAllEleves() {
         String sql = "SELECT * FROM eleve";
-        List<Eleve> eleves = new ArrayList<>();
+        List<EleveDTO> eleves = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {

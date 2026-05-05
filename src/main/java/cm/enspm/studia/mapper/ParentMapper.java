@@ -26,11 +26,11 @@ public class ParentMapper {
             dto.prenom(),
             dto.telephone(),
             dto.email(),
-            null,
+            "M",
             dto.profession(),
             dto.adresse(),
             dto.nationalite(),
-            null, //dto.lienParental(),
+            "Pere",
             new ArrayList<>()
         );
     }
@@ -50,7 +50,6 @@ public class ParentMapper {
             parent.getProfession(),
             parent.getNationalite(),
             parent.getAdresse()
-            //parent.getLienParental()
         );
     }
 
@@ -69,7 +68,6 @@ public class ParentMapper {
             fxParent.professionParent().get(),
             fxParent.nationaliteParent().get(),
             fxParent.adresseParent().get()
-            //fxParent.lienParentalParent().get()
         );
     }
 }

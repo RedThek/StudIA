@@ -3,7 +3,8 @@ package cm.enspm.studia.model.fx;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import cm.enspm.studia.model.dto.personnes.Eleve;
+import cm.enspm.studia.model.personnes.Eleve;
+import cm.enspm.studia.model.dto.personnes.EleveDTO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,7 +23,7 @@ public class FxEleve {
     private final StringProperty photo = new SimpleStringProperty();
     private final StringProperty nationalite = new SimpleStringProperty();
 
-    public FxEleve(Eleve eleveDto) {
+    public FxEleve(EleveDTO eleveDto) {
         this.identifiant.set(eleveDto.identifiant());
         this.matricule.set(eleveDto.matricule());
         this.nom.set(eleveDto.nom());
@@ -34,7 +35,7 @@ public class FxEleve {
         this.nationalite.set(eleveDto.nationalite());
     }
 
-    public FxEleve(cm.enspm.studia.model.personnes.Eleve eleveDomain) {
+    public FxEleve(Eleve eleveDomain) {
         this.identifiant.set(0);
         this.matricule.set(eleveDomain.getMatricule());
         this.nom.set(eleveDomain.getNom());
@@ -46,15 +47,21 @@ public class FxEleve {
         this.nationalite.set(eleveDomain.getNationalite());
     }
 
-    public Eleve toDto() {
-        return new Eleve(
-            identifiant.get(), matricule.get(), nom.get(), prenom.get(), 
-            dateNaissance, lieuNaissance.get(), sexe.get(), 
-            photo.get(), nationalite.get()); 
+    public EleveDTO toDto() {
+        return new EleveDTO(
+            identifiant.get(),
+            matricule.get(),
+            nom.get(),
+            prenom.get(), 
+            dateNaissance,
+            lieuNaissance.get(),
+            sexe.get(), 
+            photo.get(),
+            nationalite.get()); 
     }
 
-    public cm.enspm.studia.model.personnes.Eleve toDomain() {
-        return new cm.enspm.studia.model.personnes.Eleve(
+    public Eleve toDomain() {
+        return new Eleve(
             matricule.get(),
             nom.get(),
             prenom.get(),

@@ -69,16 +69,16 @@ public class HelloController {
     private TableView<Evaluation> evaluationsTable;
 
     private final ObservableList<Evaluation> evaluationsData = FXCollections.observableArrayList();
-    private final SchoolRepository repository = new SchoolRepository();
+    private final SchoolRepository repository;
     private final ServicesEleve eleveService;
     private final ObservableList<Eleve> studentsData = FXCollections.observableArrayList();
     private final ObservableList<Evaluation> reportData = FXCollections.observableArrayList();
 
     public HelloController() {
         try {
-            this.eleveService = new ServicesEleve(
-                    DatabaseService.getInstance().getEleveRepository(),
-                    new SessionUtilisateur());
+            var eleveRepository = DatabaseService.getInstance().getEleveRepository();
+            this.eleveService = new ServicesEleve(eleveRepository, new SessionUtilisateur());
+            this.repository = new SchoolRepository(eleveRepository);
         } catch (SQLException e) {
             throw new RuntimeException("Erreur de connexion à la base de données", e);
         }

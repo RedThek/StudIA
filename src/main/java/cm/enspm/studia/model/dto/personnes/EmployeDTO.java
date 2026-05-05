@@ -4,7 +4,7 @@ package cm.enspm.studia.model.dto.personnes;
  * Classe représentant le personnel de l'école secondaire.
  * Un membre du personnel peut enseigner plusieurs matières dans plusieurs classes ou pas.
  */
-public record Employe (
+public record EmployeDTO (
 
     /**
      * L'identifiant d'un employé de l'école secondaire dans la base de données..

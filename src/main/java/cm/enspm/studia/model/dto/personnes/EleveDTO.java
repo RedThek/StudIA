@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * Structure Enregistrement représentant un élève dans la base de données.
  */
-public record Eleve(
+public record EleveDTO(
     /**
      * L'identifiant unique de l'élève dans la base de données.
      */

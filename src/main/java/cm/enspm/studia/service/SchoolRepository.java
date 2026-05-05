@@ -1,6 +1,7 @@
 package cm.enspm.studia.service;
 
 //import cm.enspm.studia.model.*;
+import cm.enspm.studia.mapper.EleveMapper;
 import cm.enspm.studia.model.administration.Classe;
 import cm.enspm.studia.model.examens.Evaluation;
 import cm.enspm.studia.model.examens.Sequence;
@@ -11,12 +12,14 @@ import cm.enspm.studia.model.syllabus.Cycle;
 import cm.enspm.studia.model.syllabus.Matiere;
 import cm.enspm.studia.model.syllabus.NiveauEtude;
 import cm.enspm.studia.model.syllabus.SystemeEducatif;
+import cm.enspm.studia.repository.EleveRepository;
 
 import java.time.LocalDate;
 import java.util.*;
 
 public class SchoolRepository {
 
+    private final EleveRepository eleveRepository;
     private final List<Eleve> eleves = new ArrayList<>();
     private final List<Matiere> matieres = new ArrayList<>();
     private final List<Sequence> sequences = new ArrayList<>();
@@ -24,7 +27,13 @@ public class SchoolRepository {
     private final List<Classe> classes = new ArrayList<>();
     private final List<Trimestre> trimestres = new ArrayList<>();
 
+    public SchoolRepository(EleveRepository eleveRepository) {
+        this.eleveRepository = eleveRepository;
+        initializeSampleData();
+    }
+
     public SchoolRepository() {
+        this.eleveRepository = null;
         initializeSampleData();
     }
 
@@ -87,6 +96,9 @@ public class SchoolRepository {
     }
 
     public List<Eleve> getEleves() {
+        if (eleveRepository != null) {
+            return EleveMapper.toDomainList(eleveRepository.getAllEleves());
+        }
         return new ArrayList<>(eleves);
     }
 
@@ -114,6 +126,11 @@ public class SchoolRepository {
     public Eleve findEleveByMatricule(String matricule) {
         if (matricule == null) {
             return null;
+        }
+        if (eleveRepository != null) {
+            return eleveRepository.RechercherEleveParMatricule(matricule)
+                    .map(EleveMapper::toDomain)
+                    .orElse(null);
         }
         for (Eleve eleve : eleves) {
             if (matricule.equalsIgnoreCase(eleve.getMatricule())) {

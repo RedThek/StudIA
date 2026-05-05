@@ -1,5 +1,7 @@
 package cm.enspm.studia.ui.controller;
 
+import cm.enspm.studia.model.personnes.Parent;
+import cm.enspm.studia.core.ViewManager;
 import cm.enspm.studia.model.fx.FxParent;
 import cm.enspm.studia.service.ServiceParent;
 import javafx.collections.FXCollections;
@@ -10,11 +12,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ParentController {
 
     private final ServiceParent serviceParent = new ServiceParent();
+    //private final ViewManager viewManager;
     private final ObservableList<FxParent> parentsData = FXCollections.observableArrayList();
     private FxParent selectedParent;
 
@@ -41,14 +43,14 @@ public class ParentController {
 
     @FXML
     public void initialize() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("identifiantParent"));
-        cniColumn.setCellValueFactory(new PropertyValueFactory<>("numeroCNIParent"));
-        nomColumn.setCellValueFactory(new PropertyValueFactory<>("nomParent"));
-        prenomColumn.setCellValueFactory(new PropertyValueFactory<>("prenomParent"));
-        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephoneParent"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("emailParent"));
-        professionColumn.setCellValueFactory(new PropertyValueFactory<>("professionParent"));
-        nationaliteColumn.setCellValueFactory(new PropertyValueFactory<>("nationaliteParent"));
+    idColumn.setCellValueFactory(data -> data.getValue().identifiantParent()/*.asObject()*/);
+        cniColumn.setCellValueFactory(data -> data.getValue().numeroCNIParent());
+        nomColumn.setCellValueFactory(data -> data.getValue().nomParent());
+        prenomColumn.setCellValueFactory(data -> data.getValue().prenomParent());
+        telephoneColumn.setCellValueFactory(data -> data.getValue().telephoneParent());
+        emailColumn.setCellValueFactory(data -> data.getValue().emailParent());
+        professionColumn.setCellValueFactory(data -> data.getValue().professionParent());
+        nationaliteColumn.setCellValueFactory(data -> data.getValue().nationaliteParent());
 
         parentsTable.setItems(parentsData);
         parentsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -81,13 +83,13 @@ public class ParentController {
     @FXML
     public void onCreateParent() {
         try {
-            cm.enspm.studia.model.personnes.Parent parent = new cm.enspm.studia.model.personnes.Parent(
+            Parent parent = new Parent(
                     cniField.getText().trim(),
                     nomField.getText().trim(),
                     prenomField.getText().trim(),
                     telephoneField.getText().trim(),
                     emailField.getText().trim(),
-                    null,
+                    "H",
                     professionField.getText().trim(),
                     adresseField.getText().trim(),
                     nationaliteField.getText().trim(),

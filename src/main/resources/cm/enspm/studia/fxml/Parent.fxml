@@ -44,15 +44,15 @@
             <Label text="Adresse:" GridPane.rowIndex="8" GridPane.columnIndex="0" />
             <TextField fx:id="adresseField" GridPane.rowIndex="8" GridPane.columnIndex="1" />
 
-            <Label text="Lien parental:" GridPane.rowIndex="9" GridPane.columnIndex="0" />
-            <TextField fx:id="lienParentalField" GridPane.rowIndex="9" GridPane.columnIndex="1" />
+            <!--<Label text="Lien parental:" GridPane.rowIndex="9" GridPane.columnIndex="0" />
+            <TextField fx:id="lienParentalField" GridPane.rowIndex="9" GridPane.columnIndex="1" />-->
         </GridPane>
     </top>
     <center>
         <TableView fx:id="parentsTable" prefHeight="320">
             <columns>
                 <TableColumn fx:id="idColumn" text="ID" prefWidth="60" />
-                <TableColumn fx:id="cniColumn" text="CNI" prefWidth="120" />
+                <TableColumn fx:id="cniColumn" text="Numero CNI" prefWidth="120" />
                 <TableColumn fx:id="nomColumn" text="Nom" prefWidth="120" />
                 <TableColumn fx:id="prenomColumn" text="Prénom" prefWidth="120" />
                 <TableColumn fx:id="telephoneColumn" text="Téléphone" prefWidth="120" />

@@ -9,18 +9,58 @@ import javafx.beans.property.StringProperty;
 
 public class FxParent {
 
+    /**
+     * L'attribut identifiant statique de FxParent.
+     */
     private final IntegerProperty identifiant = new SimpleIntegerProperty();
+
+    /**
+     * Le numero de CNI statique de FxParent
+     */
     private final StringProperty numeroCNI = new SimpleStringProperty();
+
+    /**
+     * Le nom statique de FxParent
+     */
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty prenom = new SimpleStringProperty();
     private final StringProperty dateNaissance = new SimpleStringProperty();
+
+    /**
+     * Le numero de telephone statique de FxParent
+     */
     private final StringProperty telephone = new SimpleStringProperty();
+
+    /**
+     * L'adresse mail statique de FxParent
+     */
     private final StringProperty email = new SimpleStringProperty();
+
+    /**
+     * La profession statique de FxParent
+     */
     private final StringProperty profession = new SimpleStringProperty();
+
+    /**
+     * La nationalite statique de FxParent
+     */
     private final StringProperty nationalite = new SimpleStringProperty();
+
+    /**
+     * L'adresse de residence statique de FxParent
+     */
     private final StringProperty adresse = new SimpleStringProperty();
+
+    /**
+     * Le lien de parenté statique de FxParent
+     */
     private final StringProperty lienParental = new SimpleStringProperty();
 
+    /**
+     * Le 1er constructeur de FxParent
+     * @param ParentDTO dto
+     * @return FxParent
+     */
     public FxParent(ParentDTO dto) {
         this.identifiant.set(dto.identifiant());
         this.numeroCNI.set(dto.numeroCNI());
@@ -32,9 +72,14 @@ public class FxParent {
         this.profession.set(dto.profession());
         this.nationalite.set(dto.nationalite());
         this.adresse.set(dto.adresse());
-        //this.lienParental.set(dto.lienParental());
+        this.lienParental.set("");
     }
 
+    /**
+     * Le 2nd constructeur de FxParent
+     * @param Parent parent
+     * @return FxParent
+     */
     public FxParent(Parent parent) {
         this.identifiant.set(0);
         this.numeroCNI.set(parent.getNumeroCNI());
@@ -49,6 +94,11 @@ public class FxParent {
         this.lienParental.set(parent.getLienParental());
     }
 
+    /**
+     * Creer et remplit un objet ParentDTO avec les attributs de FxParent
+     * @param void
+     * @return ParentDTO
+     */
     public ParentDTO toDto() {
         return new ParentDTO(
             identifiant.get(),
@@ -61,10 +111,14 @@ public class FxParent {
             profession.get(),
             nationalite.get(),
             adresse.get()
-            //lienParental.get()
         );
     }
 
+    /**
+     * Creer et remplit un objet Parent avec les attributs de FxParent
+     * @param void
+     * @return Parent
+     */
     public Parent toDomain() {
         return new Parent(
             numeroCNI.get(),
@@ -72,7 +126,7 @@ public class FxParent {
             prenom.get(),
             telephone.get(),
             email.get(),
-            null,
+            "M",
             profession.get(),
             adresse.get(),
             nationalite.get(),
@@ -81,6 +135,11 @@ public class FxParent {
         );
     }
 
+    /**
+     * Getter identifiantParent de FxParent
+     * @param void
+     * @return IntegerProperty identifiant
+     */
     public IntegerProperty identifiantParent() { return identifiant; }
     public StringProperty numeroCNIParent() { return numeroCNI; }
     public StringProperty nomParent() { return nom; }
@@ -89,6 +148,12 @@ public class FxParent {
     public StringProperty telephoneParent() { return telephone; }
     public StringProperty emailParent() { return email; }
     public StringProperty professionParent() { return profession; }
+
+    /**
+     * Getter nationaliteParent de FxParent
+     * @param void
+     * @return StringProperty nationalite
+     */
     public StringProperty nationaliteParent() { return nationalite; }
     public StringProperty adresseParent() { return adresse; }
     public StringProperty lienParentalParent() { return lienParental; }

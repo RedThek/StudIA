@@ -4,31 +4,32 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import cm.enspm.studia.model.dto.personnes.EleveDTO;
+import cm.enspm.studia.model.personnes.Eleve;
 public class EleveMapper {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public static cm.enspm.studia.model.personnes.Eleve toDomain(cm.enspm.studia.model.dto.personnes.Eleve dto) {
-        if (dto == null) {
+    public static Eleve toDomain(EleveDTO eleveDTO) {
+        if (eleveDTO == null) {
             return null;
         }
 
-        String dateNaissance = dto.dateNaissance() != null ? dto.dateNaissance().format(DATE_FORMATTER) : null;
+        String dateNaissance = eleveDTO.dateNaissance() != null ? eleveDTO.dateNaissance().format(DATE_FORMATTER) : null;
         return new cm.enspm.studia.model.personnes.Eleve(
-                dto.matricule(),
-                dto.nom(),
-                dto.prenom(),
+                eleveDTO.matricule(),
+                eleveDTO.nom(),
+                eleveDTO.prenom(),
                 dateNaissance,
-                dto.lieuNaissance(),
-                dto.sexe(),
-                dto.photo(),
-                dto.nationalite(),
+                eleveDTO.lieuNaissance(),
+                eleveDTO.sexe(),
+                eleveDTO.photo(),
+                eleveDTO.nationalite(),
                 null
         );
     }
 
-    public static cm.enspm.studia.model.dto.personnes.Eleve toDto(cm.enspm.studia.model.personnes.Eleve domain) {
+    public static EleveDTO toDto(Eleve domain) {
         if (domain == null) {
             return null;
         }
@@ -38,7 +39,7 @@ public class EleveMapper {
             dateNaissance = LocalDate.parse(domain.getDateNaissance(), DATE_FORMATTER);
         }
 
-        return new cm.enspm.studia.model.dto.personnes.Eleve(
+        return new EleveDTO(
                 0,
                 domain.getMatricule(),
                 domain.getNom(),
@@ -51,7 +52,7 @@ public class EleveMapper {
         );
     }
 
-    public static List<cm.enspm.studia.model.personnes.Eleve> toDomainList(List<cm.enspm.studia.model.dto.personnes.Eleve> dtos) {
+    public static List<Eleve> toDomainList(List<EleveDTO> dtos) {
         return dtos == null ? List.of() : dtos.stream()
                 .map(EleveMapper::toDomain)
                 .collect(Collectors.toList());

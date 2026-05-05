@@ -153,7 +153,6 @@ public class MySQLParentRepository implements ParentRepository {
             rs.getString("profession-parent"),
             rs.getString("nationalite-parent"),
             rs.getString("adresse-parent")
-            //rs.getString("lien_parental")
         );
     }
 }
