@@ -19,7 +19,7 @@ public class ServicesEleve {
         this.session = session;
     }
 
-    public void enregistrementEleve(Eleve eleve) {
+    public void enregistrerEleve(Eleve eleve) {
         if (repository.RechercherEleveParMatricule(eleve.getMatricule()).isPresent()) {
             throw new IllegalArgumentException("Le matricule existe déjà dans le système.");
         }

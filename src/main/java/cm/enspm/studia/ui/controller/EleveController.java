@@ -1,6 +1,7 @@
 package cm.enspm.studia.ui.controller;
 
 import cm.enspm.studia.core.ViewManager;
+import cm.enspm.studia.mapper.EleveMapper;
 import cm.enspm.studia.model.fx.FxEleve;
 import cm.enspm.studia.model.personnes.Eleve;
 import cm.enspm.studia.service.ServicesEleve;
@@ -16,55 +17,49 @@ import javafx.scene.control.Label;
 
 public class EleveController {
     
-    private final ServicesEleve servicesEleve = new ServicesEleve();
-    private final ViewManager viewManager;
+    // Service layer for student business logic and database operations
+    private final ServicesEleve servicesEleve;
+    // Observable list holding the student data displayed in the table
     private final ObservableList<FxEleve> elevesData = FXCollections.observableArrayList();
-    private FxEleve eleveActuel; // Reactive model bound to UI
+    // Currently selected student in the table for editing/deleting
+    private FxEleve selectedEleve;
 
-    @FXML
-    private TextField nameField;
-    @FXML
-    private TextField matriculeField;
-    @FXML
-    private TextField nomField;
-    @FXML
-    private TextField prenomField;
-    @FXML
-    private TextField dateNaissanceField;
-    @FXML
-    private TextField lieuNaissanceField;
-    @FXML
-    private TextField sexeField;
-    @FXML
-    private TextField photoField;
-    @FXML
-    private TextField nationaliteField;
+    // FXML-injected text fields for student form input
+    @FXML private TextField matriculeField; // Student matricule input
+    @FXML private TextField nomField; // Last name input
+    @FXML private TextField prenomField; // First name input
+    @FXML private TextField dateNaissanceField; // Birth date input
+    @FXML private TextField lieuNaissanceField; // Birth place input
+    @FXML private TextField sexeField; // Gender input
+    @FXML private TextField nationaliteField; // Nationality input
     
-    @FXML
-    private Label statusLabel;
+    // FXML-injected table and columns for displaying student data
+    @FXML private TableView<FxEleve> studentsTable; // Main table for students
+    @FXML private TableColumn<FxEleve, Number> idColumn; // ID column
+    @FXML private TableColumn<FxEleve, String> matriculeColumn; // Matricule column
+    @FXML private TableColumn<FxEleve, String> nomColumn; // Last name column
+    @FXML private TableColumn<FxEleve, String> prenomColumn; // First name column
+    @FXML private TableColumn<FxEleve, String> dateNaissanceColumn; // Birth date column
+    @FXML private TableColumn<FxEleve, String> lieuNaissanceColumn; // Birth place column
+    @FXML private TableColumn<FxEleve, String> sexeColumn; // Gender column
+    @FXML private TableColumn<FxEleve, String> nationaliteColumn; // Nationality column
 
-    @FXML
-    private TableView<Eleve> elevesTable;
-
-    @FXML private TableColumn<FxEleve, String> matriculeColumn;
-    @FXML private TableColumn<FxEleve, String> nomColumn;
-    @FXML private TableColumn<FxEleve, String> prenomColumn;
-    @FXML private TableColumn<FxEleve, String> dateNaissanceColumn;
-    @FXML private TableColumn<FxEleve, String> lieuNaissanceColumn;
-    @FXML private TableColumn<FxEleve, String> sexeColumn;
-    @FXML private TableColumn<FxEleve, String> nationaliteColumn;
-
-    // Injected via ViewManager's Controller Factory
-    public EleveController(ServicesEleve servicesEleve, ViewManager viewManager) {
-        this.servicesEleve = servicesEleve;
-        this.viewManager = viewManager;
+    public EleveController() {
+        try {
+            var eleveRepository = cm.enspm.studia.service.DatabaseService.getInstance().getEleveRepository();
+            this.servicesEleve = new ServicesEleve(eleveRepository, new cm.enspm.studia.session.SessionUtilisateur());
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur d'initialisation du service élève", e);
+        }
     }
 
+    /**
+     * Initializes the controller after FXML loading.
+     * Sets up table column value factories and selection listener.
+     */
     @FXML
     public void initialize() {
-        // Assume currentStudent is initialized. We bind the text field bidirectionally
-        // so typing in the UI automatically updates the FxStudent model.
-        // nameField.textProperty().bindBidirectional(currentStudent.nameProperty());
+        studentsTable.setItems(elevesData);
         matriculeColumn.setCellValueFactory(data -> data.getValue().matriculeEleve());
         nomColumn.setCellValueFactory(data -> data.getValue().nomEleve());
         prenomColumn.setCellValueFactory(data -> data.getValue().prenomEleve());
@@ -73,9 +68,9 @@ public class EleveController {
         sexeColumn.setCellValueFactory(data -> data.getValue().sexeEleve());
         nationaliteColumn.setCellValueFactory(data -> data.getValue().nationaliteEleve());
 
-        elevesTable.setItems(elevesData);
-        elevesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            eleveActuel = newSelection;
+        studentsTable.setItems(elevesData);
+        studentsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            selectedEleve = newSelection;
             if (newSelection != null) {
                 bindSelectedEleve(newSelection);
             }
@@ -84,23 +79,27 @@ public class EleveController {
         refreshEleveTable();
     }
 
+    /**
+     * Binds the selected student's data to the form fields.
+     * @param eleve the selected FxEleve to bind
+     */
     private void bindSelectedEleve(FxEleve eleve) {
         matriculeField.setText(eleve.matriculeEleve().get());
         nomField.setText(eleve.nomEleve().get());
         prenomField.setText(eleve.prenomEleve().get());
-        dateNaissanceField.setText(eleve.dateNaissanceEleve().toString());
+        dateNaissanceField.setText(eleve.dateNaissanceEleve().get());
         lieuNaissanceField.setText(eleve.lieuNaissanceEleve().get());
         sexeField.setText(eleve.sexeEleve().get());
         nationaliteField.setText(eleve.nationaliteEleve().get());
-        photoField.setText(eleve.photoEleve().get());
     }
 
     private void refreshEleveTable() {
-        elevesData.setAll(servicesEleve.listerEleves());
+        var eleves = servicesEleve.listerEleves();
+        elevesData.setAll(eleves.stream().map(EleveMapper::toFxEleve).toList());
     }
 
     @FXML
-    public void onCreateEleve() {
+    public void onCreateStudent() {
         try {
             Eleve eleve = new Eleve(
                     matriculeField.getText().trim(),
@@ -109,8 +108,9 @@ public class EleveController {
                     dateNaissanceField.getText().trim(),
                     lieuNaissanceField.getText().trim(),
                     sexeField.getText().trim(),
-                    photoField.getText().trim(),
-                    nationaliteField.getText().trim()
+                    "", // photo
+                    nationaliteField.getText().trim(),
+                    null
             );
             servicesEleve.enregistrerEleve(eleve);
             refreshEleveTable();
@@ -122,19 +122,48 @@ public class EleveController {
     }
 
     @FXML
-    public void handleDeleteAction() {
-        try {
-            // Attempt to delete. The Service checks the Session Context!
-            servicesEleve.SupprimerEleve(eleveActuel.matriculeEleve().get());
-            
-            // If successful, navigate back to the dashboard
-            viewManager.switchScene("/fxml/Accueil.fxml", "Accueil");
-            
-        } catch (SecurityException e) {
-            // If the user is BASIC, the requireAdmin() check fails, and we catch it here
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Accèss Non Autorisé: " + e.getMessage());
-            alert.showAndWait();
+    public void onUpdateStudent() {
+        if (selectedEleve == null) {
+            showAlert(Alert.AlertType.WARNING, "Aucun élève sélectionné", "Veuillez sélectionner un élève dans la table.");
+            return;
         }
+        try {
+            selectedEleve.matriculeEleve().set(matriculeField.getText().trim());
+            selectedEleve.nomEleve().set(nomField.getText().trim());
+            selectedEleve.prenomEleve().set(prenomField.getText().trim());
+            selectedEleve.dateNaissanceEleve().set(dateNaissanceField.getText().trim());
+            selectedEleve.lieuNaissanceEleve().set(lieuNaissanceField.getText().trim());
+            selectedEleve.sexeEleve().set(sexeField.getText().trim());
+            selectedEleve.nationaliteEleve().set(nationaliteField.getText().trim());
+
+            servicesEleve.modifierEleve(selectedEleve.toDomain());
+            refreshEleveTable();
+            showAlert(Alert.AlertType.INFORMATION, "Élève modifié", "L'élève a été mis à jour.");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de mise à jour", e.getMessage());
+        }
+    }
+
+    @FXML
+    public void onDeleteStudent() {
+        if (selectedEleve == null) {
+            showAlert(Alert.AlertType.WARNING, "Aucun élève sélectionné", "Veuillez sélectionner un élève à supprimer.");
+            return;
+        }
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+                "Voulez-vous vraiment supprimer cet élève ?", ButtonType.YES, ButtonType.NO);
+        confirmation.showAndWait().ifPresent(buttonType -> {
+            if (buttonType == ButtonType.YES) {
+                try {
+                    servicesEleve.SupprimerEleve(selectedEleve.matriculeEleve().get());
+                    refreshEleveTable();
+                    clearForm();
+                    showAlert(Alert.AlertType.INFORMATION, "Élève supprimé", "L'élève a été supprimé.");
+                } catch (Exception e) {
+                    showAlert(Alert.AlertType.ERROR, "Erreur de suppression", e.getMessage());
+                }
+            }
+        });
     }
 
     @FXML
@@ -143,7 +172,7 @@ public class EleveController {
     }
 
     private void clearForm() {
-        selectedEleve= null;
+        selectedEleve = null;
         matriculeField.clear();
         nomField.clear();
         prenomField.clear();
@@ -151,7 +180,7 @@ public class EleveController {
         lieuNaissanceField.clear();
         sexeField.clear();
         nationaliteField.clear();
-        elevesTable.getSelectionModel().clearSelection();
+        studentsTable.getSelectionModel().clearSelection();
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

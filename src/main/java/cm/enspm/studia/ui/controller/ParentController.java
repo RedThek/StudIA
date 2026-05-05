@@ -13,34 +13,46 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for managing parent data in the JavaFX application.
+ * Handles CRUD operations for parents, binding UI components to data models.
+ */
 public class ParentController {
 
+    // Service layer for parent business logic and database operations
     private final ServiceParent serviceParent = new ServiceParent();
-    //private final ViewManager viewManager;
+    // Observable list holding the parent data displayed in the table
     private final ObservableList<FxParent> parentsData = FXCollections.observableArrayList();
+    // Currently selected parent in the table for editing/deleting
     private FxParent selectedParent;
 
-    @FXML private TextField cniField;
-    @FXML private TextField nomField;
-    @FXML private TextField prenomField;
-    @FXML private TextField dateNaissanceField;
-    @FXML private TextField telephoneField;
-    @FXML private TextField emailField;
-    @FXML private TextField professionField;
-    @FXML private TextField nationaliteField;
-    @FXML private TextField adresseField;
-    @FXML private TextField lienParentalField;
+    // FXML-injected text fields for parent form input
+    @FXML private TextField cniField; // National ID card number input
+    @FXML private TextField nomField; // Last name input
+    @FXML private TextField prenomField; // First name input
+    @FXML private TextField dateNaissanceField; // Birth date input
+    @FXML private TextField telephoneField; // Phone number input
+    @FXML private TextField emailField; // Email address input
+    @FXML private TextField professionField; // Profession input
+    @FXML private TextField nationaliteField; // Nationality input
+    @FXML private TextField adresseField; // Address input
+    @FXML private TextField lienParentalField; // Parental relationship input
 
-    @FXML private TableView<FxParent> parentsTable;
-    @FXML private TableColumn<FxParent, Number> idColumn;
-    @FXML private TableColumn<FxParent, String> cniColumn;
-    @FXML private TableColumn<FxParent, String> nomColumn;
-    @FXML private TableColumn<FxParent, String> prenomColumn;
-    @FXML private TableColumn<FxParent, String> telephoneColumn;
-    @FXML private TableColumn<FxParent, String> emailColumn;
-    @FXML private TableColumn<FxParent, String> professionColumn;
-    @FXML private TableColumn<FxParent, String> nationaliteColumn;
+    // FXML-injected table and columns for displaying parent data
+    @FXML private TableView<FxParent> parentsTable; // Main table for parents
+    @FXML private TableColumn<FxParent, Number> idColumn; // ID column
+    @FXML private TableColumn<FxParent, String> cniColumn; // CNI column
+    @FXML private TableColumn<FxParent, String> nomColumn; // Last name column
+    @FXML private TableColumn<FxParent, String> prenomColumn; // First name column
+    @FXML private TableColumn<FxParent, String> telephoneColumn; // Phone column
+    @FXML private TableColumn<FxParent, String> emailColumn; // Email column
+    @FXML private TableColumn<FxParent, String> professionColumn; // Profession column
+    @FXML private TableColumn<FxParent, String> nationaliteColumn; // Nationality column
 
+    /**
+     * Initializes the controller after FXML loading.
+     * Sets up table column value factories and selection listener.
+     */
     @FXML
     public void initialize() {
     idColumn.setCellValueFactory(data -> data.getValue().identifiantParent()/*.asObject()*/);
@@ -63,6 +75,10 @@ public class ParentController {
         refreshParentTable();
     }
 
+    /**
+     * Binds the selected parent's data to the form fields.
+     * @param parent the selected FxParent to bind
+     */
     private void bindSelectedParent(FxParent parent) {
         cniField.setText(parent.numeroCNIParent().get());
         nomField.setText(parent.nomParent().get());
@@ -76,10 +92,17 @@ public class ParentController {
         lienParentalField.setText(parent.lienParentalParent().get());
     }
 
+    /**
+     * Refreshes the parent table with latest data from the service.
+     */
     private void refreshParentTable() {
         parentsData.setAll(serviceParent.listerParents());
     }
 
+    /**
+     * Handles the create parent button click.
+     * Validates input, creates a new parent, and refreshes the table.
+     */
     @FXML
     public void onCreateParent() {
         try {
@@ -105,6 +128,10 @@ public class ParentController {
         }
     }
 
+    /**
+     * Handles the update parent button click.
+     * Updates the selected parent with form data and refreshes the table.
+     */
     @FXML
     public void onUpdateParent() {
         if (selectedParent == null) {
@@ -131,6 +158,10 @@ public class ParentController {
         }
     }
 
+    /**
+     * Handles the delete parent button click.
+     * Shows confirmation dialog and deletes the selected parent.
+     */
     @FXML
     public void onDeleteParent() {
         if (selectedParent == null) {
@@ -153,11 +184,18 @@ public class ParentController {
         });
     }
 
+    /**
+     * Handles the clear form button click.
+     * Clears all form fields and selection.
+     */
     @FXML
     public void onClearForm() {
         clearForm();
     }
 
+    /**
+     * Clears all form fields and resets the selected parent.
+     */
     private void clearForm() {
         selectedParent = null;
         cniField.clear();
@@ -173,6 +211,12 @@ public class ParentController {
         parentsTable.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Shows an alert dialog with the specified type, title, and message.
+     * @param type the alert type (e.g., INFORMATION, ERROR)
+     * @param title the alert title
+     * @param message the alert message
+     */
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

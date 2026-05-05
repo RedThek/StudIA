@@ -30,23 +30,7 @@ import cm.enspm.studia.model.examens.Sequence;
 public class HelloController {
 
     @FXML
-    private TextField matriculeField;
-    @FXML
-    private TextField nomField;
-    @FXML
-    private TextField prenomField;
-    @FXML
-    private TextField dateNaissanceField;
-    @FXML
-    private TextField lieuNaissanceField;
-    @FXML
-    private TextField sexeField;
-    @FXML
-    private TextField nationaliteField;
-    @FXML
     private TextField reportMatriculeField;
-    @FXML
-    private TableView<Eleve> studentsTable;
     @FXML
     private TableView<Evaluation> reportTable;
     @FXML
@@ -71,9 +55,8 @@ public class HelloController {
     private final ObservableList<Evaluation> evaluationsData = FXCollections.observableArrayList();
     private final SchoolRepository repository;
     private final ServicesEleve eleveService;
-    private final ObservableList<Eleve> studentsData = FXCollections.observableArrayList();
     private final ObservableList<Evaluation> reportData = FXCollections.observableArrayList();
-
+    
     public HelloController() {
         try {
             var eleveRepository = DatabaseService.getInstance().getEleveRepository();
@@ -86,35 +69,7 @@ public class HelloController {
 
     @FXML
     public void initialize() {
-        studentsData.setAll(eleveService.listerEleves());
-        studentsTable.setItems(studentsData);
         reportTable.setItems(reportData);
-
-        TableColumn<Eleve, String> matriculeColumn = new TableColumn<>("Matricule");
-        matriculeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getMatricule()));
-        matriculeColumn.setPrefWidth(140);
-
-        TableColumn<Eleve, String> nameColumn = new TableColumn<>("Nom complet");
-        nameColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getNom() + " " + data.getValue().getPrenom()));
-        nameColumn.setPrefWidth(220);
-
-        TableColumn<Eleve, String> naissanceColumn = new TableColumn<>("Naissance");
-        naissanceColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDateNaissance().toString()));
-        naissanceColumn.setPrefWidth(120);
-
-        TableColumn<Eleve, String> lieuColumn = new TableColumn<>("Lieu");
-        lieuColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLieuNaissance()));
-        lieuColumn.setPrefWidth(120);
-
-        TableColumn<Eleve, String> sexeColumn = new TableColumn<>("Sexe");
-        sexeColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getSexe()));
-        sexeColumn.setPrefWidth(80);
-
-        TableColumn<Eleve, String> nationaliteColumn = new TableColumn<>("Nationalité");
-        nationaliteColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getNationalite()));
-        nationaliteColumn.setPrefWidth(140);
-
-        studentsTable.getColumns().setAll(matriculeColumn, nameColumn, naissanceColumn, lieuColumn, sexeColumn, nationaliteColumn);
 
         TableColumn<Evaluation, String> matiereColumn = new TableColumn<>("Matière");
         matiereColumn.setCellValueFactory(data -> {
@@ -154,7 +109,7 @@ public class HelloController {
         matiereComboBox.setItems(FXCollections.observableArrayList(repository.getMatieres()));
         sequenceComboBox.setItems(FXCollections.observableArrayList(repository.getSequences()));
         evaluationsData.setAll(repository.getEvaluations());
-        evaluationsTable.setItems(evaluationsData);
+        //evaluationsTable.setItems(evaluationsData);
 
         TableColumn<Evaluation, String> eleveEvalColumn = new TableColumn<>("Élève");
         eleveEvalColumn.setCellValueFactory(data -> {
@@ -197,15 +152,7 @@ public class HelloController {
         
         reportTable.getColumns().setAll(matiereColumn, noteColumn, sequenceColumn, commentaireColumn);
 
-        studentsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                populateStudentForm(newSelection);
-                reportMatriculeField.setText(newSelection.getMatricule());
-                updateReportTable(newSelection);
-            }
-        });
-
-        showStatus("Bienvenue ! / Welcome! Sélectionnez un élève ou créez-en un nouveau.");
+        showStatus("Bienvenue ! / Welcome! Utilisez les onglets pour gérer les élèves, parents et évaluations.");
     }
 
     @FXML
@@ -246,9 +193,9 @@ public class HelloController {
             repository.addEvaluation(evaluation);
             evaluationsData.add(evaluation);
 
-            if (eleve.equals(studentsTable.getSelectionModel().getSelectedItem())) {
+            /**if (eleve.equals(studentsTable.getSelectionModel().getSelectedItem())) {
                 updateReportTable(eleve);
-            }
+            }**/
 
             showStatus("Évaluation ajoutée avec succès.");
         } catch (Exception e) {
@@ -268,10 +215,6 @@ public class HelloController {
             repository.deleteEvaluation(selected);
             evaluationsData.remove(selected);
 
-            Eleve selectedEleve = studentsTable.getSelectionModel().getSelectedItem();
-            if (selectedEleve != null) {
-                updateReportTable(selectedEleve);
-            }
 
             showStatus("Évaluation supprimée.");
         }
@@ -279,7 +222,7 @@ public class HelloController {
 
     @FXML
     protected void onCreateStudent() {
-        if (isStudentFormInvalid()) {
+        /**if (isStudentFormInvalid()) {
             showStatus("Veuillez remplir tous les champs de l'élève.");
             return;
         }
@@ -303,17 +246,17 @@ public class HelloController {
                 null
             );
 
-            eleveService.enregistrementEleve(eleve);
-            studentsData.setAll(eleveService.listerEleves());
+            eleveService.enregistrerEleve(eleve);
+            elevesData.setAll(eleveService.listerEleves());
             showStatus("Élève ajouté avec succès.");
         } catch (Exception e) {
             showStatus("Erreur lors de l'ajout de l'élève: " + e.getMessage());
-        }
+        }**/
     }
 
     @FXML
     protected void onUpdateStudent() {
-        Eleve selected = studentsTable.getSelectionModel().getSelectedItem();
+        /**Eleve selected = elevesTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             showStatus("Sélectionnez un élève pour mettre à jour.");
             return;
@@ -338,36 +281,36 @@ public class HelloController {
             );
 
             eleveService.modifierEleve(updatedEleve);
-            studentsData.setAll(eleveService.listerEleves());
+            elevesData.setAll(eleveService.listerEleves());
             showStatus("Élève mis à jour avec succès.");
         } catch (Exception e) {
             showStatus("Erreur lors de la mise à jour de l'élève: " + e.getMessage());
-        }
+        }**/
     }
 
     @FXML
     protected void onDeleteStudent() {
-        Eleve selected = studentsTable.getSelectionModel().getSelectedItem();
+        /**Eleve selected = elevesTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             showStatus("Sélectionnez un élève pour le supprimer.");
             return;
         }
         try {
             eleveService.SupprimerEleve(selected.getMatricule());
-            studentsData.setAll(eleveService.listerEleves());
+            elevesData.setAll(eleveService.listerEleves());
             clearStudentForm();
             reportData.clear();
             showStatus("Élève supprimé.");
         } catch (Exception e) {
             showStatus("Erreur lors de la suppression de l'élève: " + e.getMessage());
-        }
+        }**/
     }
 
     @FXML
     protected void onClearForm() {
-        clearStudentForm();
-        studentsTable.getSelectionModel().clearSelection();
-        showStatus("Formulaire réinitialisé.");
+        /**clearStudentForm();
+        elevesTable.getSelectionModel().clearSelection();
+        showStatus("Formulaire réinitialisé.");**/
     }
 
     @FXML
@@ -383,9 +326,7 @@ public class HelloController {
             reportData.clear();
             return;
         }
-        studentsTable.getSelectionModel().select(eleve);
-        populateStudentForm(eleve);
-        updateReportTable(eleve);
+        reportData.setAll(repository.getEvaluationsForStudent(eleve));
         showStatus("Bulletin chargé pour " + eleve.getNomComplet() + ".");
     }
 
@@ -410,41 +351,6 @@ public class HelloController {
         } catch (IOException exception) {
             showStatus("Erreur pendant la génération du PDF: " + exception.getMessage());
         }
-    }
-
-    private boolean isStudentFormInvalid() {
-        return matriculeField.getText().trim().isEmpty() || nomField.getText().trim().isEmpty()
-                || prenomField.getText().trim().isEmpty() || dateNaissanceField.getText().trim().isEmpty()
-                || lieuNaissanceField.getText().trim().isEmpty() || sexeField.getText().trim().isEmpty()
-                || nationaliteField.getText().trim().isEmpty();
-    }
-
-    private void clearStudentForm() {
-        matriculeField.clear();
-        nomField.clear();
-        prenomField.clear();
-        dateNaissanceField.clear();
-        lieuNaissanceField.clear();
-        sexeField.clear();
-        nationaliteField.clear();
-    }
-
-    private void populateStudentForm(Eleve eleve) {
-        if (eleve == null) {
-            clearStudentForm();
-            return;
-        }
-        matriculeField.setText(eleve.getMatricule());
-        nomField.setText(eleve.getNom());
-        prenomField.setText(eleve.getPrenom());
-        dateNaissanceField.setText(eleve.getDateNaissance());
-        lieuNaissanceField.setText(eleve.getLieuNaissance());
-        sexeField.setText(eleve.getSexe());
-        nationaliteField.setText(eleve.getNationalite());
-    }
-
-    private void updateReportTable(Eleve eleve) {
-        reportData.setAll(repository.getEvaluationsForStudent(eleve));
     }
 
     private void showStatus(String message) {

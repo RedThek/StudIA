@@ -40,7 +40,17 @@
         </GridPane>
     </top>
     <center>
-        <TableView fx:id="studentsTable" prefHeight="360" />
+        <TableView fx:id="studentsTable" prefHeight="360">
+            <columns>
+                <TableColumn fx:id="matriculeColumn" text="Matricule" prefWidth="120" />
+                <TableColumn fx:id="nomColumn" text="Nom" prefWidth="120" />
+                <TableColumn fx:id="prenomColumn" text="Prénom" prefWidth="120" />
+                <TableColumn fx:id="dateNaissanceColumn" text="Date de naissance" prefWidth="140" />
+                <TableColumn fx:id="lieuNaissanceColumn" text="Lieu de naissance" prefWidth="140" />
+                <TableColumn fx:id="sexeColumn" text="Sexe" prefWidth="80" />
+                <TableColumn fx:id="nationaliteColumn" text="Nationalité" prefWidth="120" />
+            </columns>
+        </TableView>
     </center>
     <bottom>
         <HBox spacing="12">

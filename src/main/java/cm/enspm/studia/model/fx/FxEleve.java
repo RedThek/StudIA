@@ -17,7 +17,7 @@ public class FxEleve {
     private final StringProperty matricule = new SimpleStringProperty();
     private final StringProperty nom = new SimpleStringProperty();
     private final StringProperty prenom = new SimpleStringProperty();
-    private final LocalDate dateNaissance;
+    private final StringProperty dateNaissance = new SimpleStringProperty();
     private final StringProperty lieuNaissance = new SimpleStringProperty();
     private final StringProperty sexe = new SimpleStringProperty();
     private final StringProperty photo = new SimpleStringProperty();
@@ -28,7 +28,7 @@ public class FxEleve {
         this.matricule.set(eleveDto.matricule());
         this.nom.set(eleveDto.nom());
         this.prenom.set(eleveDto.prenom());
-        this.dateNaissance = eleveDto.dateNaissance();
+        this.dateNaissance.set(eleveDto.dateNaissance() != null ? eleveDto.dateNaissance().format(DATE_FORMATTER) : "");
         this.lieuNaissance.set(eleveDto.lieuNaissance());
         this.sexe.set(eleveDto.sexe());
         this.photo.set(eleveDto.photo());
@@ -40,7 +40,7 @@ public class FxEleve {
         this.matricule.set(eleveDomain.getMatricule());
         this.nom.set(eleveDomain.getNom());
         this.prenom.set(eleveDomain.getPrenom());
-        this.dateNaissance = LocalDate.parse(eleveDomain.getDateNaissance(), DATE_FORMATTER);
+        this.dateNaissance.set(eleveDomain.getDateNaissance());
         this.lieuNaissance.set(eleveDomain.getLieuNaissance());
         this.sexe.set(eleveDomain.getSexe());
         this.photo.set(eleveDomain.getPhoto());
@@ -48,12 +48,16 @@ public class FxEleve {
     }
 
     public EleveDTO toDto() {
+        LocalDate date = null;
+        if (!dateNaissance.get().isEmpty()) {
+            date = LocalDate.parse(dateNaissance.get(), DATE_FORMATTER);
+        }
         return new EleveDTO(
             identifiant.get(),
             matricule.get(),
             nom.get(),
             prenom.get(), 
-            dateNaissance,
+            date,
             lieuNaissance.get(),
             sexe.get(), 
             photo.get(),
@@ -65,7 +69,7 @@ public class FxEleve {
             matricule.get(),
             nom.get(),
             prenom.get(),
-            dateNaissance.format(DATE_FORMATTER),
+            dateNaissance.get(),
             lieuNaissance.get(),
             sexe.get(),
             photo.get(),
@@ -79,7 +83,7 @@ public class FxEleve {
     public StringProperty matriculeEleve() { return matricule; }
     public StringProperty nomEleve() { return nom; }
     public StringProperty prenomEleve() { return prenom; }
-    public LocalDate dateNaissanceEleve() { return dateNaissance; }
+    public StringProperty dateNaissanceEleve() { return dateNaissance; }
     public StringProperty lieuNaissanceEleve() { return lieuNaissance; }
     public StringProperty sexeEleve() { return sexe; }
     public StringProperty photoEleve() { return photo; }

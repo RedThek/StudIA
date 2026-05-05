@@ -5,10 +5,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import cm.enspm.studia.model.dto.personnes.EleveDTO;
+import cm.enspm.studia.model.fx.FxEleve;
 import cm.enspm.studia.model.personnes.Eleve;
 public class EleveMapper {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    public static FxEleve toFxEleve(EleveDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new FxEleve(dto);
+    }
+
+    public static FxEleve toFxEleve(Eleve domain) {
+        if (domain == null) {
+            return null;
+        }
+        return new FxEleve(domain);
+    }
 
     public static Eleve toDomain(EleveDTO eleveDTO) {
         if (eleveDTO == null) {
@@ -52,9 +67,22 @@ public class EleveMapper {
         );
     }
 
+    public static EleveDTO toDto(FxEleve fxEleve) {
+        if (fxEleve == null) {
+            return null;
+        }
+        return fxEleve.toDto();
+    }
+
     public static List<Eleve> toDomainList(List<EleveDTO> dtos) {
         return dtos == null ? List.of() : dtos.stream()
                 .map(EleveMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    public static List<FxEleve> toFxList(List<EleveDTO> dtos) {
+        return dtos == null ? List.of() : dtos.stream()
+                .map(EleveMapper::toFxEleve)
                 .collect(Collectors.toList());
     }
 }
