@@ -17,7 +17,7 @@ public class ReportCardGenerator {
 
     public static void generateReportCard(Eleve eleve, List<Evaluation> evaluations, File outputFile) throws IOException {
         if (eleve == null) {
-            throw new IllegalArgumentException("L'élève ne peut pas être null");
+            throw new IllegalArgumentException("L'élève ne peut pas être null !");
         }
 
         File parentFolder = outputFile.getParentFile();
