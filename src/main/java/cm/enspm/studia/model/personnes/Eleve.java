@@ -1,7 +1,7 @@
 package cm.enspm.studia.model.personnes;
 
 /**
- * Classe représentant un élève de l'école secondaire.
+ * Classe représentant un élève de l'école.
  * Un élève a un matricule unique et peut être associé à une classe.
  */
 
