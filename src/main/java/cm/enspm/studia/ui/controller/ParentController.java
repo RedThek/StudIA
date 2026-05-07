@@ -30,7 +30,7 @@ public class ParentController {
     @FXML private TextField cniField; // National ID card number input
     @FXML private TextField nomField; // Last name input
     @FXML private TextField prenomField; // First name input
-    @FXML private TextField dateNaissanceField; // Birth date input
+    @FXML private TextField dateNaissanceField; // Birthdate input
     @FXML private TextField telephoneField; // Phone number input
     @FXML private TextField emailField; // Email address input
     @FXML private TextField professionField; // Profession input

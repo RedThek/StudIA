@@ -1,54 +1,102 @@
 package cm.enspm.studia.ui.controller;
 
-import cm.enspm.studia.model.fx.FxAccueil;
-
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.input.MouseEvent;
 
-public class AccueilController implements Initializable {
+public class AccueilController {
 
     @FXML
-    private TableView tvAccueil;
-    @FXML
-    private TableColumn<FxAccueil, String> tcFname;
-    @FXML
-    private TableColumn<FxAccueil, String> tcLname;
-    @FXML
-    private TableColumn<FxAccueil, String> tcPhone;
-    @FXML
-    private TableColumn<FxAccueil, String> tcEmail;
+    private BarChart<?, ?> barChartPopulation;
 
-    private ObservableList<FxAccueil> data;
+    @FXML
+    private Button btnMenuAccueil;
 
-    /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
-     *
-     * @param url  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resourcesBundle The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle resourcesBundle) {
-        //tcFname.setCellValueFactory(data -> data.getValue().getFname());
-        tcFname.setCellValueFactory(new PropertyValueFactory<>("fname"));
-        tcLname.setCellValueFactory(new PropertyValueFactory<>("Last name"));
-        tcPhone.setCellValueFactory(new PropertyValueFactory<>("Phone"));
-        tcEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+    @FXML
+    private Button btnMenuClasses;
 
-        data = FXCollections.observableArrayList(
-                new FxAccueil("Fname1", "lname1", "phone1", "email1"),
-                new FxAccueil("Fname2", "lname2", "phone2", "email2")
-        );
-        tvAccueil.setItems(data);
+    @FXML
+    private Button btnMenuCompte;
+
+    @FXML
+    private Button btnMenuEleves;
+
+    @FXML
+    private Button btnMenuExamens;
+
+    @FXML
+    private Button btnMenuMatieres;
+
+    @FXML
+    private Button btnMenuParents;
+
+    @FXML
+    private Button btnMenuPersonnel;
+
+    @FXML
+    private Button btnMenuPlannification;
+
+    @FXML
+    private PieChart pieChartAccueil;
+
+    @FXML
+    private Tab tabAccueilActivites;
+
+    @FXML
+    private Tab tabAccueilBienvenue;
+
+    @FXML
+    private Tab tabAccueilHistorique;
+
+    @FXML
+    private Tab tabAccueilParametres;
+
+    @FXML
+    void handleBtnMenuAccueil(MouseEvent event) {
+
     }
+
+    @FXML
+    void handleBtnMenuClasses(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleBtnMenuCompte(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleBtnMenuEleves(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleBtnMenuExamens(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleBtnMenuMatieres(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleBtnMenuParents(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleBtnMenuPersonnel(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleBtnMenuPlannification(MouseEvent event) {
+
+    }
+
 }
