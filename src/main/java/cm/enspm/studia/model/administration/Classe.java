@@ -82,39 +82,39 @@ public class Classe {
 
     /**
      * @return
-     */
+     
     public Integer getEffectif() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     /**
      * @return
-     */
+     
     public Integer getNombreFilles() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     /**
      * @return
-     */
+     
     public Integer getNombreGarcons() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     /**
      * @return
-     */
+     
     public Double getAgeMoyen() {
         // TODO implement here
         return null;
-    }
+    }*/
 
     /**
      * @return
-     */
+     
     public Integer getNouveaux() {
         // TODO implement here
         return null;
@@ -122,7 +122,7 @@ public class Classe {
 
     /**
      * @return
-     */
+     
     public Integer getRedoublants() {
         // TODO implement here
         return null;
@@ -130,7 +130,7 @@ public class Classe {
 
     /**
      * @return
-     */
+     
     public Eleve getPlusJeune() {
         // TODO implement here
         return null;
@@ -138,11 +138,11 @@ public class Classe {
 
     /**
      * @return
-     */
+     
     public Eleve getPlusVieux() {
         // TODO implement here
         return null;
-    }
+    }**/
 
     public List<Eleve> getEleves() {
         return eleves;

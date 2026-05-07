@@ -56,11 +56,15 @@ public class ReportCardGenerator {
                     content.endText();
                 } else {
                     for (Evaluation evaluation : evaluations) {
-                        String matiere = evaluation.getMatiere().getLibelle();
-                        String note = String.format("%.1f", evaluation.getNote());
-                        String sequence = evaluation.getSequence().getLibelle();
-                        String commentaire = evaluation.getCommentaire();
-                        String line = String.format("%-25s %-5s %-12s %s", truncate(matiere, 24), note, truncate(sequence, 12), truncate(commentaire, 36));
+                        // Extract first values from Sets
+                        Double note = evaluation.getNotes().stream().findFirst().orElse(0.0);
+                        String commentaire = evaluation.getCommentaire().stream().findFirst().orElse("");
+                        String trimestre = evaluation.getTrimestre().stream()
+                                .map(t -> t.getLibelle())
+                                .findFirst().orElse("");
+                        
+                        String line = String.format("%-25s %-5.1f %-12s %s", 
+                            truncate(trimestre, 24), note, truncate("Seq", 12), truncate(commentaire, 36));
                         content.showText(line);
                         content.newLineAtOffset(0, -16);
                     }

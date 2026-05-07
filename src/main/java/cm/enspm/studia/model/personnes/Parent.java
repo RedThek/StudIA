@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Parent extends Personne {
     /**
-     * 
+     * Le numero de CNI du parent
      */
     private String numeroCNI;
 
     /**
-     * 
+     * Le numero de telephone du parent.
      */
     private String telephone;
 

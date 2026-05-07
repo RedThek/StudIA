@@ -40,6 +40,11 @@
     -fx-text-fill : #FFFFFF;
 }
 
+.table-view:focused{
+    -fx-focus-color : transparent;
+    -fx-faint-focus-color : transparent;
+}
+
 .table-view .column-header,
 .table-view .column-header-background .filter{
     -fx-cell-size : 20px;
@@ -53,13 +58,12 @@
 
 .table-view .cell{
     -fx-cell-size : 30;
-    -fx-alignment : center-left;
     -fx-text-fill : #000000;
     -fx-alignment : CENTER_LEFT;
 }
 
 .table-row-cell:selected{
-    -fx-background-color : rgb(#EBE9F6);
+    -fx-background-color : rgb(226, 222, 242);
     -fx-text-fill : #FFFFFF;
 }
 
@@ -132,7 +136,7 @@
     -fx-text-fill : #A5A984;
 }
 
-.tab::selected .tab-label{
+.tab:selected .tab-label{
     -fx-alignment : CENTER;
     -fx-text-fill : #6F5CC2;
 }
