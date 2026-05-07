@@ -55,7 +55,7 @@ public class ParentController {
      */
     @FXML
     public void initialize() {
-    idColumn.setCellValueFactory(data -> data.getValue().identifiantParent()/*.asObject()*/);
+        idColumn.setCellValueFactory(data -> data.getValue().identifiantParent()/*.asObject()*/);
         cniColumn.setCellValueFactory(data -> data.getValue().numeroCNIParent());
         nomColumn.setCellValueFactory(data -> data.getValue().nomParent());
         prenomColumn.setCellValueFactory(data -> data.getValue().prenomParent());
