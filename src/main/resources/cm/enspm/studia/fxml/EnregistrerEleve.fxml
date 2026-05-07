@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20.0" styleClass="view-container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    
+    <VBox spacing="5.0">
+        <Label text="Students" styleClass="page-title" />
+        <Label text="Home &gt; Student Admit Form" styleClass="breadcrumb" />
+    </VBox>
+
+    <VBox styleClass="card" spacing="20.0">
+        <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+        </padding>
+        
+        <Label text="Add New Students" styleClass="card-title" />
+        
+        <GridPane hgap="20.0" vgap="20.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25.0" />
+                <ColumnConstraints percentWidth="25.0" />
+                <ColumnConstraints percentWidth="25.0" />
+                <ColumnConstraints percentWidth="25.0" />
+            </columnConstraints>
+            
+            <!-- Row 1 -->
+            <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="First Name *" />
+                <TextField />
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="Last Name *" />
+                <TextField />
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <Label text="Gender *" />
+                <ComboBox promptText="Please Select Gender *" maxWidth="Infinity" />
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                <Label text="Date Of Birth *" />
+                <DatePicker maxWidth="Infinity" />
+            </VBox>
+
+            <!-- Row 2 -->
+            <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="Roll" />
+                <TextField />
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label text="Blood Group *" />
+                <ComboBox promptText="Please Select Group *" maxWidth="Infinity" />
+            </VBox>
+            <!-- Add remaining rows (Religion, Email, Class, Section, etc.) following the exact same VBox pattern inside the GridPane -->
+        </GridPane>
+    </VBox>
+</VBox>

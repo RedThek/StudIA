@@ -1,22 +1,42 @@
 package cm.enspm.studia.model.examens;
 
+import java.time.LocalDate;
+
 public class Sequence {
-    private int idSequence;
+    /**
+     * 
+     */
+    private Integer numero;
+
+    /**
+     * 
+     */
     private String libelle;
+
+    /**
+     * 
+     */
     private String designation;
-    private Trimestre trimestre;
+
+    /**
+     * 
+     */
+    private LocalDate debut;
+
+    /**
+     * 
+     */
+    private LocalDate fin;
     
-    
-    public Sequence(int idSequence, String libelle, String designation, Trimestre trimestre) {
-        this.idSequence = idSequence;
+    /**
+     * 
+     */
+    public Sequence(Integer numero, String libelle, String designation, LocalDate debut, LocalDate fin) {
+        this.numero = numero;
         this.libelle = libelle;
         this.designation = designation;
-        this.trimestre = trimestre;
-    }
-
-
-    public int getIdSequence() {
-        return idSequence;
+        this.debut = debut;
+        this.fin = fin;
     }
 
 
@@ -29,14 +49,18 @@ public class Sequence {
         return designation;
     }
 
-
-    public Trimestre getTrimestre() {
-        return trimestre;
+    public Integer getNumeroSequence() {
+        return numero;
     }
 
 
-    public void setIdSequence(int idSequence) {
-        this.idSequence = idSequence;
+    public LocalDate getDebut() {
+        return debut;
+    }
+
+
+    public LocalDate getFin() {
+        return fin;
     }
 
 
@@ -50,9 +74,18 @@ public class Sequence {
     }
 
 
-    public void setTrimestre(Trimestre trimestre) {
-        this.trimestre = trimestre;
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
+
+    public void setDebut(LocalDate debut) {
+        this.debut = debut;
+    }
+
+
+    public void setFin(LocalDate fin) {
+        this.fin = fin;
+    }
     
 }

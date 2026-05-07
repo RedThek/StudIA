@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -10,60 +11,69 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.ComboBox?>
+
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="cm.enspm.studia.HelloController">
     <top>
-        <Label text="Gestion scolaire secondaire bilingue / Bilingual Secondary School Management"
+        <Label text="Gestion scolaire secondaire"
                style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 12;" />
     </top>
     <center>
         <TabPane tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="Élèves / Students">
+                <Tab text="Élèves">
+                    <fx:include source="fxml/Eleve.fxml" />
+                </Tab>
+                <Tab text="Évaluations">
                     <BorderPane>
                         <top>
                             <GridPane hgap="10" vgap="10">
                                 <padding>
                                     <Insets bottom="10" left="10" right="10" top="10" />
                                 </padding>
-                                <Label text="Matricule:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                                <TextField fx:id="matriculeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                                <Label text="Nom:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                                <TextField fx:id="nomField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                <Label text="Matricule élève:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="evaluationMatriculeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-                                <Label text="Prénom:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                                <TextField fx:id="prenomField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                <Label text="Matière:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="matiereComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-                                <Label text="Date de naissance:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                                <TextField fx:id="dateNaissanceField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                                <Label text="Séquence:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="sequenceComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
-                                <Label text="Lieu de naissance:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-                                <TextField fx:id="lieuNaissanceField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+                                <Label text="Note:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextField fx:id="noteField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
 
-                                <Label text="Sexe:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
-                                <TextField fx:id="sexeField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+                                <Label text="Date:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <TextField fx:id="evaluationDateField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
 
-                                <Label text="Nationalité:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
-                                <TextField fx:id="nationaliteField" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+                                <Label text="Commentaire:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <TextField fx:id="commentaireField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
                             </GridPane>
                         </top>
+
                         <center>
-                            <TableView fx:id="studentsTable" prefHeight="360" />
+                            <TableView fx:id="evaluationsTable" prefHeight="360" />
                         </center>
+
                         <bottom>
                             <HBox spacing="12">
                                 <padding>
                                     <Insets bottom="10" left="10" right="10" top="10" />
                                 </padding>
-                                <Button text="Ajouter / Add" onAction="#onCreateStudent" />
-                                <Button text="Mettre à jour / Update" onAction="#onUpdateStudent" />
-                                <Button text="Supprimer / Delete" onAction="#onDeleteStudent" />
-                                <Button text="Effacer / Clear" onAction="#onClearForm" />
+                                <Button text="Ajouter" onAction="#onCreateEvaluation" />
+                                <Button text="Supprimer" onAction="#onDeleteEvaluation" />
                             </HBox>
                         </bottom>
                     </BorderPane>
                 </Tab>
+
+                <Tab text="Parents">
+                    <fx:include source="fxml/Parent.fxml" />
+                </Tab>
+
                 <Tab text="Bulletin / Report Card">
                     <VBox spacing="12">
                         <padding>

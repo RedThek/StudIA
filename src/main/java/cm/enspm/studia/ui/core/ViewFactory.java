@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import cm.enspm.studia.session.ContexteSession;
 import cm.enspm.studia.ui.controller.AccueilController;
+import cm.enspm.studia.ui.controller.AccueilControllerOld;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,7 +26,7 @@ public class ViewFactory {
             // DEPENDENCY INJECTION: JavaFX will use this callback to create controllers.
             loader.setControllerFactory(controllerClass -> {
                 if (controllerClass == AccueilController.class) {
-                    return new AccueilController(contexteSession);
+                    return new AccueilControllerOld(contexteSession);
                 }
                 // Handle other controllers...
                 try {

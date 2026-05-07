@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    
+    <!-- TOP HEADER -->
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="20.0" styleClass="header-bar">
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+            <TextField promptText="Find Something..." styleClass="search-field" HBox.hgrow="ALWAYS" />
+            <Region HBox.hgrow="ALWAYS" /> <!-- Spacer -->
+            <Label text="Steve Zone\nAdmin" textAlignment="RIGHT" />
+            <Circle radius="15.0" styleClass="profile-pic-placeholder" />
+            <Button text="Messages (5)" styleClass="icon-button" />
+            <Button text="Notifications (8)" styleClass="icon-button" />
+            <ComboBox promptText="EN" styleClass="lang-combo" />
+        </HBox>
+    </top>
+
+    <!-- LEFT SIDEBAR -->
+    <left>
+        <VBox prefWidth="250.0" styleClass="sidebar" spacing="5.0">
+            <!-- Logo Area (usually spans over the header height) -->
+            <HBox alignment="CENTER" prefHeight="60.0" styleClass="logo-area">
+                <Label text="AKKHOR" styleClass="logo-text" />
+            </HBox>
+            
+            <Button text="Dashboard" maxWidth="Infinity" styleClass="menu-item" />
+            
+            <!-- Accordion or TitledPane for expandable menus -->
+            <TitledPane text="Students" expanded="true" styleClass="menu-category">
+                <VBox spacing="5.0" styleClass="submenu">
+                    <Button text="All Students" maxWidth="Infinity" styleClass="submenu-item, active" />
+                    <Button text="Student Details" maxWidth="Infinity" styleClass="submenu-item" />
+                    <Button text="Admission Form" maxWidth="Infinity" styleClass="submenu-item" />
+                    <Button text="Student Promotion" maxWidth="Infinity" styleClass="submenu-item" />
+                </VBox>
+            </TitledPane>
+            
+            <Button text="Teachers" maxWidth="Infinity" styleClass="menu-item" />
+            <Button text="Parents" maxWidth="Infinity" styleClass="menu-item" />
+            <!-- Other menu items... -->
+        </VBox>
+    </left>
+
+    <!-- DYNAMIC CENTER CONTENT AREA -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-background">
+            <padding>
+                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+            </padding>
+            <!-- Sub-views like AllStudents.fxml will be loaded here -->
+        </StackPane>
+    </center>
+</BorderPane>
