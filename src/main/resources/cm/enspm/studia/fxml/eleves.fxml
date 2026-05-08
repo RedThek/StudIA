@@ -167,9 +167,9 @@
                                  <top>
                                     <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER_LEFT">
                                        <children>
-                                          <Label prefHeight="45.0" prefWidth="139.0" text="Tous les élèves" textFill="#52438f">
+                                          <Label prefHeight="45.0" prefWidth="97.0" text="Tous les élèves" textFill="#52438f">
                                              <font>
-                                                <Font name="Comic Sans MS Bold" size="18.0" />
+                                                <Font name="Agency FB Bold" size="18.0" />
                                              </font>
                                           </Label>
                                           <Button fx:id="btnRafraichirAllEleves" layoutX="159.0" layoutY="39.0" mnemonicParsing="false" onMouseClicked="#handleBtnRafraichirAllEleves" styleClass="button2" stylesheets="@../css/style.css" text="Rafraichir" textFill="#52438f" />
@@ -179,13 +179,13 @@
                                  <center>
                                     <TableView fx:id="tableAllElevesFx" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
                                       <columns>
-                                          <TableColumn fx:id="colonneMatriculeFx" prefWidth="75.0" text="Matricule" />
+                                          <TableColumn fx:id="colonneMatriculesFx" prefWidth="75.0" text="Matricules" />
                                         <TableColumn fx:id="colonneNomsFx" prefWidth="75.0" text="Noms" />
                                         <TableColumn fx:id="colonnePrenomsFx" prefWidth="75.0" text="Prenoms" />
-                                          <TableColumn fx:id="colonneSexeFx" prefWidth="75.0" text="Sexe" />
-                                          <TableColumn fx:id="colonneClasseFx" prefWidth="75.0" text="Classe" />
-                                          <TableColumn fx:id="colonneDateNaissance" prefWidth="75.0" text="Date de naissance" />
-                                          <TableColumn fx:id="colonneLieuNaissance" prefWidth="75.0" text="Lieu de naissance" />
+                                          <TableColumn fx:id="colonneSexesFx" prefWidth="75.0" text="Sexes" />
+                                          <TableColumn fx:id="colonneStatutsFx" prefWidth="75.0" text="Statuts" />
+                                          <TableColumn fx:id="colonneDatesNaissFx" prefWidth="75.0" text="Dates de naissance" />
+                                          <TableColumn fx:id="colonneLieuxNaissFx" prefWidth="75.0" text="Lieux de naissance" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -210,61 +210,52 @@
                                                 <Font name="Comic Sans MS Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <TextField prefHeight="33.0" prefWidth="178.0" promptText="Entrez le matricule de l'élève" />
+                                          <TextField fx:id="champRechercheEleveFx" prefHeight="33.0" prefWidth="178.0" promptText="Entrez le matricule de l'élève" />
                                           <Button fx:id="btnRechercheEleveFx" mnemonicParsing="false" onMouseClicked="#handleClickRechercheEleve" styleClass="button2" stylesheets="@../css/style.css" text="Recherche" textFill="#52438f" />
-                                          <Button fx:id="btnExporterInfosEleveFx" layoutX="159.0" layoutY="39.0" mnemonicParsing="false" onMouseClicked="#handleBtnExporterInfosEleve" styleClass="button2" stylesheets="@../css/style.css" text="Exporter" textFill="#52438f" />
+                                          <Button fx:id="btnExporterInfosEleveFx" layoutX="159.0" layoutY="39.0" mnemonicParsing="false" onMouseClicked="#handleClickExporterInfosEleve" styleClass="button2" stylesheets="@../css/style.css" text="Exporter" textFill="#52438f" />
                                        </children>
                                     </HBox>
                                  </top>
                                  <center>
                                     <AnchorPane prefHeight="300.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <VBox alignment="CENTER_LEFT" prefHeight="508.0" prefWidth="292.0" spacing="12.0">
+                                          <VBox alignment="CENTER_LEFT" prefHeight="508.0" prefWidth="286.0" spacing="12.0">
                                              <children>
-                                                <Button alignment="CENTER" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" style="-fx-border-radius: 4;" styleClass="button2">
-                                                   <graphic>
-                                                      <ImageView fitHeight="105.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../img/favicon/StudIA-couleur-fav-256.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
                                                 <Label text="Noms:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font></Label>
                                                 <Label layoutX="10.0" layoutY="10.0" text="Prenoms:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font></Label>
                                                 <Label layoutX="10.0" layoutY="27.0" text="Date de naissance:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font></Label>
                                                 <Label layoutX="10.0" layoutY="44.0" text="Lieu de naissance:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font></Label>
                                                 <Label layoutX="124.0" layoutY="221.0" text="Sexe:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font></Label>
                                                 <Label layoutX="124.0" layoutY="258.0" text="Classe:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font></Label>
                                                 <Label layoutX="124.0" layoutY="295.0" text="Parent:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font></Label>
                                                 <Label layoutX="124.0" layoutY="332.0" text="Nationalité:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font></Label>
                                                 <Label layoutX="109.0" layoutY="462.0" text="Date d'inscription:">
                                                    <font>
-                                                      <Font size="18.0" />
+                                                      <Font name="System Bold" size="18.0" />
                                                    </font>
                                                 </Label>
                                              </children>
@@ -272,56 +263,56 @@
                                                 <Insets left="25.0" />
                                              </padding>
                                           </VBox>
-                                          <VBox layoutX="321.0" layoutY="1.0" prefHeight="506.0" prefWidth="332.0" spacing="13.0">
+                                          <VBox layoutX="289.0" layoutY="1.0" prefHeight="506.0" prefWidth="647.0" spacing="12.0">
                                              <children>
-                                                <Label text="Noms:">
+                                                <Label fx:id="consulterNomEleveFx" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Prenoms:">
+                                                <Label fx:id="consulterPrenomEleveFx" layoutX="35.0" layoutY="150.0" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Date de naissance:">
+                                                <Label fx:id="consulterDateNaissEleveFx" layoutX="35.0" layoutY="190.0" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Lieu de naissance:">
+                                                <Label fx:id="consulterLieuNaissEleveFx" layoutX="35.0" layoutY="230.0" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Sexe:">
+                                                <Label fx:id="consulterSexeEleveFx" layoutX="35.0" layoutY="270.0" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Classe:">
+                                                <Label fx:id="consulterClasseEleveFx" layoutX="35.0" layoutY="310.0" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Parent:">
+                                                <Label fx:id="consulterParentEleveFx" layoutX="35.0" layoutY="350.0" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Nationalité:">
+                                                <Label fx:id="consulterPaysEleveFx" layoutX="35.0" layoutY="390.0" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Date d'inscription:">
+                                                <Label fx:id="consulterDateInscripEleveFx" layoutX="35.0" layoutY="430.0" prefHeight="27.0" prefWidth="400.0">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
                                              </children>
                                              <padding>
-                                                <Insets left="25.0" top="140.0" />
+                                                <Insets left="25.0" top="80.0" />
                                              </padding></VBox>
                                        </children>
                                     </AnchorPane>
@@ -332,9 +323,93 @@
                      </content>
                   </Tab>
                   <Tab text="Enregistrer">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane prefHeight="603.0" prefWidth="1086.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <top>
+                                    <VBox prefHeight="339.0" prefWidth="1086.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="224.0" prefWidth="1086.0" spacing="50.0">
+                                             <children>
+                                                <VBox alignment="CENTER_LEFT" prefHeight="224.0" prefWidth="287.0" spacing="10.0">
+                                                   <children>
+                                                      <Label text="Matricule" />
+                                                      <TextField fx:id="champSaveMatriculeEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Le matricule de l'élève">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </TextField>
+                                                      <Label text="Noms" />
+                                                      <TextField fx:id="champSaveNomEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Nom de l'élève">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </TextField>
+                                                      <Label text="Prénoms" />
+                                                      <TextField fx:id="champSavePrenomEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Prenom de l'élève">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </TextField>
+                                                   </children>
+                                                </VBox>
+                                                <VBox alignment="CENTER_LEFT" prefHeight="224.0" prefWidth="305.0" spacing="10.0">
+                                                   <children>
+                                                      <Label text="Date de naissance" />
+                                                      <TextField fx:id="champSaveDateNaissEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Date de naissance de l'élève">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </TextField>
+                                                      <Label text="Lieu de naissance" />
+                                                      <TextField fx:id="champSaveLieuNaissEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Lieu de naissance de l'élève">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </TextField>
+                                                      <Label text="Sexe" />
+                                                      <TextField fx:id="champSaveSexeEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Le sexe de l'élève">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </TextField>
+                                                   </children>
+                                                </VBox>
+                                                <VBox alignment="CENTER_LEFT" prefHeight="224.0" prefWidth="278.0" spacing="10.0">
+                                                   <children>
+                                                      <Label text="Nationalité" />
+                                                      <TextField fx:id="champSavePaysEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="La nationalité de l'élève">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </TextField>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <Separator prefWidth="200.0" />
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                                             <children>
+                                                <Button fx:id="btnEnregistrerEleve" mnemonicParsing="false" onMouseClicked="#handleClickBtnSaveEleveFx" prefHeight="38.0" prefWidth="123.0" styleClass="button2" stylesheets="@../css/style.css" text="Enregistrer" textFill="#52438f" />
+                                             </children>
+                                             <padding>
+                                                <Insets left="20.0" />
+                                             </padding>
+                                          </HBox>
+                                       </children>
+                                       <BorderPane.margin>
+                                          <Insets top="10.0" />
+                                       </BorderPane.margin>
+                                       <padding>
+                                          <Insets top="50.0" />
+                                       </padding>
+                                    </VBox>
+                                 </top>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
                   </Tab>
                   <Tab text="Modifier">
                      <content>
@@ -346,12 +421,14 @@
                                        <children>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                                              <children>
-                                                <TextField prefHeight="30.0" prefWidth="203.0" promptText="Entrez le matricule de l'élève">
+                                                <TextField fx:id="champRechercheModifEleveFx" prefHeight="30.0" prefWidth="203.0" promptText="Entrez le matricule de l'élève">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </TextField>
-                                                <Button fx:id="btnRafraichirAllEleves1" mnemonicParsing="false" onMouseClicked="#handleBtnRafraichirAllEleves" styleClass="button2" stylesheets="@../css/style.css" text="Recherche" textFill="#52438f" />
+                                                <Button fx:id="btnRechercheModifEleveFx" mnemonicParsing="false" onMouseClicked="#handleClickRechercheModifEleveFx" styleClass="button2" stylesheets="@../css/style.css" text="Recherche" textFill="#52438f" />
+                                                <Button fx:id="btnModifEleveFx" layoutX="644.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#handleClickModifEleveFx" styleClass="button2" stylesheets="@../css/style.css" text="Modifier" textFill="#52438f" />
+                                                <Button fx:id="btnSupprimEleveFx" layoutX="700.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#handleClickSupprimEleveFx" styleClass="button2" stylesheets="@../css/style.css" text="Supprimer" textFill="#52438f" />
                                              </children>
                                              <padding>
                                                 <Insets left="20.0" />
@@ -363,19 +440,19 @@
                                                 <VBox alignment="CENTER_LEFT" prefHeight="224.0" prefWidth="287.0" spacing="10.0">
                                                    <children>
                                                       <Label text="Matricule" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
+                                                      <TextField fx:id="champMatriculeModifEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Le matricule de l'élève">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
                                                       </TextField>
                                                       <Label text="Noms" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
+                                                      <TextField fx:id="champNomModifEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Nom de l'élève">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
                                                       </TextField>
                                                       <Label text="Prénoms" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
+                                                      <TextField fx:id="champPrenomModifEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Prenom de l'élève">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
@@ -385,19 +462,19 @@
                                                 <VBox alignment="CENTER_LEFT" prefHeight="224.0" prefWidth="305.0" spacing="10.0">
                                                    <children>
                                                       <Label text="Date de naissance" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
+                                                      <TextField fx:id="champDateNaissModifEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Date de naissance de l'élève">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
                                                       </TextField>
                                                       <Label text="Lieu de naissance" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
+                                                      <TextField fx:id="champLieuNaissModifEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Lieu de naissance de l'élève">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
                                                       </TextField>
                                                       <Label text="Sexe" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
+                                                      <TextField fx:id="champSexeModifEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Le sexe de l'élève">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
@@ -406,20 +483,14 @@
                                                 </VBox>
                                                 <VBox alignment="CENTER_LEFT" prefHeight="224.0" prefWidth="278.0" spacing="10.0">
                                                    <children>
-                                                      <Label text="Matricule" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
+                                                      <Label text="Nationalité" />
+                                                      <TextField fx:id="champPaysModifEleveFx" prefHeight="30.0" prefWidth="98.0" promptText="Entrez la nationalité de l'élève">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
                                                       </TextField>
-                                                      <Label text="Noms" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
-                                                         <font>
-                                                            <Font size="14.0" />
-                                                         </font>
-                                                      </TextField>
-                                                      <Label text="Prénoms" />
-                                                      <TextField prefHeight="30.0" prefWidth="98.0" promptText="Entrez le matricule de l'élève">
+                                                      <Label text="Statut" />
+                                                      <TextField fx:id="champStatutModifEleveFx" prefHeight="34.0" prefWidth="278.0" promptText="Le statut de l'élève">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
@@ -434,13 +505,14 @@
                                  <center>
                                     <TableView fx:id="tableModifEleveFx" maxHeight="119.0" minHeight="100.0" prefHeight="119.0" prefWidth="1086.0" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
                                        <columns>
-                                          <TableColumn fx:id="colonneMatriculeFx1" prefWidth="75.0" text="Matricule" />
-                                          <TableColumn fx:id="colonneNomsFx1" prefWidth="75.0" text="Noms" />
-                                          <TableColumn fx:id="colonnePrenomsFx1" prefWidth="75.0" text="Prenoms" />
-                                          <TableColumn fx:id="colonneSexeFx1" prefWidth="75.0" text="Sexe" />
-                                          <TableColumn fx:id="colonneClasseFx1" prefWidth="75.0" text="Classe" />
-                                          <TableColumn fx:id="colonneDateNaissance1" prefWidth="75.0" text="Date de naissance" />
-                                          <TableColumn fx:id="colonneLieuNaissance1" prefWidth="75.0" text="Lieu de naissance" />
+                                          <TableColumn fx:id="colonneModifMatriculeFx" prefWidth="75.0" text="Matricule" />
+                                          <TableColumn fx:id="colonneModifNomFx" prefWidth="75.0" text="Nom" />
+                                          <TableColumn fx:id="colonneModifPrenomFx" prefWidth="75.0" text="Prenom" />
+                                          <TableColumn fx:id="colonneModifDateNaissFx" prefWidth="75.0" text="Date de naissance" />
+                                          <TableColumn fx:id="colonneModifLieuNaissFx" prefWidth="75.0" text="Lieu de naissance" />
+                                          <TableColumn fx:id="colonneModifSexeFx" prefWidth="75.0" text="Sexe" />
+                                          <TableColumn fx:id="colonneModifPaysFx" prefWidth="75.0" text="Nationalité" />
+                                          <TableColumn fx:id="colonneModifStatutFx" prefWidth="75.0" text="Statut" />
                                        </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

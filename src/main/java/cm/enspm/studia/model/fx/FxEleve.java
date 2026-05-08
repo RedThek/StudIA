@@ -22,6 +22,8 @@ public class FxEleve {
     private final StringProperty sexe = new SimpleStringProperty();
     private final StringProperty photo = new SimpleStringProperty();
     private final StringProperty nationalite = new SimpleStringProperty();
+    private final StringProperty statut = new SimpleStringProperty();
+    private final StringProperty classe = new SimpleStringProperty();
 
     public FxEleve(EleveDTO eleveDto) {
         this.identifiant.set(eleveDto.identifiant());
@@ -74,7 +76,7 @@ public class FxEleve {
             sexe.get(),
             photo.get(),
             nationalite.get(),
-            null
+            classe.get()
         );
     }
 
@@ -88,4 +90,6 @@ public class FxEleve {
     public StringProperty sexeEleve() { return sexe; }
     public StringProperty photoEleve() { return photo; }
     public StringProperty nationaliteEleve() { return nationalite; }
+    public StringProperty statutEleve() { return statut; }
+    public StringProperty classeEleve() { return classe; }
 }
