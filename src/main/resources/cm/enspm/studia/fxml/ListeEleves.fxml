@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20.0" styleClass="view-container" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    
+    <!-- Breadcrumb & Title -->
+    <VBox spacing="5.0">
+        <Label text="Students" styleClass="page-title" />
+        <Label text="Home &gt; All Students" styleClass="breadcrumb" />
+    </VBox>
+
+    <!-- Main Content Card -->
+    <VBox styleClass="card" spacing="20.0" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        </padding>
+        
+        <HBox alignment="CENTER_LEFT" spacing="15.0">
+            <Label text="All Students Data" styleClass="card-title" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="..." styleClass="more-options-btn" />
+        </HBox>
+
+        <!-- Search Filters -->
+        <HBox spacing="15.0">
+            <TextField promptText="Search by Roll ..." HBox.hgrow="ALWAYS" />
+            <TextField promptText="Search by Name ..." HBox.hgrow="ALWAYS" />
+            <TextField promptText="Search by Class ..." HBox.hgrow="ALWAYS" />
+            <Button text="SEARCH" styleClass="action-btn-warning" prefWidth="120.0" />
+        </HBox>
+
+        <!-- Data Table -->
+        <TableView fx:id="studentsTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn text="" prefWidth="40.0" /> <!-- Checkbox -->
+                <TableColumn text="Roll" prefWidth="80.0" />
+                <TableColumn text="Photo" prefWidth="60.0" />
+                <TableColumn text="Name" prefWidth="150.0" />
+                <TableColumn text="Gender" prefWidth="80.0" />
+                <TableColumn text="Class" prefWidth="60.0" />
+                <TableColumn text="Section" prefWidth="60.0" />
+                <TableColumn text="Parents" prefWidth="150.0" />
+                <TableColumn text="Address" prefWidth="200.0" />
+                <TableColumn text="Date Of Birth" prefWidth="120.0" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

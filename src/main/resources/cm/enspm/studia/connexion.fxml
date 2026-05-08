@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cm.enspm.studia.ui.controller.ConnexionController">
+   <children>
+      <HBox maxHeight="720.0" maxWidth="1280.0" minHeight="600.0" minWidth="1024.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" minHeight="600.0" minWidth="500.0" prefHeight="720.0" prefWidth="767.0" spacing="15.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <ImageView fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #FFFFFF;">
+                     <image>
+                        <Image url="@img/logo/StudIA-couleur.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" minHeight="48.0" minWidth="400.0" prefHeight="48.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;" text="Ecole - Ecole - Ecole" textFill="#00323f">
+                     <font>
+                        <Font name="Berlin Sans FB" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="430.0" minHeight="48.0" minWidth="300.0" prefHeight="48.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;" text="Gestion d'ecole secondaire" textFill="#00323f">
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" maxHeight="768.0" maxWidth="866.0" minHeight="600.0" minWidth="524.0" prefHeight="720.0" prefWidth="718.0" spacing="10.0" style="-fx-background-color: #52438F;">
+               <children>
+                  <Label text="Nom d'utilisateur" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="champNomUtilisateurFX" prefHeight="40.0" prefWidth="300.0" promptText="nom d'utilisateur ou email">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Mot de passe" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="champMotdePasseFx" minHeight="40.0" minWidth="300.0" prefHeight="40.0" prefWidth="300.0" promptText="votre mot de passe">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </PasswordField>
+                  <Button fx:id="btnConnexionFx" mnemonicParsing="false" onMouseClicked="#handleMouseClickConnexion" prefHeight="36.0" prefWidth="150.0" styleClass="button2" stylesheets="@css/style.css" text="Connexion">
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="30.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label fx:id="labelMotdePasseOublierFx" onMouseClicked="#handleMouseClickMotdePasseOublier" text="Mot de passe oublié?" textFill="WHITE" />
+                  <Separator maxWidth="200.0" minWidth="380.0" prefWidth="200.0" />
+                  <Label text="Vous n'avez pas de compte?" textFill="WHITE" />
+                  <Button fx:id="btnCreerCompteFx" mnemonicParsing="false" onMouseClicked="#handleMouseClickCreerCompte" prefHeight="38.0" prefWidth="147.0" styleClass="button2" stylesheets="@css/style.css" text="Creer un compte">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></Button>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets left="80.0" right="80.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

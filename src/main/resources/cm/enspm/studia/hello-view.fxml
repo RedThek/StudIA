@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.ComboBox?>
+
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="cm.enspm.studia.HelloController">
+    <top>
+        <Label text="Gestion scolaire secondaire"
+               style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 12;" />
+    </top>
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Élèves">
+                    <fx:include source="fxml/Eleve.fxml" />
+                </Tab>
+                <Tab text="Évaluations">
+                    <BorderPane>
+                        <top>
+                            <GridPane hgap="10" vgap="10">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
+
+                                <Label text="Matricule élève:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="evaluationMatriculeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label text="Matière:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="matiereComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                <Label text="Séquence:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="sequenceComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                                <Label text="Note:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextField fx:id="noteField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                                <Label text="Date:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <TextField fx:id="evaluationDateField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                                <Label text="Commentaire:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <TextField fx:id="commentaireField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+                            </GridPane>
+                        </top>
+
+                        <center>
+                            <TableView fx:id="evaluationsTable" prefHeight="360" />
+                        </center>
+
+                        <bottom>
+                            <HBox spacing="12">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
+                                <Button text="Ajouter" onAction="#onCreateEvaluation" />
+                                <Button text="Supprimer" onAction="#onDeleteEvaluation" />
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
+                <Tab text="Parents">
+                    <fx:include source="fxml/Parent.fxml" />
+                </Tab>
+
+                <Tab text="Bulletin / Report Card">
+                    <VBox spacing="12">
+                        <padding>
+                            <Insets bottom="10" left="10" right="10" top="10" />
+                        </padding>
+                        <HBox spacing="10">
+                            <Label text="Matricule :" />
+                            <TextField fx:id="reportMatriculeField" promptText="ELV2024-001" />
+                            <Button text="Charger / Load" onAction="#onLoadReport" />
+                            <Button text="Générer PDF / Generate PDF" onAction="#onGeneratePdf" />
+                        </HBox>
+                        <TableView fx:id="reportTable" prefHeight="460" />
+                    </VBox>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <bottom>
+        <Label fx:id="statusLabel" style="-fx-padding: 10; -fx-background-color: #f4f4f4;" />
+    </bottom>
+</BorderPane>

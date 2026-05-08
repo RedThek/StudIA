@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="cm.enspm.studia.ui.controller.EleveController">
+    <top>
+        <GridPane hgap="10" vgap="10">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Label text="Matricule:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="matriculeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label text="Nom:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextField fx:id="nomField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label text="Prénom:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <TextField fx:id="prenomField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+            <Label text="Date de naissance:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <TextField fx:id="dateNaissanceField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+            <Label text="Lieu de naissance:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <TextField fx:id="lieuNaissanceField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+            <Label text="Sexe:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <TextField fx:id="sexeField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+            <Label text="Nationalité:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <TextField fx:id="nationaliteField" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+        </GridPane>
+    </top>
+    <center>
+        <TableView fx:id="studentsTable" prefHeight="360">
+            <columns>
+                <TableColumn fx:id="matriculeColumn" text="Matricule" prefWidth="120" />
+                <TableColumn fx:id="nomColumn" text="Nom" prefWidth="120" />
+                <TableColumn fx:id="prenomColumn" text="Prénom" prefWidth="120" />
+                <TableColumn fx:id="dateNaissanceColumn" text="Date de naissance" prefWidth="140" />
+                <TableColumn fx:id="lieuNaissanceColumn" text="Lieu de naissance" prefWidth="140" />
+                <TableColumn fx:id="sexeColumn" text="Sexe" prefWidth="80" />
+                <TableColumn fx:id="nationaliteColumn" text="Nationalité" prefWidth="120" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="12">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Button text="Ajouter / Add" onAction="#onCreateStudent" />
+            <Button text="Mettre à jour / Update" onAction="#onUpdateStudent" />
+            <Button text="Supprimer / Delete" onAction="#onDeleteStudent" />
+            <Button text="Effacer / Clear" onAction="#onClearForm" />
+        </HBox>
+    </bottom>
+</BorderPane>

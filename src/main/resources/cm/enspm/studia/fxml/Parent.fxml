@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="cm.enspm.studia.ui.controller.ParentController">
+    <top>
+        <GridPane hgap="10" vgap="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+            <Label text="Numéro CNI:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="cniField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label text="Nom:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextField fx:id="nomField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label text="Prénom:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <TextField fx:id="prenomField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+            <Label text="Date de naissance:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <TextField fx:id="dateNaissanceField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+            <Label text="Téléphone:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <TextField fx:id="telephoneField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+            <Label text="E-mail:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <TextField fx:id="emailField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+            <Label text="Profession:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <TextField fx:id="professionField" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+
+            <Label text="Nationalité:" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+            <TextField fx:id="nationaliteField" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+
+            <Label text="Adresse:" GridPane.rowIndex="8" GridPane.columnIndex="0" />
+            <TextField fx:id="adresseField" GridPane.rowIndex="8" GridPane.columnIndex="1" />
+
+            <!--<Label text="Lien parental:" GridPane.rowIndex="9" GridPane.columnIndex="0" />
+            <TextField fx:id="lienParentalField" GridPane.rowIndex="9" GridPane.columnIndex="1" />-->
+        </GridPane>
+    </top>
+    <center>
+        <TableView fx:id="parentsTable" prefHeight="320">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="60" />
+                <TableColumn fx:id="cniColumn" text="Numero CNI" prefWidth="120" />
+                <TableColumn fx:id="nomColumn" text="Nom" prefWidth="120" />
+                <TableColumn fx:id="prenomColumn" text="Prénom" prefWidth="120" />
+                <TableColumn fx:id="telephoneColumn" text="Téléphone" prefWidth="120" />
+                <TableColumn fx:id="emailColumn" text="E-mail" prefWidth="140" />
+                <TableColumn fx:id="professionColumn" text="Profession" prefWidth="120" />
+                <TableColumn fx:id="nationaliteColumn" text="Nationalité" prefWidth="120" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="12">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+            <Button text="Ajouter" onAction="#onCreateParent" />
+            <Button text="Mettre à jour" onAction="#onUpdateParent" />
+            <Button text="Supprimer" onAction="#onDeleteParent" />
+            <Button text="Effacer" onAction="#onClearForm" />
+        </HBox>
+    </bottom>
+</BorderPane>
