@@ -1,38 +1,53 @@
 package cm.enspm.studia.model;
 
+/**
+ * Représente une matière enseignée dans l'établissement.
+ */
 public class Matiere {
 
-    private int identifiantMatiere;      // Code unique (ex: "001")
-    private String codeMatiere;           // Code de la matière (ex: "MAT222", "PHY")
-    private String libelle;                   // Nom de la matière (ex: "Mathématiques")
-    
-    public Matiere(int identifiantMatiere, String codeMatiere, String libelle) {
+    private int identifiantMatiere;
+    private String code;           // Ex: "MAT", "FR"
+    private String designation;    // Ex: "Mathématiques", "Français"
+    private int coefficient;       // Coefficient de la matière
+
+    public Matiere(int identifiantMatiere, String code, String designation, int coefficient) {
         this.identifiantMatiere = identifiantMatiere;
-        this.codeMatiere = codeMatiere;
-        this.libelle = libelle;
+        this.code               = code;
+        this.designation        = designation;
+        this.coefficient        = coefficient;
     }
 
-    public int getIdentifiantMatiere() {
-        return identifiantMatiere;
+    /** Constructeur sans coefficient (coefficient = 1 par défaut). */
+    public Matiere(int identifiantMatiere, String code, String designation) {
+        this(identifiantMatiere, code, designation, 1);
     }
 
-    public String getCodeMatiere() {
-        return codeMatiere;
-    }
+    // ── Getters ──────────────────────────────────────────────────────────────
 
-    public String getLibelle() {
-        return libelle;
-    }
+    public int getIdentifiantMatiere()  { return identifiantMatiere; }
+    public String getCode()             { return code; }
+    public String getDesignation()      { return designation; }
+    public int getCoefficient()         { return coefficient; }
 
-    public void setIdentifiantMatiere(int identifiantMatiere) {
-        this.identifiantMatiere = identifiantMatiere;
-    }
+    /** Alias pour compatibilité avec l'ancien code. */
+    public String getCodeMatiere()      { return code; }
+    /** Alias pour compatibilité avec l'ancien code. */
+    public String getLibelle()          { return designation; }
 
-    public void setCodeMatiere(String codeMatiere) {
-        this.codeMatiere = codeMatiere;
-    }
+    // ── Setters ──────────────────────────────────────────────────────────────
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setIdentifiantMatiere(int id)     { this.identifiantMatiere = id; }
+    public void setCode(String code)              { this.code = code; }
+    public void setDesignation(String designation){ this.designation = designation; }
+    public void setCoefficient(int coefficient)   { this.coefficient = coefficient; }
+
+    /** Alias pour compatibilité avec l'ancien code. */
+    public void setCodeMatiere(String code)       { this.code = code; }
+    /** Alias pour compatibilité avec l'ancien code. */
+    public void setLibelle(String designation)    { this.designation = designation; }
+
+    @Override
+    public String toString() {
+        return "[" + code + "] " + designation + " (coeff. " + coefficient + ")";
     }
 }
