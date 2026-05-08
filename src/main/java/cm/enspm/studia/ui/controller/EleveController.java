@@ -1,5 +1,7 @@
 package cm.enspm.studia.ui.controller;
 
+import cm.enspm.studia.service.DatabaseService;
+import cm.enspm.studia.session.SessionUtilisateur;
 import cm.enspm.studia.core.ViewManager;
 import cm.enspm.studia.mapper.EleveMapper;
 import cm.enspm.studia.model.fx.FxEleve;
@@ -9,10 +11,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
 
 public class EleveController {
@@ -21,33 +25,198 @@ public class EleveController {
     private final ServicesEleve servicesEleve;
     // Observable list holding the student data displayed in the table
     private final ObservableList<FxEleve> elevesData = FXCollections.observableArrayList();
+    private final ObservableList<FxEleve> donneesEleve = FXCollections.observableArrayList();
     // Currently selected student in the table for editing/deleting
     private FxEleve selectedEleve;
 
-    // FXML-injected text fields for student form input
-    @FXML private TextField matriculeField; // Student matricule input
-    @FXML private TextField nomField; // Last name input
-    @FXML private TextField prenomField; // First name input
-    @FXML private TextField dateNaissanceField; // Birth date input
-    @FXML private TextField lieuNaissanceField; // Birth place input
-    @FXML private TextField sexeField; // Gender input
-    @FXML private TextField nationaliteField; // Nationality input
+    //Boutons du menu gauche
+    @FXML private Button btnMenuAccueilFx;
+    @FXML private Button btnMenuClassesFx;
+    @FXML private Button btnMenuCompteFx;
+    @FXML private Button btnMenuElevesFx;
+    @FXML private Button btnMenuExamensFx;
+    @FXML private Button btnMenuMatieresFx;
+    @FXML private Button btnMenuParentsFx;
+    @FXML private Button btnMenuPersonnelFx;
+    @FXML private Button btnMenuPlannification;
+
+    //Onglet General
+    @FXML private Button btnRafraichirAllEleves;
+
+    @FXML private TableView<FxEleve> tableAllElevesFx; //FXML-injected table for displaying all student data
+
+    @FXML private TableColumn<FxEleve, String> colonneMatriculesFx; // FXML-injected columns for displaying student data
+    @FXML private TableColumn<FxEleve, String> colonneNomsFx; 
+    @FXML private TableColumn<FxEleve, String> colonnePrenomsFx;
+    @FXML private TableColumn<FxEleve, String> colonneSexesFx;
+    @FXML private TableColumn<FxEleve, String> colonneStatutsFx;
+    @FXML private TableColumn<FxEleve, String> colonneDatesNaissFx;
+    @FXML private TableColumn<FxEleve, String> colonneLieuxNaissFx;
+
+    //Onglet Consulter
+    @FXML private TextField champRechercheEleveFx;
+
+    @FXML private Button btnRechercheEleveFx;
+    @FXML private Button btnExporterInfosEleveFx;
     
-    // FXML-injected table and columns for displaying student data
-    @FXML private TableView<FxEleve> studentsTable; // Main table for students
-    @FXML private TableColumn<FxEleve, Number> idColumn; // ID column
-    @FXML private TableColumn<FxEleve, String> matriculeColumn; // Matricule column
-    @FXML private TableColumn<FxEleve, String> nomColumn; // Last name column
-    @FXML private TableColumn<FxEleve, String> prenomColumn; // First name column
-    @FXML private TableColumn<FxEleve, String> dateNaissanceColumn; // Birth date column
-    @FXML private TableColumn<FxEleve, String> lieuNaissanceColumn; // Birth place column
-    @FXML private TableColumn<FxEleve, String> sexeColumn; // Gender column
-    @FXML private TableColumn<FxEleve, String> nationaliteColumn; // Nationality column
+    @FXML private Label consulterNomEleveFx;
+    @FXML private Label consulterPrenomEleveFx;
+    @FXML private Label consulterDateNaissEleveFx;
+    @FXML private Label consulterLieuNaissEleveFx;
+    @FXML private Label consulterSexeEleveFx;
+    @FXML private Label consulterClasseEleveFx;
+    @FXML private Label consulterParentEleveFx;
+    @FXML private Label consulterPaysEleveFx;
+    @FXML private Label consulterDateInscripEleveFx;
+
+    //Onglet Enregistrer
+    @FXML private TextField champSaveMatriculeEleveFx;
+    @FXML private TextField champSaveNomEleveFx;
+    @FXML private TextField champSavePrenomEleveFx;
+    @FXML private TextField champSaveDateNaissEleveFx;
+    @FXML private TextField champSaveLieuNaissEleveFx;
+    @FXML private TextField champSaveSexeEleveFx;
+    @FXML private TextField champSavePaysEleveFx;
+
+    @FXML private Button btnEnregistrerEleve;
+
+    //Onglet Modifier & Supprimer
+    @FXML private TextField champRechercheModifEleveFx;
+
+    @FXML private Button btnRechercheModifEleveFx;
+    @FXML private Button btnModifEleveFx;
+    @FXML private Button btnSupprimEleveFx;
+
+    @FXML private TextField champDateNaissModifEleveFx;
+    @FXML private TextField champLieuNaissModifEleveFx;
+    @FXML private TextField champMatriculeModifEleveFx;
+    @FXML private TextField champNomModifEleveFx;
+    @FXML private TextField champPaysModifEleveFx;
+    @FXML private TextField champPrenomModifEleveFx;
+    @FXML private TextField champSexeModifEleveFx;
+    @FXML private TextField champStatutModifEleveFx;
+
+    @FXML private TableView<FxEleve> tableModifEleveFx;  //FXML-injected table for displaying a modified student data
+
+    @FXML private TableColumn<FxEleve, String> colonneModifMatriculeFx;
+    @FXML private TableColumn<FxEleve, String> colonneModifNomFx;
+    @FXML private TableColumn<FxEleve, String> colonneModifPrenomFx;
+    @FXML private TableColumn<FxEleve, String> colonneModifDateNaissFx;
+    @FXML private TableColumn<FxEleve, String> colonneModifLieuNaissFx;
+    @FXML private TableColumn<FxEleve, String> colonneModifSexeFx;
+    @FXML private TableColumn<FxEleve, String> colonneModifPaysFx;
+    @FXML private TableColumn<FxEleve, String> colonneModifStatutFx;
+
+    /** FXML-injected text fields for student form input
+    @FXML private TextField champMatriculeFx; // Student matricule input
+    @FXML private TextField champNomsFx; // Last name input
+    @FXML private TextField champPrenomFx; // First name input
+    @FXML private TextField champSexeFx; // Gender input
+    @FXML private TextField champClasse; // Class input
+    @FXML private TextField champDateNaissanceFx; // Birthdate input
+    @FXML private TextField champLieuNaissance; // Birthplace input
+    **/
+
+    //Menu gauche
+    @FXML
+    void handleClickMenuAccueil(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickMenuEleves(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickMenuPersonnel(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickMenuParents(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickMenuClasses(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickMenuMatieres(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickMenuExamens(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickMenuPlannification(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickMenuCompte(MouseEvent event) {
+
+    }
+
+    //Onglet General
+    @FXML
+    void handleBtnRafraichirAllEleves(MouseEvent event) {
+        refreshEleveTable();
+    }
+
+    //Onglet Consulter
+    @FXML
+    void handleClickRechercheEleve(MouseEvent event) {
+        String matricule = champRechercheEleveFx.getText().trim();
+        if (matricule.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Recherche invalide", "Veuillez entrer un matricule pour la recherche.");
+            return;
+        }
+        Eleve eleve = servicesEleve.rechercherEleveParMatricule(matricule);
+        if (eleve != null) {
+            afficherDetailEleve(eleve);
+        } else {
+            showAlert(Alert.AlertType.INFORMATION, "Élève non trouvé", "Aucun élève trouvé avec ce matricule.");
+            afficherDetailEleve(null);
+        }
+    }
+
+    @FXML
+    void handleClickExporterInfosEleve(MouseEvent event) {
+
+    }
+    
+    //Onglet Enregistrer
+    @FXML
+    void handleClickBtnSaveEleveFx(MouseEvent event) {
+
+    }
+    
+    //Onglet Modifier  
+    @FXML
+    void handleClickRechercheModifEleveFx(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickModifEleveFx(MouseEvent event) {
+
+    }
+
+    @FXML
+    void handleClickSupprimEleveFx(MouseEvent event) {
+
+    }
 
     public EleveController() {
         try {
-            var eleveRepository = cm.enspm.studia.service.DatabaseService.getInstance().getEleveRepository();
-            this.servicesEleve = new ServicesEleve(eleveRepository, new cm.enspm.studia.session.SessionUtilisateur());
+            var eleveRepository = DatabaseService.getInstance().getEleveRepository();
+            this.servicesEleve = new ServicesEleve(eleveRepository, new SessionUtilisateur());
         } catch (Exception e) {
             throw new RuntimeException("Erreur d'initialisation du service élève", e);
         }
@@ -59,17 +228,28 @@ public class EleveController {
      */
     @FXML
     public void initialize() {
-        studentsTable.setItems(elevesData);
-        matriculeColumn.setCellValueFactory(data -> data.getValue().matriculeEleve());
-        nomColumn.setCellValueFactory(data -> data.getValue().nomEleve());
-        prenomColumn.setCellValueFactory(data -> data.getValue().prenomEleve());
-        dateNaissanceColumn.setCellValueFactory(data -> data.getValue().dateNaissanceEleve());
-        lieuNaissanceColumn.setCellValueFactory(data -> data.getValue().lieuNaissanceEleve());
-        sexeColumn.setCellValueFactory(data -> data.getValue().sexeEleve());
-        nationaliteColumn.setCellValueFactory(data -> data.getValue().nationaliteEleve());
+        colonneMatriculesFx.setCellValueFactory(data -> data.getValue().matriculeEleve());
+        colonneNomsFx.setCellValueFactory(data -> data.getValue().nomEleve());
+        colonnePrenomsFx.setCellValueFactory(data -> data.getValue().prenomEleve());
+        colonneSexesFx.setCellValueFactory(data -> data.getValue().sexeEleve());
+        colonneStatutsFx.setCellValueFactory(data -> data.getValue().statutEleve());
+        colonneDatesNaissFx.setCellValueFactory(data -> data.getValue().dateNaissanceEleve());
+        colonneLieuxNaissFx.setCellValueFactory(data -> data.getValue().lieuNaissanceEleve());
+        
+        tableAllElevesFx.setItems(elevesData);
 
-        studentsTable.setItems(elevesData);
-        studentsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        colonneModifMatriculeFx.setCellValueFactory(data -> data.getValue().matriculeEleve());
+        colonneModifNomFx.setCellValueFactory(data -> data.getValue().nomEleve());
+        colonneModifPrenomFx.setCellValueFactory(data -> data.getValue().prenomEleve());
+        colonneModifDateNaissFx.setCellValueFactory(data -> data.getValue().dateNaissanceEleve());
+        colonneModifLieuNaissFx.setCellValueFactory(data -> data.getValue().lieuNaissanceEleve());
+        colonneModifSexeFx.setCellValueFactory(data -> data.getValue().sexeEleve());
+        colonneModifPaysFx.setCellValueFactory(data -> data.getValue().nationaliteEleve());
+        colonneModifStatutFx.setCellValueFactory(data -> data.getValue().statutEleve());
+
+        tableModifEleveFx.setItems(donneesEleve);
+
+        tableModifEleveFx.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             selectedEleve = newSelection;
             if (newSelection != null) {
                 bindSelectedEleve(newSelection);
@@ -84,13 +264,14 @@ public class EleveController {
      * @param eleve the selected FxEleve to bind
      */
     private void bindSelectedEleve(FxEleve eleve) {
-        matriculeField.setText(eleve.matriculeEleve().get());
-        nomField.setText(eleve.nomEleve().get());
-        prenomField.setText(eleve.prenomEleve().get());
-        dateNaissanceField.setText(eleve.dateNaissanceEleve().get());
-        lieuNaissanceField.setText(eleve.lieuNaissanceEleve().get());
-        sexeField.setText(eleve.sexeEleve().get());
-        nationaliteField.setText(eleve.nationaliteEleve().get());
+        champMatriculeModifEleveFx.setText(eleve.matriculeEleve().get());
+        champNomModifEleveFx.setText(eleve.nomEleve().get());
+        champPrenomModifEleveFx.setText(eleve.prenomEleve().get());
+        champDateNaissModifEleveFx.setText(eleve.dateNaissanceEleve().get());
+        champLieuNaissModifEleveFx.setText(eleve.lieuNaissanceEleve().get());
+        champSexeModifEleveFx.setText(eleve.sexeEleve().get());
+        champPaysModifEleveFx.setText(eleve.nationaliteEleve().get());
+        champStatutModifEleveFx.setText(eleve.statutEleve().get());
     }
 
     private void refreshEleveTable() {
@@ -102,15 +283,15 @@ public class EleveController {
     public void onCreateStudent() {
         try {
             Eleve eleve = new Eleve(
-                    matriculeField.getText().trim(),
-                    nomField.getText().trim(),
-                    prenomField.getText().trim(),
-                    dateNaissanceField.getText().trim(),
-                    lieuNaissanceField.getText().trim(),
-                    sexeField.getText().trim(),
+                    champSaveMatriculeEleveFx.getText().trim(),
+                    champSaveNomEleveFx.getText().trim(),
+                    champSavePrenomEleveFx.getText().trim(),
+                    champSaveDateNaissEleveFx.getText().trim(),
+                    champSaveLieuNaissEleveFx.getText().trim(),
+                    champSaveSexeEleveFx.getText().trim(),
                     "", // photo
-                    nationaliteField.getText().trim(),
-                    null
+                    champSavePaysEleveFx.getText().trim(),
+                    ""
             );
             servicesEleve.enregistrerEleve(eleve);
             refreshEleveTable();
@@ -128,13 +309,13 @@ public class EleveController {
             return;
         }
         try {
-            selectedEleve.matriculeEleve().set(matriculeField.getText().trim());
-            selectedEleve.nomEleve().set(nomField.getText().trim());
-            selectedEleve.prenomEleve().set(prenomField.getText().trim());
-            selectedEleve.dateNaissanceEleve().set(dateNaissanceField.getText().trim());
-            selectedEleve.lieuNaissanceEleve().set(lieuNaissanceField.getText().trim());
-            selectedEleve.sexeEleve().set(sexeField.getText().trim());
-            selectedEleve.nationaliteEleve().set(nationaliteField.getText().trim());
+            selectedEleve.matriculeEleve().set(champMatriculeModifEleveFx.getText().trim());
+            selectedEleve.nomEleve().set(champNomModifEleveFx.getText().trim());
+            selectedEleve.prenomEleve().set(champPrenomModifEleveFx.getText().trim());
+            selectedEleve.dateNaissanceEleve().set(champDateNaissModifEleveFx.getText().trim());
+            selectedEleve.lieuNaissanceEleve().set(champLieuNaissModifEleveFx.getText().trim());
+            selectedEleve.sexeEleve().set(champSexeModifEleveFx.getText().trim());
+            selectedEleve.nationaliteEleve().set(champPaysModifEleveFx.getText().trim());
 
             servicesEleve.modifierEleve(selectedEleve.toDomain());
             refreshEleveTable();
@@ -173,14 +354,38 @@ public class EleveController {
 
     private void clearForm() {
         selectedEleve = null;
-        matriculeField.clear();
-        nomField.clear();
-        prenomField.clear();
-        dateNaissanceField.clear();
-        lieuNaissanceField.clear();
-        sexeField.clear();
-        nationaliteField.clear();
-        studentsTable.getSelectionModel().clearSelection();
+        champMatriculeModifEleveFx.clear();
+        champNomModifEleveFx.clear();
+        champPrenomModifEleveFx.clear();
+        champDateNaissModifEleveFx.clear();
+        champLieuNaissModifEleveFx.clear();
+        champSexeModifEleveFx.clear();
+        champPaysModifEleveFx.clear();
+        tableModifEleveFx.getSelectionModel().clearSelection();
+    }
+
+    private void afficherDetailEleve(Eleve eleve) {
+        if (eleve != null) {
+            consulterNomEleveFx.setText(eleve.getNom());
+            consulterPrenomEleveFx.setText(eleve.getPrenom());
+            consulterDateNaissEleveFx.setText(eleve.getDateNaissance());
+            consulterLieuNaissEleveFx.setText(eleve.getLieuNaissance());
+            consulterSexeEleveFx.setText(eleve.getSexe());
+            consulterClasseEleveFx.setText(eleve.getClasse());
+            consulterParentEleveFx.setText("N/A"); // Placeholder for parent info
+            consulterPaysEleveFx.setText(eleve.getNationalite());
+            consulterDateInscripEleveFx.setText("N/A"); // Placeholder for enrollment date
+        } else {
+            consulterNomEleveFx.setText("");
+            consulterPrenomEleveFx.setText("");
+            consulterDateNaissEleveFx.setText("");
+            consulterLieuNaissEleveFx.setText("");
+            consulterSexeEleveFx.setText("");
+            consulterClasseEleveFx.setText("");
+            consulterParentEleveFx.setText("");
+            consulterPaysEleveFx.setText("");
+            consulterDateInscripEleveFx.setText("");
+        }
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

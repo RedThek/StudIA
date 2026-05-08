@@ -26,7 +26,7 @@ public class Eleve extends Personne {
     /**
      * 
      */
-    private Classe classe;
+    private String classe;
 
     /**
      * Constructeur de la classe Eleve.
@@ -34,7 +34,7 @@ public class Eleve extends Personne {
     public Eleve(
         String matricule, String nom, String prenom,
         String dateNaissance, String lieuNaissance, 
-        String sexe, String photo, String nationalite, Classe classe) {
+        String sexe, String photo, String nationalite, String classe) {
         super(nom, prenom, dateNaissance, lieuNaissance, sexe, nationalite);
         this.matricule  = matricule;
         this.photo   = photo;
@@ -56,7 +56,7 @@ public class Eleve extends Personne {
         return statut;
     }
 
-    public Classe getClasse() {
+    public String getClasse() {
         return classe;
     }
 
@@ -74,7 +74,7 @@ public class Eleve extends Personne {
         this.statut = statut;
     }
 
-    public void setClasse(Classe classe) {
+    public void setClasse(String classe) {
         this.classe = classe;
     }
 
