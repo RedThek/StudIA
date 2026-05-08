@@ -7,6 +7,8 @@ package cm.enspm.studia.model.personnes;
 
 public class Eleve extends Personne {
 
+    private List<Parent> parents = new ArrayList<>(); /**Lier à un ou plusieurs parent */
+    private List<Enseignant> enseignants = new ArrayList<>(); /**Lier à un ou plusieurs enseignants */
     private String matricule;
     private String photo;
 
@@ -21,6 +23,17 @@ public class Eleve extends Personne {
         this.matricule  = matricule;
         this.photo   = photo;
     }
+
+    // Associer un parent
+    public void ajouterParent(Parent parent){
+        parents.add(parent);    
+        }
+
+
+    // Associer un enseignant
+    public void ajouterEnseignant(Enseignant enseignant){
+        enseignants.add(parent);    
+        }
 
     // ----------------------------- Getters -----------------------------
 

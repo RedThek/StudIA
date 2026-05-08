@@ -78,7 +78,4 @@ public class Parent extends Personne {
     public String getRole() {
         return "Parent";
     }
-
-    
-
 }

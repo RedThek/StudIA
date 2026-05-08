@@ -7,6 +7,7 @@ package cm.enspm.studia.model.personnes;
 public abstract class Personne {
 
     // Attributs communs à toutes les personnes
+    protected int id;
     private String nom;
     private String prenom;
     private String dateNaissance;
@@ -18,6 +19,7 @@ public abstract class Personne {
      * Constructeur complet de la classe Personne.
      */
     public Personne(
+        int id,
         String nom,
         String prenom,
         String dateNaissance,
@@ -25,6 +27,7 @@ public abstract class Personne {
         String sexe,
         String nationalite
     ){
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
@@ -82,4 +85,9 @@ public abstract class Personne {
      * pour retourner le rôle de la personne dans l'école.
      */
     public abstract String getRole();
+}
+
+@Override
+public String toString(){
+    return "ID:"+id+"| Nom:"+nom+"|Prénom:"+prenom;
 }
