@@ -23,6 +23,8 @@ public class ServicesEleve {
         if (repository.RechercherEleveParMatricule(eleve.getMatricule()).isPresent()) {
             throw new IllegalArgumentException("Le matricule existe déjà dans le système.");
         }
+        Integer idEleve = repository.rechercherIdParMatricule(eleve.getMatricule());
+        //eleve.setIdentifiant(idEleve != null ? idEleve : 0);
         repository.enregistrerEleve(EleveMapper.toDto(eleve));
     }
 

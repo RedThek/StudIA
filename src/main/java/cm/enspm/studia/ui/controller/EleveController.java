@@ -188,19 +188,52 @@ public class EleveController {
 
     @FXML
     void handleClickExporterInfosEleve(MouseEvent event) {
-
+            if (selectedEleve == null) {
+                showAlert(Alert.AlertType.WARNING, "Aucun élève sélectionné", "Veuillez sélectionner un élève à exporter.");
+                return;
+            }else {
+                // Placeholder for export functionality
+                showAlert(Alert.AlertType.INFORMATION, "Fonctionnalité non implémentée", "L'export des informations de l'élève n'est pas encore implémenté.");
+            }
     }
     
     //Onglet Enregistrer
     @FXML
     void handleClickBtnSaveEleveFx(MouseEvent event) {
-
+        try {
+            Eleve eleve = new Eleve(
+                    champSaveMatriculeEleveFx.getText().trim(),
+                    champSaveNomEleveFx.getText().trim(),
+                    champSavePrenomEleveFx.getText().trim(),
+                    champSaveDateNaissEleveFx.getText().trim(),
+                    champSaveLieuNaissEleveFx.getText().trim(),
+                    champSaveSexeEleveFx.getText().trim(),
+                    " ", // photo
+                    champSavePaysEleveFx.getText().trim(),
+                    " "
+            );
+            servicesEleve.enregistrerEleve(eleve);
+            showAlert(Alert.AlertType.INFORMATION, "Élève ajouté", "L'élève a bien été enregistré.");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur d'enregistrement", e.getMessage());
+        }
     }
     
     //Onglet Modifier  
     @FXML
     void handleClickRechercheModifEleveFx(MouseEvent event) {
-
+        String matricule = champRechercheModifEleveFx.getText().trim();
+        if (matricule.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Recherche invalide", "Veuillez entrer un matricule pour la recherche.");
+            return;
+        }
+        Eleve eleve = servicesEleve.rechercherEleveParMatricule(matricule);
+        if (eleve != null) {
+            donneesEleve.setAll(EleveMapper.toFxEleve(eleve));
+        } else {
+            showAlert(Alert.AlertType.INFORMATION, "Élève non trouvé", "Aucun élève trouvé avec ce matricule.");
+            donneesEleve.clear();
+        }
     }
 
     @FXML

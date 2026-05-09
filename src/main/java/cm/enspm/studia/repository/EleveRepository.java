@@ -11,6 +11,7 @@ public interface EleveRepository {
     void modifierEleve(EleveDTO eleveDTO);
     //void desactiverEleve(String matriculeEleve);
     void supprimerEleve(String matriculeEleve);
+    Integer rechercherIdParMatricule(String matriculeEleve);
     Optional<EleveDTO> RechercherEleveParMatricule(String matriculeEleve);
     List<EleveDTO> getAllEleves();
 }

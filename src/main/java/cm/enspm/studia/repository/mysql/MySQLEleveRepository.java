@@ -28,7 +28,7 @@ public class MySQLEleveRepository implements EleveRepository {
             lieu-naissance-eleve, 
             sexe-eleve, 
             photo-eleve, 
-            nationalite-eleve)
+            nationalite-eleve),
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -49,7 +49,9 @@ public class MySQLEleveRepository implements EleveRepository {
 
     @Override
     public Optional<EleveDTO> RechercherEleveParMatricule(String matriculeEleve) {
-        String sql = "SELECT * FROM eleve WHERE matricule-eleve = ?";
+        String sql = """
+        SELECT * FROM eleve WHERE matricule-eleve = ?
+        """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matriculeEleve);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -61,6 +63,22 @@ public class MySQLEleveRepository implements EleveRepository {
             throw new RuntimeException(e);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Integer rechercherIdParMatricule(String matriculeEleve) {
+        String sql = "SELECT id-eleve FROM eleve WHERE matricule-eleve = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, matriculeEleve);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id-eleve");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur Base de données lors de la recherche de l'ID de l'élève", e);
+        }
+        return null;
     }
 
     private EleveDTO appliquerResultatDansEleve(ResultSet rs) throws SQLException {
@@ -117,7 +135,9 @@ public class MySQLEleveRepository implements EleveRepository {
     }**/
 
     public List<EleveDTO> RechercherEleveParNom(String mot_cle) {
-        String sql = "SELECT * FROM eleve WHERE nom-eleve LIKE ? OR prenom-eleve LIKE ?";
+        String sql = """
+            SELECT * FROM eleve WHERE nom-eleve LIKE ? OR prenom-eleve LIKE ?
+            """;
         List<EleveDTO> eleves = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             String pattern = "%" + mot_cle + "%";
