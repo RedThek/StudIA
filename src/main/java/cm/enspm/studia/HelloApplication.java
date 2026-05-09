@@ -10,12 +10,15 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("fxml/eleves.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/eleves.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setTitle("StudIA");
-        try{
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("img/favicon/StudIA-couleur-fav-16.png")));
-        }catch (Exception e){
+        try {
+            var iconStream = getClass().getResourceAsStream("img/favicon/StudIA-couleur-fav-16.png");
+            if (iconStream != null) {
+                stage.getIcons().add(new Image(iconStream));
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         stage.setScene(scene);

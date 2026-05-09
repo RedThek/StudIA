@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implémentation MySQL du dépôt d'élèves.
+ * Traduits les opérations EleveRepository en requêtes SQL.
+ */
 public class MySQLEleveRepository implements EleveRepository {
 
     private final Connection connection;
@@ -16,40 +20,50 @@ public class MySQLEleveRepository implements EleveRepository {
         this.connection = connection;
     }
 
+    /**
+     * Insère un nouvel élève dans la table MySQL `eleve`.
+     */
     @Override
     public void enregistrerEleve(EleveDTO eleveDTO) {
         String sql = """
-            INSERT INTO eleves (
-            id-eleve, 
-            matricule-eleve, 
-            nom-eleve, 
-            prenom-eleve, 
-            date-naissance-eleve, 
-            lieu-naissance-eleve, 
-            sexe-eleve, 
-            photo-eleve, 
-            nationalite-eleve)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO eleve (
+                `matricule-eleve`,
+                `nom-eleve`,
+                `prenom-eleve`,
+                `date-naissance-eleve`,
+                `lieu-naissance-eleve`,
+                `sexe-eleve`,
+                `photo-eleve`,
+                `nationalite-eleve`
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, eleveDTO.identifiant());
-            stmt.setString(2, eleveDTO.matricule());
-            stmt.setString(3, eleveDTO.nom());
-            stmt.setString(4, eleveDTO.prenom());
-            stmt.setDate(5, Date.valueOf(eleveDTO.dateNaissance()));
-            stmt.setString(6, eleveDTO.lieuNaissance());
-            stmt.setString(7, eleveDTO.sexe());
-            stmt.setString(8, eleveDTO.photo());
-            stmt.setString(9, eleveDTO.nationalite());
+            stmt.setString(1, eleveDTO.matricule());
+            stmt.setString(2, eleveDTO.nom());
+            stmt.setString(3, eleveDTO.prenom());
+            if (eleveDTO.dateNaissance() != null) {
+                stmt.setDate(4, Date.valueOf(eleveDTO.dateNaissance()));
+            } else {
+                stmt.setNull(4, Types.DATE);
+            }
+            stmt.setString(5, eleveDTO.lieuNaissance());
+            stmt.setString(6, eleveDTO.sexe());
+            stmt.setString(7, eleveDTO.photo());
+            stmt.setString(8, eleveDTO.nationalite());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erreur Base de données lors de l'enregistrement de l'élève", e);
         }
     }
 
+    /**
+     * Retourne un élève correspondant au matricule fourni.
+     */
     @Override
     public Optional<EleveDTO> RechercherEleveParMatricule(String matriculeEleve) {
-        String sql = "SELECT * FROM eleve WHERE matricule-eleve = ?";
+        String sql = """
+        SELECT * FROM eleve WHERE `matricule-eleve` = ?
+        """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matriculeEleve);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -63,13 +77,37 @@ public class MySQLEleveRepository implements EleveRepository {
         return Optional.empty();
     }
 
+    /**
+     * Recherche l'identifiant interne d'un élève par son matricule.
+     */
+    @Override
+    public Integer rechercherIdParMatricule(String matriculeEleve) {
+        String sql = "SELECT `id-eleve` FROM eleve WHERE `matricule-eleve` = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, matriculeEleve);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id-eleve");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur Base de données lors de la recherche de l'ID de l'élève", e);
+        }
+        return null;
+    }
+
+    /**
+     * Transforme une ligne SQL ResultSet en DTO Eleve.
+     */
     private EleveDTO appliquerResultatDansEleve(ResultSet rs) throws SQLException {
+        java.sql.Date sqlDate = rs.getDate("date-naissance-eleve");
+        java.time.LocalDate dateNaissance = sqlDate != null ? sqlDate.toLocalDate() : null;
         return new EleveDTO(
             rs.getInt("id-eleve"),
             rs.getString("matricule-eleve"),
             rs.getString("nom-eleve"),
             rs.getString("prenom-eleve"),
-            rs.getDate("date-naissance-eleve").toLocalDate(),
+            dateNaissance,
             rs.getString("lieu-naissance-eleve"),
             rs.getString("sexe-eleve"),
             rs.getString("photo-eleve"),
@@ -77,23 +115,30 @@ public class MySQLEleveRepository implements EleveRepository {
         );
     }
 
+    /**
+     * Met à jour les informations d'un élève existant dans la base.
+     */
     @Override
     public void modifierEleve(EleveDTO eleve) {
         String sql = """
-            UPDATE eleve 
-            SET nom-eleve = ?, 
-            prenom-eleve = ?, 
-            date-naissance-eleve = ?, 
-            lieu-naissance-eleve = ?, 
-            sexe-eleve = ?, 
-            photo-eleve = ?, 
-            nationalite-eleve = ?
-            WHERE matricule-eleve = ?
+            UPDATE eleve
+            SET `nom-eleve` = ?,
+                `prenom-eleve` = ?,
+                `date-naissance-eleve` = ?,
+                `lieu-naissance-eleve` = ?,
+                `sexe-eleve` = ?,
+                `photo-eleve` = ?,
+                `nationalite-eleve` = ?
+            WHERE `matricule-eleve` = ?
             """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, eleve.nom());
             stmt.setString(2, eleve.prenom());
-            stmt.setDate(3, Date.valueOf(eleve.dateNaissance()));
+            if (eleve.dateNaissance() != null) {
+                stmt.setDate(3, Date.valueOf(eleve.dateNaissance()));
+            } else {
+                stmt.setNull(3, Types.DATE);
+            }
             stmt.setString(4, eleve.lieuNaissance());
             stmt.setString(5, eleve.sexe());
             stmt.setString(6, eleve.photo());
@@ -116,8 +161,14 @@ public class MySQLEleveRepository implements EleveRepository {
         }
     }**/
 
+    /**
+     * Recherche des élèves dont le nom ou le prénom correspond à un mot clé.
+     */
     public List<EleveDTO> RechercherEleveParNom(String mot_cle) {
-        String sql = "SELECT * FROM eleve WHERE nom-eleve LIKE ? OR prenom-eleve LIKE ?";
+        String sql = """
+            SELECT * FROM eleve
+            WHERE `nom-eleve` LIKE ? OR `prenom-eleve` LIKE ?
+            """;
         List<EleveDTO> eleves = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             String pattern = "%" + mot_cle + "%";
@@ -134,9 +185,12 @@ public class MySQLEleveRepository implements EleveRepository {
         return eleves;
     }
 
+    /**
+     * Supprime un élève de la base par matricule.
+     */
     @Override
     public void supprimerEleve(String matriculeEleve) {
-        String sql = "DELETE FROM eleve WHERE matricule-eleve = ?";
+        String sql = "DELETE FROM eleve WHERE `matricule-eleve` = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matriculeEleve);
             stmt.executeUpdate();
@@ -145,6 +199,9 @@ public class MySQLEleveRepository implements EleveRepository {
         }
     }
 
+    /**
+     * Retourne tous les élèves stockés dans la table MySQL.
+     */
     @Override
     public List<EleveDTO> getAllEleves() {
         String sql = "SELECT * FROM eleve";

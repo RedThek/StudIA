@@ -37,6 +37,20 @@ public class AnneeScolaire {
         return dateFin;
     }
 
+    public String getLibelleAnneeScolaire() {
+        // Générer le libellé de l'année scolaire au format "YYYY-YYYY"
+        int anneeDebut = dateDebut.getYear();
+        int anneeFin = dateFin.getYear();
+        return anneeDebut + "-" + anneeFin;
+    }
+
+    public int getIdAnneeScolaire() {
+        // Générer un identifiant unique pour l'année scolaire en combinant les années de début et de fin
+        int anneeDebut = dateDebut.getYear();
+        int anneeFin = dateFin.getYear();
+        return anneeDebut * 10000 + anneeFin; // Ex: 20232024 -> 20232024
+    }
+
     public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
@@ -45,11 +59,21 @@ public class AnneeScolaire {
         this.dateFin = dateFin;
     }
 
-    public String getLibelle() {
+    public String getLibelleAnneScolaire2() {
         // Générer le libellé de l'année scolaire au format "YYYY-YYYY"
         int anneeDebut = dateDebut.getYear() + 1900; // getYear() retourne l'année depuis 1900
         int anneeFin = dateFin.getYear() + 1900;
         return anneeDebut + "-" + anneeFin;
+    }
+
+    public String getLibelleDebutAnneeScolaire() {
+        int anneeDebut = dateDebut.getYear() + 1900; // getYear() retourne l'année depuis 1900
+        return String.valueOf(anneeDebut);
+    }
+
+    public String getLibelleFinAnneeScolaire() {
+        int anneeFin = dateFin.getYear() + 1900; // getYear() retourne l'année depuis 1900
+        return String.valueOf(anneeFin);
     }
     
 }
