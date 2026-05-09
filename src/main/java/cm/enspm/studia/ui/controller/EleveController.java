@@ -25,87 +25,88 @@ public class EleveController {
     private final ServicesEleve servicesEleve;
     // Observable list holding the student data displayed in the table
     private final ObservableList<FxEleve> elevesData = FXCollections.observableArrayList();
+    // Observable list holding the student data filtered for modification
     private final ObservableList<FxEleve> donneesEleve = FXCollections.observableArrayList();
     // Currently selected student in the table for editing/deleting
     private FxEleve selectedEleve;
 
     //Boutons du menu gauche
-    @FXML private Button btnMenuAccueilFx;
-    @FXML private Button btnMenuClassesFx;
-    @FXML private Button btnMenuCompteFx;
-    @FXML private Button btnMenuElevesFx;
-    @FXML private Button btnMenuExamensFx;
-    @FXML private Button btnMenuMatieresFx;
-    @FXML private Button btnMenuParentsFx;
-    @FXML private Button btnMenuPersonnelFx;
-    @FXML private Button btnMenuPlannification;
+    @FXML private Button btnMenuAccueilFx; // Bouton pour aller à l'écran d'accueil
+    @FXML private Button btnMenuClassesFx; // Bouton pour aller à l'écran des classes
+    @FXML private Button btnMenuCompteFx; // Bouton pour aller à l'écran du compte utilisateur
+    @FXML private Button btnMenuElevesFx; // Bouton pour aller à l'écran des élèves
+    @FXML private Button btnMenuExamensFx; // Bouton pour aller à l'écran des examens
+    @FXML private Button btnMenuMatieresFx; // Bouton pour aller à l'écran des matières
+    @FXML private Button btnMenuParentsFx; // Bouton pour aller à l'écran des parents
+    @FXML private Button btnMenuPersonnelFx; // Bouton pour aller à l'écran du personnel
+    @FXML private Button btnMenuPlannification; // Bouton pour aller à l'écran de planification
 
     //Onglet General
-    @FXML private Button btnRafraichirAllEleves;
+    @FXML private Button btnRafraichirAllEleves; // Bouton pour rafraîchir la liste de tous les élèves
 
-    @FXML private TableView<FxEleve> tableAllElevesFx; //FXML-injected table for displaying all student data
+    @FXML private TableView<FxEleve> tableAllElevesFx; // Table principale affichant les élèves
 
-    @FXML private TableColumn<FxEleve, String> colonneMatriculesFx; // FXML-injected columns for displaying student data
-    @FXML private TableColumn<FxEleve, String> colonneNomsFx; 
-    @FXML private TableColumn<FxEleve, String> colonnePrenomsFx;
-    @FXML private TableColumn<FxEleve, String> colonneSexesFx;
-    @FXML private TableColumn<FxEleve, String> colonneStatutsFx;
-    @FXML private TableColumn<FxEleve, String> colonneDatesNaissFx;
-    @FXML private TableColumn<FxEleve, String> colonneLieuxNaissFx;
+    @FXML private TableColumn<FxEleve, String> colonneMatriculesFx; // Colonne matricule
+    @FXML private TableColumn<FxEleve, String> colonneNomsFx; // Colonne nom
+    @FXML private TableColumn<FxEleve, String> colonnePrenomsFx; // Colonne prénom
+    @FXML private TableColumn<FxEleve, String> colonneSexesFx; // Colonne sexe
+    @FXML private TableColumn<FxEleve, String> colonneStatutsFx; // Colonne statut
+    @FXML private TableColumn<FxEleve, String> colonneDatesNaissFx; // Colonne date de naissance
+    @FXML private TableColumn<FxEleve, String> colonneLieuxNaissFx; // Colonne lieu de naissance
 
     //Onglet Consulter
-    @FXML private TextField champRechercheEleveFx;
+    @FXML private TextField champRechercheEleveFx; // Champ de recherche de matricule pour consultation
 
-    @FXML private Button btnRechercheEleveFx;
-    @FXML private Button btnExporterInfosEleveFx;
+    @FXML private Button btnRechercheEleveFx; // Bouton pour lancer la recherche
+    @FXML private Button btnExporterInfosEleveFx; // Bouton pour exporter les informations de l'élève
     
-    @FXML private Label consulterNomEleveFx;
-    @FXML private Label consulterPrenomEleveFx;
-    @FXML private Label consulterDateNaissEleveFx;
-    @FXML private Label consulterLieuNaissEleveFx;
-    @FXML private Label consulterSexeEleveFx;
-    @FXML private Label consulterClasseEleveFx;
-    @FXML private Label consulterParentEleveFx;
-    @FXML private Label consulterPaysEleveFx;
-    @FXML private Label consulterDateInscripEleveFx;
+    @FXML private Label consulterNomEleveFx; // Affiche le nom de l'élève recherché
+    @FXML private Label consulterPrenomEleveFx; // Affiche le prénom de l'élève recherché
+    @FXML private Label consulterDateNaissEleveFx; // Affiche la date de naissance
+    @FXML private Label consulterLieuNaissEleveFx; // Affiche le lieu de naissance
+    @FXML private Label consulterSexeEleveFx; // Affiche le sexe
+    @FXML private Label consulterClasseEleveFx; // Affiche la classe associée
+    @FXML private Label consulterParentEleveFx; // Affiche le parent associé
+    @FXML private Label consulterPaysEleveFx; // Affiche la nationalité
+    @FXML private Label consulterDateInscripEleveFx; // Affiche la date d'inscription
 
     //Onglet Enregistrer
-    @FXML private TextField champSaveMatriculeEleveFx;
-    @FXML private TextField champSaveNomEleveFx;
-    @FXML private TextField champSavePrenomEleveFx;
-    @FXML private TextField champSaveDateNaissEleveFx;
-    @FXML private TextField champSaveLieuNaissEleveFx;
-    @FXML private TextField champSaveSexeEleveFx;
-    @FXML private TextField champSavePaysEleveFx;
+    @FXML private TextField champSaveMatriculeEleveFx; // Champ de saisie du matricule
+    @FXML private TextField champSaveNomEleveFx; // Champ de saisie du nom
+    @FXML private TextField champSavePrenomEleveFx; // Champ de saisie du prénom
+    @FXML private TextField champSaveDateNaissEleveFx; // Champ de saisie de la date de naissance
+    @FXML private TextField champSaveLieuNaissEleveFx; // Champ de saisie du lieu de naissance
+    @FXML private TextField champSaveSexeEleveFx; // Champ de saisie du sexe
+    @FXML private TextField champSavePaysEleveFx; // Champ de saisie de la nationalité
 
-    @FXML private Button btnEnregistrerEleve;
+    @FXML private Button btnEnregistrerEleve; // Bouton pour enregistrer un nouvel élève
 
     //Onglet Modifier & Supprimer
-    @FXML private TextField champRechercheModifEleveFx;
+    @FXML private TextField champRechercheModifEleveFx; // Champ de recherche de l'élève à modifier ou supprimer
 
-    @FXML private Button btnRechercheModifEleveFx;
-    @FXML private Button btnModifEleveFx;
-    @FXML private Button btnSupprimEleveFx;
+    @FXML private Button btnRechercheModifEleveFx; // Bouton de recherche pour modification
+    @FXML private Button btnModifEleveFx; // Bouton de validation de modification
+    @FXML private Button btnSupprimEleveFx; // Bouton de suppression
 
-    @FXML private TextField champDateNaissModifEleveFx;
-    @FXML private TextField champLieuNaissModifEleveFx;
-    @FXML private TextField champMatriculeModifEleveFx;
-    @FXML private TextField champNomModifEleveFx;
-    @FXML private TextField champPaysModifEleveFx;
-    @FXML private TextField champPrenomModifEleveFx;
-    @FXML private TextField champSexeModifEleveFx;
-    @FXML private TextField champStatutModifEleveFx;
+    @FXML private TextField champDateNaissModifEleveFx; // Champ date de naissance pour modification
+    @FXML private TextField champLieuNaissModifEleveFx; // Champ lieu de naissance pour modification
+    @FXML private TextField champMatriculeModifEleveFx; // Champ matricule pour modification
+    @FXML private TextField champNomModifEleveFx; // Champ nom pour modification
+    @FXML private TextField champPaysModifEleveFx; // Champ nationalité pour modification
+    @FXML private TextField champPrenomModifEleveFx; // Champ prénom pour modification
+    @FXML private TextField champSexeModifEleveFx; // Champ sexe pour modification
+    @FXML private TextField champStatutModifEleveFx; // Champ statut pour modification
 
-    @FXML private TableView<FxEleve> tableModifEleveFx;  //FXML-injected table for displaying a modified student data
+    @FXML private TableView<FxEleve> tableModifEleveFx;  // Table affichant l'élève sélectionné pour modification
 
-    @FXML private TableColumn<FxEleve, String> colonneModifMatriculeFx;
-    @FXML private TableColumn<FxEleve, String> colonneModifNomFx;
-    @FXML private TableColumn<FxEleve, String> colonneModifPrenomFx;
-    @FXML private TableColumn<FxEleve, String> colonneModifDateNaissFx;
-    @FXML private TableColumn<FxEleve, String> colonneModifLieuNaissFx;
-    @FXML private TableColumn<FxEleve, String> colonneModifSexeFx;
-    @FXML private TableColumn<FxEleve, String> colonneModifPaysFx;
-    @FXML private TableColumn<FxEleve, String> colonneModifStatutFx;
+    @FXML private TableColumn<FxEleve, String> colonneModifMatriculeFx; // Colonne matricule modification
+    @FXML private TableColumn<FxEleve, String> colonneModifNomFx; // Colonne nom modification
+    @FXML private TableColumn<FxEleve, String> colonneModifPrenomFx; // Colonne prénom modification
+    @FXML private TableColumn<FxEleve, String> colonneModifDateNaissFx; // Colonne date de naissance modification
+    @FXML private TableColumn<FxEleve, String> colonneModifLieuNaissFx; // Colonne lieu de naissance modification
+    @FXML private TableColumn<FxEleve, String> colonneModifSexeFx; // Colonne sexe modification
+    @FXML private TableColumn<FxEleve, String> colonneModifPaysFx; // Colonne nationalité modification
+    @FXML private TableColumn<FxEleve, String> colonneModifStatutFx; // Colonne statut modification
 
     /** FXML-injected text fields for student form input
     @FXML private TextField champMatriculeFx; // Student matricule input
@@ -118,58 +119,91 @@ public class EleveController {
     **/
 
     //Menu gauche
+    /**
+     * Gère le clic sur le bouton Accueil.
+     */
     @FXML
     void handleClickMenuAccueil(MouseEvent event) {
 
     }
 
+    /**
+     * Gère le clic sur le bouton Élèves.
+     */
     @FXML
     void handleClickMenuEleves(MouseEvent event) {
 
     }
 
+    /**
+     * Gère le clic sur le bouton Personnel.
+     */
     @FXML
     void handleClickMenuPersonnel(MouseEvent event) {
 
     }
 
+    /**
+     * Gère le clic sur le bouton Parents.
+     */
     @FXML
     void handleClickMenuParents(MouseEvent event) {
 
     }
 
+    /**
+     * Gère le clic sur le bouton Classes.
+     */
     @FXML
     void handleClickMenuClasses(MouseEvent event) {
 
     }
 
+    /**
+     * Gère le clic sur le bouton Matières.
+     */
     @FXML
     void handleClickMenuMatieres(MouseEvent event) {
 
     }
 
+    /**
+     * Gère le clic sur le bouton Examens.
+     */
     @FXML
     void handleClickMenuExamens(MouseEvent event) {
 
     }
 
+    /**
+     * Gère le clic sur le bouton Planification.
+     */
     @FXML
     void handleClickMenuPlannification(MouseEvent event) {
 
     }
 
+    /**
+     * Gère le clic sur le bouton Compte.
+     */
     @FXML
     void handleClickMenuCompte(MouseEvent event) {
 
     }
 
     //Onglet General
+    /**
+     * Rafraîchit la liste de tous les élèves dans la table générale.
+     */
     @FXML
     void handleBtnRafraichirAllEleves(MouseEvent event) {
         refreshEleveTable();
     }
 
     //Onglet Consulter
+    /**
+     * Recherche un élève à partir du matricule saisi dans l'onglet consultation.
+     */
     @FXML
     void handleClickRechercheEleve(MouseEvent event) {
         String matricule = champRechercheEleveFx.getText().trim();
@@ -186,6 +220,9 @@ public class EleveController {
         }
     }
 
+    /**
+     * Lance l'export des informations de l'élève sélectionné.
+     */
     @FXML
     void handleClickExporterInfosEleve(MouseEvent event) {
             if (selectedEleve == null) {
@@ -198,6 +235,9 @@ public class EleveController {
     }
     
     //Onglet Enregistrer
+    /**
+     * Enregistre un nouvel élève avec les données du formulaire.
+     */
     @FXML
     void handleClickBtnSaveEleveFx(MouseEvent event) {
         try {
@@ -220,6 +260,9 @@ public class EleveController {
     }
     
     //Onglet Modifier  
+    /**
+     * Recherche un élève pour modification et affiche ses données dans le formulaire.
+     */
     @FXML
     void handleClickRechercheModifEleveFx(MouseEvent event) {
         String matricule = champRechercheModifEleveFx.getText().trim();
@@ -236,16 +279,25 @@ public class EleveController {
         }
     }
 
+    /**
+     * Applique les modifications saisies au seul élève sélectionné.
+     */
     @FXML
     void handleClickModifEleveFx(MouseEvent event) {
 
     }
 
+    /**
+     * Supprime l'élève sélectionné après confirmation.
+     */
     @FXML
     void handleClickSupprimEleveFx(MouseEvent event) {
 
     }
 
+    /**
+     * Initialise le contrôleur EleveController en construisant le service avec le dépôt de données.
+     */
     public EleveController() {
         try {
             var eleveRepository = DatabaseService.getInstance().getEleveRepository();
@@ -256,8 +308,7 @@ public class EleveController {
     }
 
     /**
-     * Initializes the controller after FXML loading.
-     * Sets up table column value factories and selection listener.
+     * Initialise les colonnes de la table et configure la sélection de l'élève.
      */
     @FXML
     public void initialize() {
@@ -296,6 +347,10 @@ public class EleveController {
      * Binds the selected student's data to the form fields.
      * @param eleve the selected FxEleve to bind
      */
+    /**
+     * Copie les données de l'élève sélectionné dans le formulaire de modification.
+     * @param eleve élève sélectionné
+     */
     private void bindSelectedEleve(FxEleve eleve) {
         champMatriculeModifEleveFx.setText(eleve.matriculeEleve().get());
         champNomModifEleveFx.setText(eleve.nomEleve().get());
@@ -307,11 +362,20 @@ public class EleveController {
         champStatutModifEleveFx.setText(eleve.statutEleve().get());
     }
 
+    /**
+     * Recharge la liste des élèves depuis le service et l'affiche dans la table.
+     */
     private void refreshEleveTable() {
         var eleves = servicesEleve.listerEleves();
         elevesData.setAll(eleves.stream().map(EleveMapper::toFxEleve).toList());
     }
 
+    /**
+     * Crée un nouvel élève depuis le formulaire et le sauvegarde en base.
+     */
+    /**
+     * Crée un nouvel élève depuis le formulaire et le sauvegarde en base.
+     */
     @FXML
     public void onCreateStudent() {
         try {
@@ -335,6 +399,9 @@ public class EleveController {
         }
     }
 
+    /**
+     * Met à jour l'élève sélectionné avec les données du formulaire de modification.
+     */
     @FXML
     public void onUpdateStudent() {
         if (selectedEleve == null) {
@@ -358,6 +425,9 @@ public class EleveController {
         }
     }
 
+    /**
+     * Supprime l'élève actuellement sélectionné après confirmation utilisateur.
+     */
     @FXML
     public void onDeleteStudent() {
         if (selectedEleve == null) {
@@ -380,11 +450,17 @@ public class EleveController {
         });
     }
 
+    /**
+     * Vide le formulaire de modification et désélectionne l'élève actif.
+     */
     @FXML
     public void onClearForm() {
         clearForm();
     }
 
+    /**
+     * Réinitialise les champs de saisie et la sélection dans la table.
+     */
     private void clearForm() {
         selectedEleve = null;
         champMatriculeModifEleveFx.clear();
@@ -397,6 +473,10 @@ public class EleveController {
         tableModifEleveFx.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Affiche les détails de l'élève recherché dans l'onglet consultation.
+     * @param eleve élève à afficher ou null pour vider les champs
+     */
     private void afficherDetailEleve(Eleve eleve) {
         if (eleve != null) {
             consulterNomEleveFx.setText(eleve.getNom());
@@ -421,6 +501,12 @@ public class EleveController {
         }
     }
 
+    /**
+     * Affiche une boîte de dialogue d'alerte.
+     * @param type type d'alerte (INFORMATION, WARNING, ERROR, etc.)
+     * @param title titre de la fenêtre d'alerte
+     * @param message contenu du message
+     */
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

@@ -3,14 +3,14 @@ package cm.enspm.studia.model.dto.administration;
 import cm.enspm.studia.model.personnes.Employe;
 import cm.enspm.studia.model.syllabus.Matiere;
 
-public class Affectation {
+public class AffectationDTO {
 
     private int idAffectation;                     // Identifiant unique de l'affectation
     private Employe enseignant;   // Référence à l'enseignant
     private Matiere matiere;         // Référence à la matière
-    private Classe classe;           // Référence à la classe
+    private ClasseDTO classe;           // Référence à la classe
 
-    public Affectation(int idAffectation, Employe enseignant, Matiere matiere, Classe classe) {
+    public AffectationDTO(int idAffectation, Employe enseignant, Matiere matiere, ClasseDTO classe) {
         this.idAffectation = idAffectation;
         this.enseignant = enseignant;
         this.matiere = matiere;
@@ -29,7 +29,7 @@ public class Affectation {
         return matiere;
     }
 
-    public Classe getClasse() {
+    public ClasseDTO getClasse() {
         return classe;
     }
 
@@ -41,7 +41,7 @@ public class Affectation {
         this.matiere = matiere;
     }
 
-    public void setClasse(Classe classe) {
+    public void setClasse(ClasseDTO classe) {
         this.classe = classe;
     }
 }

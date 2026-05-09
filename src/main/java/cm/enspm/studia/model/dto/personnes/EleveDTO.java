@@ -3,7 +3,8 @@ package cm.enspm.studia.model.dto.personnes;
 import java.time.LocalDate;
 
 /**
- * Structure Enregistrement représentant un élève dans la base de données.
+ * DTO représentant les données persistées d'un élève.
+ * Chaque champ correspond à une colonne de la table élève.
  */
 public record EleveDTO(
     /**

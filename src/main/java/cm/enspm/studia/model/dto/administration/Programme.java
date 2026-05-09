@@ -3,12 +3,12 @@ package cm.enspm.studia.model.dto.administration;
 public class Programme {
 
     private int id;
-    private Affectation affectation;
+    private AffectationDTO affectation;
     private Salle salle;
     private CrenauHoraire crenauHoraire;
 
     
-    public Programme(int id, Affectation affectation, Salle salle, CrenauHoraire crenauHoraire) {
+    public Programme(int id, AffectationDTO affectation, Salle salle, CrenauHoraire crenauHoraire) {
         this.id = id;
         this.affectation = affectation;
         this.salle = salle;
@@ -26,12 +26,12 @@ public class Programme {
     }
 
 
-    public Affectation getAffectation() {
+    public AffectationDTO getAffectation() {
         return affectation;
     }
 
 
-    public void setAffectation(Affectation affectation) {
+    public void setAffectation(AffectationDTO affectation) {
         this.affectation = affectation;
     }
 

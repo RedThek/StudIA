@@ -48,7 +48,7 @@ public class Classe {
     }
 
     public String getLibelle() {
-        return niveauEtude.getDesignation() + " " + anneeScolare.getLibelle();
+        return niveauEtude.getDesignation() + " " + anneeScolare.getLibelleAnneeScolaire();
     }
 
 
